@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Job, Application, CandidateProfile, FilterState, UserRole, ApplicationStatus, JobStatus } from '@/types';
-import { INITIAL_JOBS, INITIAL_CANDIDATE, INITIAL_APPLICATIONS } from '@/data/mockData';
+import { REAL_JOB_OPENINGS, VERIFIED_CANDIDATE, REAL_APPLICATIONS } from '@/data/realJobOpenings';
 import { generateAiScreening } from '@/lib/aiAgent';
 
 interface ToastState {
@@ -47,10 +47,10 @@ const JobContext = createContext<JobContextType | undefined>(undefined);
 
 export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [role, setRoleState] = useState<UserRole>('seeker');
-  const [jobs, setJobs] = useState<Job[]>(INITIAL_JOBS);
-  const [applications, setApplications] = useState<Application[]>(INITIAL_APPLICATIONS);
-  const [candidateProfile, setCandidateProfile] = useState<CandidateProfile>(INITIAL_CANDIDATE);
-  const [savedJobIds, setSavedJobIds] = useState<string[]>(['job-1', 'job-3']);
+  const [jobs, setJobs] = useState<Job[]>(REAL_JOB_OPENINGS);
+  const [applications, setApplications] = useState<Application[]>(REAL_APPLICATIONS);
+  const [candidateProfile, setCandidateProfile] = useState<CandidateProfile>(VERIFIED_CANDIDATE);
+  const [savedJobIds, setSavedJobIds] = useState<string[]>(['real-google-spanner', 'real-phonepe-upi']);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [toasts, setToasts] = useState<ToastState[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -80,11 +80,11 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (!hasLegacyFakeJobs && parsed.length > 0) {
           setJobs(parsed);
         } else {
-          setJobs(INITIAL_JOBS);
-          localStorage.setItem('careerhub_real_inr_jobs_v1', JSON.stringify(INITIAL_JOBS));
+          setJobs(REAL_JOB_OPENINGS);
+          localStorage.setItem('careerhub_real_inr_jobs_v1', JSON.stringify(REAL_JOB_OPENINGS));
         }
       } else {
-        setJobs(INITIAL_JOBS);
+        setJobs(REAL_JOB_OPENINGS);
       }
 
       // 3. Load verified applications
@@ -97,11 +97,11 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (!hasLegacyFakeApps && parsedApps.length > 0) {
           setApplications(parsedApps);
         } else {
-          setApplications(INITIAL_APPLICATIONS);
-          localStorage.setItem('careerhub_real_inr_apps_v1', JSON.stringify(INITIAL_APPLICATIONS));
+          setApplications(REAL_APPLICATIONS);
+          localStorage.setItem('careerhub_real_inr_apps_v1', JSON.stringify(REAL_APPLICATIONS));
         }
       } else {
-        setApplications(INITIAL_APPLICATIONS);
+        setApplications(REAL_APPLICATIONS);
       }
 
       const savedProfile = localStorage.getItem('careerhub_real_inr_profile_v1');

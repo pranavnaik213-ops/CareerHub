@@ -91,7 +91,7 @@ export default function HomePage() {
           {/* Quick Filter Pills with Real Tech Companies & Keywords */}
           <div className="flex flex-wrap items-center gap-2 pt-2">
             <span className="text-xs text-slate-400 mr-1">Quick Search:</span>
-            {['Google', 'Razorpay', 'Microsoft', 'Swiggy', 'Flipkart', 'Stripe', 'Remote', 'Next.js'].map((term, i) => (
+            {['Google', 'Microsoft', 'PhonePe', 'Uber', 'Stripe', 'Razorpay', 'Apple', 'Remote'].map((term, i) => (
               <button
                 key={i}
                 onClick={() => {
@@ -118,8 +118,8 @@ export default function HomePage() {
               <Building2 className="w-4 h-4 text-blue-400" aria-hidden="true" />
               Top Employers
             </div>
-            <p className="text-xl font-bold text-white font-heading">13+ Tech Leaders</p>
-            <p className="text-xs text-slate-400 mt-0.5">Google, Stripe, Microsoft, Razorpay, Swiggy, Flipkart</p>
+            <p className="text-xl font-bold text-white font-heading">22+ Tech Leaders</p>
+            <p className="text-xs text-slate-400 mt-0.5">Google, Microsoft, Apple, Stripe, Uber, PhonePe, Meta, Netflix</p>
           </div>
 
           <div className="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">

@@ -249,6 +249,128 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, companyName, 
     );
   }
 
+  if (lowerName.includes('apple')) {
+    return (
+      <div
+        role="img"
+        aria-label="Apple logo"
+        className={`bg-black text-white border border-slate-700 shadow-sm flex items-center justify-center flex-shrink-0 ${sizeClasses[size]} ${className}`}
+      >
+        <svg width={iconPx} height={iconPx} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.64-.78 1.08-1.86.96-2.95-1 .04-2.13.66-2.81 1.46-.59.69-1.12 1.79-.98 2.87 1.12.08 2.19-.6 2.83-1.38z"/>
+        </svg>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('netflix')) {
+    return (
+      <div
+        role="img"
+        aria-label="Netflix logo"
+        className={`bg-black text-[#E50914] border border-slate-800 shadow-sm flex items-center justify-center flex-shrink-0 font-black ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-sm font-black tracking-tight text-[#E50914]">N</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('phonepe')) {
+    return (
+      <div
+        role="img"
+        aria-label="PhonePe logo"
+        className={`bg-[#5f259f] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-sm font-black">Pe</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('cred')) {
+    return (
+      <div
+        role="img"
+        aria-label="CRED logo"
+        className={`bg-black text-white border border-slate-700 shadow-sm flex items-center justify-center flex-shrink-0 font-black ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-black tracking-wider uppercase">CRED</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('zomato')) {
+    return (
+      <div
+        role="img"
+        aria-label="Zomato logo"
+        className={`bg-[#E23744] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-black ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-black italic">zomato</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('adobe')) {
+    return (
+      <div
+        role="img"
+        aria-label="Adobe logo"
+        className={`bg-[#FF0000] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-black ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-sm font-black">A</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('salesforce')) {
+    return (
+      <div
+        role="img"
+        aria-label="Salesforce logo"
+        className={`bg-[#00A1E0] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-black">SF</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('oracle')) {
+    return (
+      <div
+        role="img"
+        aria-label="Oracle logo"
+        className={`bg-[#C74634] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-black tracking-widest">OCI</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('cisco')) {
+    return (
+      <div
+        role="img"
+        aria-label="Cisco logo"
+        className={`bg-[#049fd9] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-black">CISCO</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('intuit')) {
+    return (
+      <div
+        role="img"
+        aria-label="Intuit logo"
+        className={`bg-[#0077C5] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-bold">intuit</span>
+      </div>
+    );
+  }
+
   // Fallback: Clean, restrained professional dark tile
   const initials = name
     .split(' ')

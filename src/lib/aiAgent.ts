@@ -1,5 +1,5 @@
 import { Job, CandidateProfile, Application, ApplicationStatus } from '@/types';
-import { AI_AGENT_JOB_POOL } from '@/data/mockData';
+import { AI_AGENT_REAL_JOB_POOL } from '@/data/realJobOpenings';
 
 /**
  * Autonomous AI Platform Agent Engine
@@ -83,7 +83,7 @@ export function generateAiScreening(job: Job, candidateOrApp: { skills?: string[
 export function fetchNextAgentJob(existingJobs: Job[]): Job | null {
   const existingTitles = existingJobs.map((j) => `${j.company}-${j.title}`);
   
-  const candidateOpening = AI_AGENT_JOB_POOL.find((item) => {
+  const candidateOpening = AI_AGENT_REAL_JOB_POOL.find((item) => {
     return !existingTitles.includes(`${item.company}-${item.title}`);
   });
 
