@@ -89,8 +89,30 @@ export const Navbar: React.FC = () => {
           )}
 
           <Link
+            href="/resume-analyzer"
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              pathname === '/resume-analyzer'
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            Resume ATS
+          </Link>
+
+          <Link
+            href="/interview-prep"
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              pathname === '/interview-prep'
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            Interview Prep
+          </Link>
+
+          <Link
             href="/salary-calculator"
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               pathname === '/salary-calculator'
                 ? 'bg-slate-800 text-white'
                 : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -101,7 +123,7 @@ export const Navbar: React.FC = () => {
 
           <Link
             href="/pricing"
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               pathname === '/pricing'
                 ? 'bg-slate-800 text-white'
                 : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -257,13 +279,33 @@ export const Navbar: React.FC = () => {
           )}
 
           <Link
+            href="/resume-analyzer"
+            onClick={closeMobileMenu}
+            className={`block px-3 py-2 rounded-md text-xs font-medium ${
+              pathname === '/resume-analyzer' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
+            }`}
+          >
+            Resume ATS Scanner
+          </Link>
+
+          <Link
+            href="/interview-prep"
+            onClick={closeMobileMenu}
+            className={`block px-3 py-2 rounded-md text-xs font-medium ${
+              pathname === '/interview-prep' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
+            }`}
+          >
+            Interview Prep & Challenges
+          </Link>
+
+          <Link
             href="/salary-calculator"
             onClick={closeMobileMenu}
             className={`block px-3 py-2 rounded-md text-xs font-medium ${
               pathname === '/salary-calculator' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
             }`}
           >
-            Tech Salaries
+            Tech Salaries & Tax Calculator
           </Link>
 
           <Link

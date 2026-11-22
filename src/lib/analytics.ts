@@ -23,7 +23,9 @@ export type AnalyticsEventName =
   | 'cookie_consent_accepted'
   | 'cookie_consent_declined'
   | 'ai_agent_sync_triggered'
-  | 'linkedin_connected';
+  | 'linkedin_connected'
+  | 'resume_analyzed'
+  | 'interview_prep_evaluated';
 
 export interface AnalyticsEvent {
   name: AnalyticsEventName;
