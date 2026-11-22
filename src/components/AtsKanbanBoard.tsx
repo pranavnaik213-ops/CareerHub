@@ -6,11 +6,11 @@ import { Application, ApplicationStatus } from '@/types';
 import { User, FileText, Calendar, CheckCircle2, XCircle, Clock, Search, MessageSquare, ChevronRight, Filter } from 'lucide-react';
 
 const STAGES: { id: ApplicationStatus; title: string; color: string; border: string }[] = [
-  { id: 'Submitted', title: 'Submitted', color: 'bg-blue-500/10 text-blue-400', border: 'border-blue-500/30' },
-  { id: 'Under Review', title: 'Under Review', color: 'bg-amber-500/10 text-amber-400', border: 'border-amber-500/30' },
-  { id: 'Interview Scheduled', title: 'Interview Scheduled', color: 'bg-violet-500/10 text-violet-300', border: 'border-violet-500/30' },
-  { id: 'Offer Extended', title: 'Offer Extended', color: 'bg-emerald-500/10 text-emerald-400', border: 'border-emerald-500/30' },
-  { id: 'Rejected', title: 'Rejected', color: 'bg-rose-500/10 text-rose-400', border: 'border-rose-500/30' }
+  { id: 'Submitted', title: 'Submitted', color: 'bg-blue-500/15 text-blue-300', border: 'border-blue-500/30' },
+  { id: 'Under Review', title: 'Under Review', color: 'bg-amber-500/15 text-amber-300', border: 'border-amber-500/30' },
+  { id: 'Interview Scheduled', title: 'Interview Scheduled', color: 'bg-violet-500/15 text-violet-300', border: 'border-violet-500/30' },
+  { id: 'Offer Extended', title: 'Offer Extended', color: 'bg-emerald-500/15 text-emerald-300', border: 'border-emerald-500/30' },
+  { id: 'Rejected', title: 'Rejected', color: 'bg-rose-500/15 text-rose-300', border: 'border-rose-500/30' }
 ];
 
 export const AtsKanbanBoard: React.FC = () => {
@@ -48,29 +48,29 @@ export const AtsKanbanBoard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      
+
       {/* Top ATS Filter Controls */}
       <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between bg-slate-900/60 p-4 rounded-2xl border border-slate-800 backdrop-blur-xl">
-        
+
         {/* Search Candidate */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search candidates by name, job, or skill..."
-            className="w-full bg-slate-950/80 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 outline-none"
+            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-400 outline-none"
           />
         </div>
 
         {/* Filter by Specific Job Posting */}
         <div className="flex items-center gap-2">
-          <Filter className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+          <Filter className="w-3.5 h-3.5 text-slate-400 hidden sm:block" aria-hidden="true" />
           <select
             value={selectedJobIdFilter}
             onChange={(e) => setSelectedJobIdFilter(e.target.value)}
-            className="bg-slate-950/80 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none"
+            className="bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none w-full sm:w-auto"
           >
             <option value="All">All Posted Jobs ({jobs.length})</option>
             {jobs.map((job) => (
@@ -83,8 +83,8 @@ export const AtsKanbanBoard: React.FC = () => {
 
       </div>
 
-      {/* Kanban Board Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-x-auto pb-4">
+      {/* Kanban Board Columns with smooth horizontal scroll */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-x-auto pb-4 custom-scrollbar">
         {STAGES.map((stage) => {
           const stageApps = filteredApps.filter((app) => app.status === stage.id);
 
@@ -98,7 +98,7 @@ export const AtsKanbanBoard: React.FC = () => {
                 <span className={`px-2.5 py-1 rounded-lg text-xs font-bold border ${stage.color} ${stage.border}`}>
                   {stage.title}
                 </span>
-                <span className="text-xs font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-bold text-slate-300 bg-slate-800 px-2.5 py-0.5 rounded-full">
                   {stageApps.length}
                 </span>
               </div>
@@ -106,7 +106,7 @@ export const AtsKanbanBoard: React.FC = () => {
               {/* Column Cards */}
               <div className="space-y-3 flex-1">
                 {stageApps.length === 0 ? (
-                  <div className="p-4 text-center border border-dashed border-slate-800/60 rounded-xl text-[11px] text-slate-500">
+                  <div className="p-6 text-center border border-dashed border-slate-800/80 rounded-xl text-xs text-slate-400">
                     No candidates in this stage
                   </div>
                 ) : (
@@ -124,7 +124,7 @@ export const AtsKanbanBoard: React.FC = () => {
                           </h4>
                           <p className="text-[11px] font-medium text-slate-400 line-clamp-1">{app.jobTitle}</p>
                         </div>
-                        <div className="w-6 h-6 rounded-md bg-indigo-600/20 text-indigo-300 font-bold text-[10px] flex items-center justify-center">
+                        <div className="w-6 h-6 rounded-md bg-indigo-600/20 text-indigo-300 font-bold text-[10px] flex items-center justify-center flex-shrink-0">
                           {app.candidateName[0]}
                         </div>
                       </div>
@@ -132,16 +132,16 @@ export const AtsKanbanBoard: React.FC = () => {
                       {/* Skills Tags */}
                       <div className="flex flex-wrap gap-1 mb-3">
                         {app.skills.slice(0, 3).map((s, i) => (
-                          <span key={i} className="px-1.5 py-0.5 rounded text-[9px] bg-slate-800 text-slate-300">
+                          <span key={i} className="px-1.5 py-0.5 rounded text-[9px] bg-slate-800 text-slate-200 border border-slate-700/60">
                             {s}
                           </span>
                         ))}
                       </div>
 
                       {/* Applied Date & Quick Stage Change */}
-                      <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-slate-800/50">
+                      <div className="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-800/50">
                         <span>Applied: {app.appliedDate}</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                       </div>
                     </div>
                   ))
@@ -155,9 +155,13 @@ export const AtsKanbanBoard: React.FC = () => {
 
       {/* Candidate Inspector Modal */}
       {activeCandidateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
-          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in"
+        >
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] sm:max-h-[88vh] flex flex-col">
+
             <div className="p-6 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-slate-100">{activeCandidateModal.candidateName}</h3>
@@ -165,48 +169,49 @@ export const AtsKanbanBoard: React.FC = () => {
               </div>
               <button
                 onClick={() => setActiveCandidateModal(null)}
-                className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800"
+                className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors"
+                aria-label="Close candidate modal"
               >
                 ✕
               </button>
             </div>
 
             <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-1">
-              
+
               {/* Candidate Info */}
-              <div className="grid grid-cols-2 gap-4 text-xs bg-slate-950 p-4 rounded-xl border border-slate-800">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-slate-950 p-4 rounded-xl border border-slate-800">
                 <div>
-                  <span className="text-slate-500 block">Email:</span>
+                  <span className="text-slate-400 block font-medium">Email:</span>
                   <span className="font-semibold text-slate-200">{activeCandidateModal.candidateEmail}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Phone:</span>
+                  <span className="text-slate-400 block font-medium">Phone:</span>
                   <span className="font-semibold text-slate-200">{activeCandidateModal.candidatePhone}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Resume File:</span>
+                  <span className="text-slate-400 block font-medium">Resume File:</span>
                   <span className="font-semibold text-indigo-300 flex items-center gap-1">
-                    <FileText className="w-3.5 h-3.5" />
+                    <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                     {activeCandidateModal.resumeName}
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Applied Date:</span>
+                  <span className="text-slate-400 block font-medium">Applied Date:</span>
                   <span className="font-semibold text-slate-200">{activeCandidateModal.appliedDate}</span>
                 </div>
               </div>
 
               {/* Cover Letter */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Cover Letter</h4>
-                <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-300 whitespace-pre-wrap leading-relaxed">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Cover Letter</h4>
+                <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 whitespace-pre-wrap leading-relaxed">
                   {activeCandidateModal.coverLetter}
                 </div>
               </div>
 
               {/* Stage Transition Selector */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Update Stage</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Update Stage</h4>
                 <div className="flex flex-wrap gap-2">
                   {STAGES.map((s) => (
                     <button
@@ -215,11 +220,10 @@ export const AtsKanbanBoard: React.FC = () => {
                         updateApplicationStatus(activeCandidateModal.id, s.id);
                         setActiveCandidateModal((prev) => (prev ? { ...prev, status: s.id } : null));
                       }}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-                        activeCandidateModal.status === s.id
+                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${activeCandidateModal.status === s.id
                           ? `${s.color} ${s.border} ring-2 ring-indigo-500/40`
-                          : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-slate-200'
-                      }`}
+                          : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white'
+                        }`}
                     >
                       {s.title}
                     </button>
@@ -230,23 +234,25 @@ export const AtsKanbanBoard: React.FC = () => {
               {/* Recruiter Notes & Interview Scheduler */}
               <div className="space-y-3 pt-2">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Schedule Interview Date / Time</label>
+                  <label htmlFor="interview-date-input" className="block text-xs font-semibold text-slate-300 mb-1">Schedule Interview Date / Time</label>
                   <input
+                    id="interview-date-input"
                     type="text"
                     value={interviewTime}
                     onChange={(e) => setInterviewTime(e.target.value)}
                     placeholder="e.g. 2026-09-05 at 14:00 EST"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Recruiter Notes</label>
+                  <label htmlFor="recruiter-notes-input" className="block text-xs font-semibold text-slate-300 mb-1">Recruiter Notes</label>
                   <textarea
+                    id="recruiter-notes-input"
                     rows={3}
                     value={editingNotes}
                     onChange={(e) => setEditingNotes(e.target.value)}
                     placeholder="Add feedback, interview observations, or rating notes..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -262,7 +268,7 @@ export const AtsKanbanBoard: React.FC = () => {
               </button>
               <button
                 onClick={handleSaveNotes}
-                className="px-5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md"
+                className="px-5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md min-h-[36px]"
               >
                 Save Changes
               </button>

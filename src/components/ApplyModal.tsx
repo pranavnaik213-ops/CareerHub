@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone } from 'lucide-react';
+import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 interface ApplyModalProps {
   job: Job | null;
@@ -11,23 +12,119 @@ interface ApplyModalProps {
 }
 
 export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
-  const { candidateProfile, applyForJob } = useJobContext();
+  const { candidateProfile, applyForJob, showToast } = useJobContext();
+  
+  const [candidateName, setCandidateName] = useState(candidateProfile.name);
+  const [candidateEmail, setCandidateEmail] = useState(candidateProfile.email);
+  const [candidatePhone, setCandidatePhone] = useState(candidateProfile.phone);
   const [coverLetter, setCoverLetter] = useState(
-    `Dear Hiring Manager at ${job?.company || 'Company'},\n\nI am excited to submit my application for the ${job?.title || 'position'}. With my background in ${candidateProfile.skills.slice(0, 3).join(', ')}, I am confident I can make an immediate impact on your engineering and product goals.\n\nThank you for considering my application.\n\nBest regards,\n${candidateProfile.name}`
+    `Dear Hiring Team at ${job?.company || 'Company'},\n\nI am thrilled to submit my candidacy for the ${job?.title || 'position'}. With my experience in ${candidateProfile.skills.slice(0, 3).join(', ')}, I am confident in delivering high impact across your engineering workflows.\n\nThank you for reviewing my application.\n\nBest regards,\n${candidateProfile.name}`
   );
   const [customResume, setCustomResume] = useState(candidateProfile.resumeName);
+  const [authorized, setAuthorized] = useState(true);
+  
+  // Validation error states
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Spam / Bot Protection
+  const [honeypotValue, setHoneypotValue] = useState(''); // Invisible to real users
+  const formOpenedTimestamp = useRef<number>(Date.now());
+  const lastSubmitAttempt = useRef<number>(0);
+
+  useEffect(() => {
+    if (job) {
+      formOpenedTimestamp.current = Date.now();
+      trackEvent('job_apply_initiated', {
+        jobId: job.id,
+        title: job.title,
+        company: job.company,
+      });
+    }
+  }, [job]);
 
   if (!job) return null;
 
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    // Name validation
+    if (!candidateName.trim() || candidateName.trim().length < 2) {
+      newErrors.name = 'Full name must be at least 2 characters long.';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!candidateEmail.trim() || !emailRegex.test(candidateEmail.trim())) {
+      newErrors.email = 'Please provide a valid email address (e.g. name@domain.com).';
+    }
+
+    // Phone validation
+    const digitsOnly = candidatePhone.replace(/\D/g, '');
+    if (!candidatePhone.trim() || digitsOnly.length < 7) {
+      newErrors.phone = 'Please enter a valid phone number (at least 7 digits).';
+    }
+
+    // Cover letter validation
+    if (!coverLetter.trim() || coverLetter.trim().length < 25) {
+      newErrors.coverLetter = 'Cover letter must be at least 25 characters long.';
+    } else if (coverLetter.length > 3000) {
+      newErrors.coverLetter = 'Cover letter cannot exceed 3,000 characters.';
+    }
+
+    // Authorization checkbox
+    if (!authorized) {
+      newErrors.authorized = 'You must certify that your application details are accurate.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1. Bot Honeypot Check: If the hidden honeypot input contains any text, it was filled by a spam bot
+    if (honeypotValue.trim().length > 0) {
+      // eslint-disable-next-line no-console
+      console.warn('[Security] Bot submission caught by honeypot.');
+      showToast('Automated bot submission detected.', 'error');
+      onClose();
+      return;
+    }
+
+    // 2. Speed Bot Check: Real humans cannot read and submit this form in under 1.2 seconds
+    const elapsedMs = Date.now() - formOpenedTimestamp.current;
+    if (elapsedMs < 1200) {
+      showToast('Submission too fast. Please take a moment to review your application.', 'error');
+      return;
+    }
+
+    // 3. Rate-Limiting Cooldown Check: Prevent double-click spamming
+    const now = Date.now();
+    if (now - lastSubmitAttempt.current < 3000) {
+      showToast('Please wait a moment before resubmitting.', 'info');
+      return;
+    }
+    lastSubmitAttempt.current = now;
+
+    // 4. Form Validation
+    if (!validateForm()) {
+      showToast('Please fix the errors in the form before submitting.', 'error');
+      return;
+    }
+
     setIsSubmitting(true);
 
     setTimeout(() => {
       const success = applyForJob(job.id, coverLetter, customResume);
       setIsSubmitting(false);
       if (success) {
+        trackEvent('job_apply_submitted', {
+          jobId: job.id,
+          title: job.title,
+          company: job.company,
+        });
         onClose();
       }
     }, 600);
@@ -35,68 +132,151 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
 
   const handleSimulateResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setCustomResume(e.target.files[0].name);
+      const file = e.target.files[0];
+      const validExtensions = ['.pdf', '.docx', '.doc'];
+      const fileExt = '.' + file.name.split('.').pop()?.toLowerCase();
+
+      if (!validExtensions.includes(fileExt)) {
+        showToast('Invalid file format. Please upload a PDF or Word document (.pdf, .docx).', 'error');
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('File size exceeds the 5MB maximum limit.', 'error');
+        return;
+      }
+
+      setCustomResume(file.name);
+      showToast(`Attached resume: ${file.name}`, 'success');
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-apply-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in"
+    >
+      <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] sm:max-h-[88vh] flex flex-col">
         
         {/* Header */}
         <div className="p-6 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-slate-100">Apply for Position</h2>
+            <h2 id="modal-apply-title" className="text-lg font-bold text-slate-100">Apply for Position</h2>
             <p className="text-xs text-indigo-400 font-semibold">{job.title} • {job.company}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/60 transition-colors"
+            className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/60 hover:bg-slate-800 transition-colors"
+            aria-label="Close application modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-1">
+        <form onSubmit={handleSubmit} noValidate className="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-1">
           
-          {/* Pre-filled Candidate Contact Info */}
-          <div className="bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Candidate Information</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="flex items-center gap-2 text-slate-200">
-                <User className="w-3.5 h-3.5 text-indigo-400" />
-                <span className="font-semibold">{candidateProfile.name}</span>
+          {/* Honeypot Anti-Spam Field (Completely hidden from human visitors) */}
+          <div className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none" aria-hidden="true">
+            <label htmlFor="user_website_hp">Do not fill this field if you are human</label>
+            <input
+              type="text"
+              id="user_website_hp"
+              name="user_website_hp"
+              value={honeypotValue}
+              onChange={(e) => setHoneypotValue(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
+          {/* Candidate Contact Information */}
+          <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">Candidate Information</h3>
+              <span className="text-[10px] text-slate-400">Editable for this application</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Full Name *</label>
+                <div className="relative">
+                  <User className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <input
+                    type="text"
+                    value={candidateName}
+                    onChange={(e) => {
+                      setCandidateName(e.target.value);
+                      if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
+                    }}
+                    className={`w-full bg-slate-900 border ${
+                      errors.name ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                    } rounded-xl pl-9 pr-3 py-2 text-xs text-slate-100 outline-none`}
+                    placeholder="Jane Doe"
+                  />
+                </div>
+                {errors.name && <p className="text-[11px] text-rose-400 mt-1">{errors.name}</p>}
               </div>
-              <div className="flex items-center gap-2 text-slate-200">
-                <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                <span>{candidateProfile.email}</span>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
+                <div className="relative">
+                  <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <input
+                    type="email"
+                    value={candidateEmail}
+                    onChange={(e) => {
+                      setCandidateEmail(e.target.value);
+                      if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
+                    }}
+                    className={`w-full bg-slate-900 border ${
+                      errors.email ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                    } rounded-xl pl-9 pr-3 py-2 text-xs text-slate-100 outline-none`}
+                    placeholder="jane@example.com"
+                  />
+                </div>
+                {errors.email && <p className="text-[11px] text-rose-400 mt-1">{errors.email}</p>}
               </div>
-              <div className="flex items-center gap-2 text-slate-200">
-                <Phone className="w-3.5 h-3.5 text-indigo-400" />
-                <span>{candidateProfile.phone}</span>
-              </div>
-              <div className="text-slate-400 truncate">
-                <span>Headline: {candidateProfile.headline}</span>
+
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Phone Number *</label>
+                <div className="relative">
+                  <Phone className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <input
+                    type="tel"
+                    value={candidatePhone}
+                    onChange={(e) => {
+                      setCandidatePhone(e.target.value);
+                      if (errors.phone) setErrors((prev) => ({ ...prev, phone: '' }));
+                    }}
+                    className={`w-full bg-slate-900 border ${
+                      errors.phone ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                    } rounded-xl pl-9 pr-3 py-2 text-xs text-slate-100 outline-none`}
+                    placeholder="+1 (555) 234-5678"
+                  />
+                </div>
+                {errors.phone && <p className="text-[11px] text-rose-400 mt-1">{errors.phone}</p>}
               </div>
             </div>
           </div>
 
           {/* Resume Upload Section */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-2">Resume / CV</label>
+            <label className="block text-xs font-semibold text-slate-300 mb-2">Resume / CV Document *</label>
             <div className="flex items-center justify-between p-4 bg-slate-950/80 border border-slate-800 rounded-2xl">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20">
+                <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20" aria-hidden="true">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-slate-200">{customResume}</p>
-                  <p className="text-[10px] text-slate-400">PDF, DOCX up to 5MB</p>
+                  <p className="text-[11px] text-slate-400">PDF, DOCX up to 5MB</p>
                 </div>
               </div>
-              <label className="cursor-pointer px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5">
-                <Upload className="w-3.5 h-3.5" />
+              <label className="cursor-pointer px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5 min-h-[38px]">
+                <Upload className="w-3.5 h-3.5" aria-hidden="true" />
                 Replace File
                 <input
                   type="file"
@@ -111,55 +291,75 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
           {/* Cover Letter */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className="text-xs font-semibold text-slate-300">Cover Letter</label>
-              <span className="text-[10px] text-slate-500">{coverLetter.length} chars</span>
+              <label className="text-xs font-semibold text-slate-300">Cover Letter *</label>
+              <span className={`text-[11px] ${coverLetter.length > 2500 ? 'text-amber-400 font-bold' : 'text-slate-400'}`}>
+                {coverLetter.length} / 3000 chars
+              </span>
             </div>
             <textarea
-              required
               rows={5}
               value={coverLetter}
-              onChange={(e) => setCoverLetter(e.target.value)}
-              className="w-full bg-slate-950/90 border border-slate-800 focus:border-indigo-500 rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-500 outline-none leading-relaxed"
+              onChange={(e) => {
+                setCoverLetter(e.target.value);
+                if (errors.coverLetter) setErrors((prev) => ({ ...prev, coverLetter: '' }));
+              }}
+              className={`w-full bg-slate-950 border ${
+                errors.coverLetter ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+              } rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-400 outline-none leading-relaxed`}
+              placeholder="Introduce yourself and explain why you're a great fit for this position..."
             />
+            {errors.coverLetter && <p className="text-[11px] text-rose-400 mt-1">{errors.coverLetter}</p>}
           </div>
 
           {/* Screening Checkbox */}
-          <div className="flex items-start gap-3 p-3 bg-indigo-950/20 border border-indigo-500/20 rounded-xl">
-            <input
-              type="checkbox"
-              required
-              defaultChecked
-              id="authorize"
-              className="mt-0.5 accent-indigo-500 rounded"
-            />
-            <label htmlFor="authorize" className="text-xs text-slate-300 leading-snug">
-              I certify that the provided experience details and contact information are accurate and complete.
-            </label>
+          <div className="space-y-1">
+            <div className="flex items-start gap-3 p-3.5 bg-indigo-950/20 border border-indigo-500/20 rounded-xl">
+              <input
+                type="checkbox"
+                id="authorize"
+                checked={authorized}
+                onChange={(e) => {
+                  setAuthorized(e.target.checked);
+                  if (errors.authorized) setErrors((prev) => ({ ...prev, authorized: '' }));
+                }}
+                className="mt-0.5 accent-indigo-500 h-4 w-4 rounded cursor-pointer"
+              />
+              <label htmlFor="authorize" className="text-xs text-slate-300 leading-snug cursor-pointer">
+                I certify that the provided experience details, contact information, and resume are truthful and accurate.
+              </label>
+            </div>
+            {errors.authorized && <p className="text-[11px] text-rose-400 pl-1">{errors.authorized}</p>}
           </div>
 
           {/* Submit CTA */}
-          <div className="pt-3 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 hover:brightness-110 transition-all disabled:opacity-50"
-            >
-              {isSubmitting ? (
-                <span>Submitting Application...</span>
-              ) : (
-                <>
-                  <Send className="w-3.5 h-3.5" />
-                  Submit Application
-                </>
-              )}
-            </button>
+          <div className="pt-3 flex items-center justify-between gap-3 border-t border-slate-800/80">
+            <span className="text-[11px] text-slate-400 hidden sm:block">
+              🛡️ Protected with bot & spam verification
+            </span>
+
+            <div className="flex items-center gap-3 ml-auto">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 hover:brightness-110 transition-all disabled:opacity-50 min-h-[40px]"
+              >
+                {isSubmitting ? (
+                  <span>Submitting Application...</span>
+                ) : (
+                  <>
+                    <Send className="w-3.5 h-3.5" aria-hidden="true" />
+                    Submit Application
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
         </form>

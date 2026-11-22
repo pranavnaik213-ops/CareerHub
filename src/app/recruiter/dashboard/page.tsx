@@ -29,19 +29,19 @@ export default function RecruiterDashboard() {
     <div className="space-y-8">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-violet-950/40 to-slate-900 border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-violet-950/40 to-slate-900 border border-slate-800 shadow-xl">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg" aria-hidden="true">
             <Building2 className="w-8 h-8" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-white">Recruiter Control Hub</h1>
+              <h1 className="text-2xl font-bold text-white tracking-tight">Recruiter Control Hub</h1>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-violet-500/20 text-violet-300 border border-violet-500/30">
                 Employer Edition
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-300 mt-1">
               Publish job listings, track applicant pipelines, and manage candidate hiring stages.
             </p>
           </div>
@@ -49,9 +49,9 @@ export default function RecruiterDashboard() {
 
         <Link
           href="/recruiter/post-job"
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/20 hover:brightness-110 transition-all"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/20 hover:brightness-110 transition-all min-h-[40px]"
         >
-          <PlusCircle className="w-4 h-4" />
+          <PlusCircle className="w-4 h-4" aria-hidden="true" />
           Post New Job
         </Link>
       </div>
@@ -60,29 +60,29 @@ export default function RecruiterDashboard() {
       <RecruiterMetrics />
 
       {/* Navigation Tabs */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
         <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
           <button
             onClick={() => setActiveTab('ats')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
               activeTab === 'ats'
                 ? 'bg-violet-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
-            <Kanban className="w-3.5 h-3.5" />
+            <Kanban className="w-3.5 h-3.5" aria-hidden="true" />
             ATS Candidate Pipeline ({applications.length})
           </button>
 
           <button
             onClick={() => setActiveTab('postings')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
               activeTab === 'postings'
                 ? 'bg-violet-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
-            <Table className="w-3.5 h-3.5" />
+            <Table className="w-3.5 h-3.5" aria-hidden="true" />
             Manage Job Listings ({jobs.length})
           </button>
         </div>
@@ -95,22 +95,22 @@ export default function RecruiterDashboard() {
       {activeTab === 'postings' && (
         <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl space-y-6">
           
-          <div className="flex justify-between items-center pb-4 border-b border-slate-800">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div>
               <h2 className="text-base font-bold text-slate-100">Job Listings Directory</h2>
               <p className="text-xs text-slate-400">Manage status visibility or remove inactive job postings.</p>
             </div>
             <Link
               href="/recruiter/post-job"
-              className="px-4 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white shadow-md"
+              className="px-4 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white shadow-md w-fit min-h-[36px] flex items-center justify-center"
             >
               + Create Posting
             </Link>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <table className="w-full text-left text-xs text-slate-200">
+              <thead className="bg-slate-950 text-slate-300 uppercase text-[10px] tracking-wider border-b border-slate-800">
                 <tr>
                   <th className="p-4">Position Title & Company</th>
                   <th className="p-4">Work Setup</th>
@@ -130,7 +130,11 @@ export default function RecruiterDashboard() {
                       
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-lg">
+                          <div
+                            role="img"
+                            aria-label={`${job.company} logo`}
+                            className="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-lg flex-shrink-0"
+                          >
                             {job.logo}
                           </div>
                           <div>
@@ -141,7 +145,7 @@ export default function RecruiterDashboard() {
                       </td>
 
                       <td className="p-4">
-                        <span className="px-2.5 py-1 rounded-md text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                        <span className="px-2.5 py-1 rounded-md text-[10px] font-semibold bg-slate-800 text-slate-200 border border-slate-700">
                           {job.locationType} • {job.jobType}
                         </span>
                       </td>
@@ -179,10 +183,11 @@ export default function RecruiterDashboard() {
                       <td className="p-4 text-right">
                         <button
                           onClick={() => deleteJob(job.id)}
-                          className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition-colors"
+                          className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition-colors min-w-[36px] min-h-[36px]"
                           title="Delete Job"
+                          aria-label={`Delete job ${job.title}`}
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4" aria-hidden="true" />
                         </button>
                       </td>
 

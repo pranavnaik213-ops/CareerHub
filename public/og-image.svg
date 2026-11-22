@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#090d16"/>
+  <circle cx="1050" cy="150" r="300" fill="#6366f1" fill-opacity="0.12" filter="blur(80px)"/>
+  <circle cx="150" cy="500" r="250" fill="#8b5cf6" fill-opacity="0.1" filter="blur(80px)"/>
+  <g transform="translate(100, 100)">
+    <rect width="64" height="64" rx="16" fill="url(#brand-grad)"/>
+    <text x="32" y="42" font-size="28" text-anchor="middle" fill="#ffffff">💼</text>
+    <text x="84" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">CareerHub</text>
+  </g>
+  <text x="100" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="800" fill="#ffffff" letter-spacing="-0.03em">
+    Find Your Dream Career or
+  </text>
+  <text x="100" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="800" fill="url(#text-grad)" letter-spacing="-0.03em">
+    Hire Top Tech Talent
+  </text>
+  <text x="100" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#94a3b8" max-width="800">
+    Centralized candidate ATS tracking, verified tech jobs, and direct recruiter pipelines.
+  </text>
+  <g transform="translate(100, 480)">
+    <rect width="210" height="48" rx="12" fill="#1e293b" stroke="#334155"/>
+    <text x="105" y="30" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#f8fafc" text-anchor="middle">🎯 ATS Kanban Board</text>
+    <rect x="230" width="220" height="48" rx="12" fill="#1e293b" stroke="#334155"/>
+    <text x="340" y="30" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#f8fafc" text-anchor="middle">🛡️ 100% Verified Jobs</text>
+    <rect x="470" width="230" height="48" rx="12" fill="#1e293b" stroke="#334155"/>
+    <text x="585" y="30" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#34d399" text-anchor="middle">⚡ &lt; 48hr Response</text>
+  </g>
+  <defs>
+    <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+</svg>

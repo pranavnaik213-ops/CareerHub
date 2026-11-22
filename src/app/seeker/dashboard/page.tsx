@@ -19,8 +19,10 @@ import {
   Plus,
   Trash2,
   Save,
-  Briefcase
+  Briefcase,
+  AlertCircle
 } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 const APPLICATION_STAGES: ApplicationStatus[] = [
   'Submitted',
@@ -36,6 +38,7 @@ export default function CandidateDashboard() {
     candidateProfile,
     savedJobIds,
     updateCandidateProfile,
+    showToast,
     role
   } = useJobContext();
 
@@ -43,16 +46,52 @@ export default function CandidateDashboard() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [applyJobModal, setApplyJobModal] = useState<Job | null>(null);
 
-  // Profile Form State
+  // Profile Form State & Validation
   const [profileForm, setProfileForm] = useState(candidateProfile);
   const [newSkill, setNewSkill] = useState('');
+  const [profileErrors, setProfileErrors] = useState<Record<string, string>>({});
 
   const savedJobs = jobs.filter((j) => savedJobIds.includes(j.id));
   const candidateApps = applications.filter((app) => app.candidateEmail === candidateProfile.email);
 
+  const validateProfile = (): boolean => {
+    const errs: Record<string, string> = {};
+
+    if (!profileForm.name.trim() || profileForm.name.trim().length < 2) {
+      errs.name = 'Full name must be at least 2 characters.';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!profileForm.email.trim() || !emailRegex.test(profileForm.email.trim())) {
+      errs.email = 'Please provide a valid email address.';
+    }
+
+    const digitsOnly = profileForm.phone.replace(/\D/g, '');
+    if (!profileForm.phone.trim() || digitsOnly.length < 7) {
+      errs.phone = 'Please enter a valid phone number with area code.';
+    }
+
+    if (!profileForm.headline.trim()) {
+      errs.headline = 'Please specify your professional headline.';
+    }
+
+    setProfileErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateProfile()) {
+      showToast('Please fix the errors in your profile.', 'error');
+      return;
+    }
+
     updateCandidateProfile(profileForm);
+    trackEvent('profile_updated', {
+      name: profileForm.name,
+      headline: profileForm.headline,
+      skillsCount: profileForm.skills.length,
+    });
   };
 
   const handleAddSkill = () => {
@@ -75,16 +114,16 @@ export default function CandidateDashboard() {
     <div className="space-y-8">
       
       {/* Dashboard Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 shadow-xl">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-extrabold text-2xl flex items-center justify-center shadow-lg">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-extrabold text-2xl flex items-center justify-center shadow-lg" aria-hidden="true">
             {candidateProfile.name.split(' ').map((n) => n[0]).join('')}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">{candidateProfile.name}</h1>
+            <h1 className="text-2xl font-bold text-white tracking-tight">{candidateProfile.name}</h1>
             <p className="text-xs text-indigo-300 font-medium">{candidateProfile.headline}</p>
-            <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-slate-500" />
+            <p className="text-xs text-slate-300 mt-1 flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
               {candidateProfile.location}
             </p>
           </div>
@@ -94,37 +133,37 @@ export default function CandidateDashboard() {
         <div className="flex items-center bg-slate-950 p-1.5 rounded-2xl border border-slate-800 w-full sm:w-auto">
           <button
             onClick={() => setActiveTab('applications')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
               activeTab === 'applications'
                 ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
-            <Briefcase className="w-3.5 h-3.5" />
+            <Briefcase className="w-3.5 h-3.5" aria-hidden="true" />
             My Applications ({candidateApps.length})
           </button>
 
           <button
             onClick={() => setActiveTab('saved')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
               activeTab === 'saved'
                 ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
-            <Bookmark className="w-3.5 h-3.5" />
+            <Bookmark className="w-3.5 h-3.5" aria-hidden="true" />
             Saved Jobs ({savedJobs.length})
           </button>
 
           <button
             onClick={() => setActiveTab('profile')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
               activeTab === 'profile'
                 ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-300 hover:text-white'
             }`}
           >
-            <User className="w-3.5 h-3.5" />
+            <User className="w-3.5 h-3.5" aria-hidden="true" />
             Resume & Profile
           </button>
         </div>
@@ -140,9 +179,9 @@ export default function CandidateDashboard() {
 
           {candidateApps.length === 0 ? (
             <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-12 text-center space-y-3">
-              <Clock className="w-10 h-10 text-slate-500 mx-auto" />
-              <h3 className="text-sm font-bold text-slate-300">No active job applications yet</h3>
-              <p className="text-xs text-slate-500">Explore open positions on the home directory and submit your resume.</p>
+              <Clock className="w-10 h-10 text-slate-400 mx-auto" aria-hidden="true" />
+              <h3 className="text-sm font-bold text-slate-200">No active job applications yet</h3>
+              <p className="text-xs text-slate-400">Explore open positions on the home directory and submit your resume.</p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -167,8 +206,8 @@ export default function CandidateDashboard() {
                         <span
                           className={`px-3 py-1 rounded-xl text-xs font-bold border ${
                             isRejected
-                              ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
-                              : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                              ? 'bg-rose-500/10 text-rose-300 border-rose-500/30'
+                              : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
                           }`}
                         >
                           {app.status}
@@ -190,18 +229,18 @@ export default function CandidateDashboard() {
                                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all ${
                                     isCompleted
                                       ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/30'
-                                      : 'bg-slate-950 border-slate-800 text-slate-600'
+                                      : 'bg-slate-950 border-slate-800 text-slate-500'
                                   }`}
                                 >
-                                  {isCompleted ? <CheckCircle2 className="w-4 h-4" /> : idx + 1}
+                                  {isCompleted ? <CheckCircle2 className="w-4 h-4" aria-hidden="true" /> : idx + 1}
                                 </div>
                                 <span
                                   className={`text-[11px] font-medium leading-tight ${
                                     isCurrent
                                       ? 'text-indigo-300 font-bold'
                                       : isCompleted
-                                      ? 'text-slate-300'
-                                      : 'text-slate-600'
+                                      ? 'text-slate-200'
+                                      : 'text-slate-500'
                                   }`}
                                 >
                                   {stageTitle}
@@ -212,7 +251,7 @@ export default function CandidateDashboard() {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-3 rounded-xl bg-rose-950/20 border border-rose-500/20 text-xs text-rose-300">
+                      <div className="p-3.5 rounded-xl bg-rose-950/20 border border-rose-500/20 text-xs text-rose-300">
                         This application has been closed by the recruiter.
                       </div>
                     )}
@@ -220,7 +259,7 @@ export default function CandidateDashboard() {
                     {/* Recruiter Interview Details or Notes */}
                     {app.interviewDate && (
                       <div className="p-4 rounded-xl bg-violet-950/30 border border-violet-500/30 flex items-center gap-3">
-                        <Calendar className="w-5 h-5 text-violet-400 flex-shrink-0" />
+                        <Calendar className="w-5 h-5 text-violet-400 flex-shrink-0" aria-hidden="true" />
                         <div>
                           <p className="text-xs font-bold text-violet-200">Interview Scheduled!</p>
                           <p className="text-xs text-violet-300">{app.interviewDate}</p>
@@ -253,9 +292,9 @@ export default function CandidateDashboard() {
 
           {savedJobs.length === 0 ? (
             <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-12 text-center space-y-3">
-              <Bookmark className="w-10 h-10 text-slate-500 mx-auto" />
-              <h3 className="text-sm font-bold text-slate-300">No saved jobs yet</h3>
-              <p className="text-xs text-slate-500">Click the bookmark icon on any job card to save it for later review.</p>
+              <Bookmark className="w-10 h-10 text-slate-400 mx-auto" aria-hidden="true" />
+              <h3 className="text-sm font-bold text-slate-200">No saved jobs yet</h3>
+              <p className="text-xs text-slate-400">Click the bookmark icon on any job card to save it for later review.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -274,18 +313,18 @@ export default function CandidateDashboard() {
 
       {/* TAB 3: RESUME & PROFILE EDITOR */}
       {activeTab === 'profile' && (
-        <form onSubmit={handleSaveProfile} className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 backdrop-blur-xl space-y-8">
+        <form onSubmit={handleSaveProfile} noValidate className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl space-y-8">
           
-          <div className="flex justify-between items-center pb-4 border-b border-slate-800">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div>
               <h2 className="text-lg font-bold text-slate-100">Candidate Profile & Resume</h2>
               <p className="text-xs text-slate-400">Keep your information up-to-date for fast 1-click job applications.</p>
             </div>
             <button
               type="submit"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/25 hover:brightness-110 transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/25 hover:brightness-110 transition-all min-h-[40px] w-fit"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-4 h-4" aria-hidden="true" />
               Save Profile Changes
             </button>
           </div>
@@ -293,51 +332,83 @@ export default function CandidateDashboard() {
           {/* Basic Details */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Full Name</label>
+              <label htmlFor="profile-name" className="block text-xs font-semibold text-slate-300 mb-2">Full Name *</label>
               <input
+                id="profile-name"
                 type="text"
                 value={profileForm.name}
-                onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200"
+                onChange={(e) => {
+                  setProfileForm({ ...profileForm, name: e.target.value });
+                  if (profileErrors.name) setProfileErrors((prev) => ({ ...prev, name: '' }));
+                }}
+                className={`w-full bg-slate-950 border ${
+                  profileErrors.name ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                } rounded-xl px-4 py-2.5 text-xs text-slate-200 outline-none`}
               />
+              {profileErrors.name && <p className="text-[11px] text-rose-400 mt-1">{profileErrors.name}</p>}
             </div>
+
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Email Address</label>
+              <label htmlFor="profile-email" className="block text-xs font-semibold text-slate-300 mb-2">Email Address *</label>
               <input
+                id="profile-email"
                 type="email"
                 value={profileForm.email}
-                onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200"
+                onChange={(e) => {
+                  setProfileForm({ ...profileForm, email: e.target.value });
+                  if (profileErrors.email) setProfileErrors((prev) => ({ ...prev, email: '' }));
+                }}
+                className={`w-full bg-slate-950 border ${
+                  profileErrors.email ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                } rounded-xl px-4 py-2.5 text-xs text-slate-200 outline-none`}
               />
+              {profileErrors.email && <p className="text-[11px] text-rose-400 mt-1">{profileErrors.email}</p>}
             </div>
+
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Phone Number</label>
+              <label htmlFor="profile-phone" className="block text-xs font-semibold text-slate-300 mb-2">Phone Number *</label>
               <input
-                type="text"
+                id="profile-phone"
+                type="tel"
                 value={profileForm.phone}
-                onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200"
+                onChange={(e) => {
+                  setProfileForm({ ...profileForm, phone: e.target.value });
+                  if (profileErrors.phone) setProfileErrors((prev) => ({ ...prev, phone: '' }));
+                }}
+                className={`w-full bg-slate-950 border ${
+                  profileErrors.phone ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                } rounded-xl px-4 py-2.5 text-xs text-slate-200 outline-none`}
               />
+              {profileErrors.phone && <p className="text-[11px] text-rose-400 mt-1">{profileErrors.phone}</p>}
             </div>
+
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Headline / Job Title</label>
+              <label htmlFor="profile-headline" className="block text-xs font-semibold text-slate-300 mb-2">Headline / Job Title *</label>
               <input
+                id="profile-headline"
                 type="text"
                 value={profileForm.headline}
-                onChange={(e) => setProfileForm({ ...profileForm, headline: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200"
+                onChange={(e) => {
+                  setProfileForm({ ...profileForm, headline: e.target.value });
+                  if (profileErrors.headline) setProfileErrors((prev) => ({ ...prev, headline: '' }));
+                }}
+                className={`w-full bg-slate-950 border ${
+                  profileErrors.headline ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                } rounded-xl px-4 py-2.5 text-xs text-slate-200 outline-none`}
               />
+              {profileErrors.headline && <p className="text-[11px] text-rose-400 mt-1">{profileErrors.headline}</p>}
             </div>
           </div>
 
           {/* Bio */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-2">Professional Summary</label>
+            <label htmlFor="profile-bio" className="block text-xs font-semibold text-slate-300 mb-2">Professional Summary</label>
             <textarea
+              id="profile-bio"
               rows={3}
               value={profileForm.bio}
               onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-200 leading-relaxed"
+              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-200 leading-relaxed outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -350,14 +421,20 @@ export default function CandidateDashboard() {
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
                 placeholder="Add a new skill (e.g. Next.js, Python)..."
-                className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-200"
+                className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddSkill();
+                  }
+                }}
               />
               <button
                 type="button"
                 onClick={handleAddSkill}
-                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1"
+                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1 transition-colors"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3.5 h-3.5" aria-hidden="true" />
                 Add Skill
               </button>
             </div>
@@ -372,6 +449,7 @@ export default function CandidateDashboard() {
                     type="button"
                     onClick={() => handleRemoveSkill(skill)}
                     className="text-slate-400 hover:text-rose-400"
+                    aria-label={`Remove skill ${skill}`}
                   >
                     ×
                   </button>
@@ -383,7 +461,7 @@ export default function CandidateDashboard() {
           {/* Resume Upload Simulation */}
           <div className="p-6 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20">
+              <div className="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20" aria-hidden="true">
                 <FileText className="w-6 h-6" />
               </div>
               <div>
