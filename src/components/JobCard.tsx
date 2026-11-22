@@ -216,17 +216,38 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
           <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={handleSelectJob}
-              className="px-3 py-1.5 rounded-md text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              className="px-2.5 py-1.5 rounded-md text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              title="View full role details and AI match evaluation"
             >
               Details
             </button>
-            <button
-              onClick={() => onApplyClick(job)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors"
-            >
-              Apply
-              <ArrowRight className="w-3 h-3" aria-hidden="true" />
-            </button>
+            {job.applyUrl ? (
+              <a
+                href={job.applyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent('job_apply_external_clicked', {
+                    jobId: job.id,
+                    company: job.company,
+                    title: job.title,
+                  });
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors shadow-sm"
+                title={`Apply directly on official ${job.company} Careers Portal`}
+              >
+                <span>Apply on {job.company}</span>
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+            ) : (
+              <button
+                onClick={() => onApplyClick(job)}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors"
+              >
+                Apply
+                <ArrowRight className="w-3 h-3" aria-hidden="true" />
+              </button>
+            )}
           </div>
         )}
 

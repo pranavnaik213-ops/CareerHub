@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert, ShieldCheck, Sparkles } from 'lucide-react';
+import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
 import { trackEvent } from '@/lib/analytics';
 import { generateTailoredCoverLetter } from '@/lib/aiAgent';
@@ -189,6 +189,37 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} noValidate className="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-1">
+          
+          {/* Direct Official Website Application Alert */}
+          {job.applyUrl && (
+            <div className="p-3.5 bg-blue-950/30 border border-blue-800/50 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+              <div>
+                <p className="font-semibold text-white flex items-center gap-1.5">
+                  <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+                  Official Company Careers Portal
+                </p>
+                <p className="text-[11px] text-slate-300 mt-0.5">
+                  Prefer to apply directly? You can submit your resume on {job.company}&apos;s verified careers site.
+                </p>
+              </div>
+              <a
+                href={job.applyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent('job_apply_external_clicked', {
+                    jobId: job.id,
+                    company: job.company,
+                    title: job.title,
+                  });
+                }}
+                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors flex items-center gap-1.5 whitespace-nowrap"
+              >
+                <span>Apply on {job.company}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          )}
           
           {/* Honeypot Anti-Spam Field (Completely hidden from human visitors) */}
           <div className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none" aria-hidden="true">

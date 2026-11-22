@@ -134,6 +134,37 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
 
         {/* Scrollable Body Content */}
         <div className="p-6 sm:p-7 space-y-6 overflow-y-auto custom-scrollbar flex-1 text-slate-300">
+
+          {/* Direct Official Company Career Portal Banner */}
+          {job.applyUrl && (
+            <div className="p-3.5 bg-blue-950/25 border border-blue-800/40 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+              <div>
+                <p className="font-semibold text-white flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-blue-400" aria-hidden="true" />
+                  Verified Official Company Career Portal
+                </p>
+                <p className="text-[11px] text-slate-300 mt-0.5">
+                  This opening is directly hosted on {job.company}&apos;s verified corporate careers infrastructure.
+                </p>
+              </div>
+              <a
+                href={job.applyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent('job_apply_external_clicked', {
+                    jobId: job.id,
+                    company: job.company,
+                    title: job.title,
+                  });
+                }}
+                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors flex items-center gap-1.5 whitespace-nowrap"
+              >
+                <span>Apply on {job.company}</span>
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+            </div>
+          )}
           
           {/* AI Match Breakdown Card */}
           <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2.5">
@@ -261,9 +292,16 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
                   href={job.applyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => {
+                    trackEvent('job_apply_external_clicked', {
+                      jobId: job.id,
+                      company: job.company,
+                      title: job.title,
+                    });
+                  }}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors"
                 >
-                  <span>Apply on Official Portal</span>
+                  <span>Apply on Official {job.company} Site</span>
                   <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
               )}
@@ -275,7 +313,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
                 }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
               >
-                Quick Apply
+                1-Click ATS Fast-Track
                 <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </div>

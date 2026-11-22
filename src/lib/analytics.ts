@@ -14,6 +14,7 @@ export type AnalyticsEventName =
   | 'job_card_viewed'
   | 'job_apply_initiated'
   | 'job_apply_submitted'
+  | 'job_apply_external_clicked'
   | 'job_saved'
   | 'job_unsaved'
   | 'job_posted'
