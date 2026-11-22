@@ -4,10 +4,42 @@ import React, { useState, useRef } from 'react';
 import { useJobContext } from '@/context/JobContext';
 import { useRouter } from 'next/navigation';
 import { LocationType, JobType, ExperienceLevel } from '@/types';
-import { Briefcase, Building, MapPin, DollarSign, Plus, X, ArrowLeft, Send, Sparkles, AlertCircle, ShieldAlert } from 'lucide-react';
+import {
+  Briefcase,
+  Building,
+  MapPin,
+  DollarSign,
+  Plus,
+  X,
+  ArrowLeft,
+  Send,
+  Sparkles,
+  AlertCircle,
+  ShieldAlert,
+  Zap,
+  Cpu,
+  ShieldCheck,
+  Layers,
+  Globe,
+  Building2,
+  Flame,
+  Code2,
+  Gem
+} from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
-const LOGO_ICONS = ['⚡', '🚀', '✨', '🧠', '🛡️', '🌐', '💼', '🎯', '🔥', '💎'];
+const BRAND_ICONS = [
+  { id: 'zap', name: 'Fast Energy', Icon: Zap, gradient: 'from-amber-500 to-orange-500' },
+  { id: 'sparkles', name: 'Innovation', Icon: Sparkles, gradient: 'from-indigo-500 to-violet-500' },
+  { id: 'cpu', name: 'AI & Data', Icon: Cpu, gradient: 'from-cyan-500 to-blue-500' },
+  { id: 'shield', name: 'Security', Icon: ShieldCheck, gradient: 'from-emerald-500 to-teal-500' },
+  { id: 'layers', name: 'Full Stack', Icon: Layers, gradient: 'from-purple-500 to-pink-500' },
+  { id: 'globe', name: 'Distributed', Icon: Globe, gradient: 'from-blue-500 to-indigo-500' },
+  { id: 'building', name: 'Enterprise', Icon: Building2, gradient: 'from-slate-600 to-slate-800' },
+  { id: 'flame', name: 'High Growth', Icon: Flame, gradient: 'from-rose-500 to-red-500' },
+  { id: 'code', name: 'Engineering', Icon: Code2, gradient: 'from-violet-500 to-indigo-500' },
+  { id: 'gem', name: 'Premium Tier', Icon: Gem, gradient: 'from-teal-500 to-emerald-500' },
+];
 
 export default function PostJobPage() {
   const { postJob, setRole, showToast } = useJobContext();
@@ -15,7 +47,7 @@ export default function PostJobPage() {
 
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('CareerHub Recruiting Partner');
-  const [logo, setLogo] = useState('⚡');
+  const [selectedIconId, setSelectedIconId] = useState('zap');
   const [location, setLocation] = useState('Remote (Worldwide)');
   const [locationType, setLocationType] = useState<LocationType>('Remote');
   const [jobType, setJobType] = useState<JobType>('Full-time');
@@ -125,7 +157,7 @@ export default function PostJobPage() {
     postJob({
       title: title.trim(),
       company: company.trim(),
-      logo,
+      logo: selectedIconId,
       location: location.trim(),
       locationType,
       jobType,
@@ -191,7 +223,7 @@ export default function PostJobPage() {
             <h1 className="text-2xl font-bold text-white tracking-tight">Publish New Job Listing</h1>
             <p className="text-xs text-slate-400 mt-1">Fill out the role parameters to broadcast your opening to verified candidates.</p>
           </div>
-          <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 w-fit">
+          <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 w-fit">
             Active Recruiter Session
           </span>
         </div>
@@ -237,23 +269,28 @@ export default function PostJobPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Company Avatar Icon</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-2">Company Brand Icon</label>
               <div className="flex flex-wrap gap-2">
-                {LOGO_ICONS.map((icon) => (
-                  <button
-                    key={icon}
-                    type="button"
-                    onClick={() => setLogo(icon)}
-                    className={`w-9 h-9 rounded-xl text-lg flex items-center justify-center border transition-all ${
-                      logo === icon
-                        ? 'bg-indigo-600/30 border-indigo-500 text-white shadow-md'
-                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
-                    }`}
-                    aria-label={`Select icon ${icon}`}
-                  >
-                    {icon}
-                  </button>
-                ))}
+                {BRAND_ICONS.map((brand) => {
+                  const Icon = brand.Icon;
+                  const isSelected = selectedIconId === brand.id;
+                  return (
+                    <button
+                      key={brand.id}
+                      type="button"
+                      onClick={() => setSelectedIconId(brand.id)}
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all ${
+                        isSelected
+                          ? 'bg-indigo-600/30 border-indigo-500 text-white shadow-md shadow-indigo-600/25 ring-2 ring-indigo-500/40'
+                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                      }`}
+                      title={brand.name}
+                      aria-label={`Select ${brand.name} icon`}
+                    >
+                      <Icon className="w-4 h-4" aria-hidden="true" />
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>

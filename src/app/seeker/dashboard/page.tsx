@@ -5,6 +5,7 @@ import { useJobContext } from '@/context/JobContext';
 import { JobCard } from '@/components/JobCard';
 import { JobDetailsModal } from '@/components/JobDetailsModal';
 import { ApplyModal } from '@/components/ApplyModal';
+import { CompanyLogo } from '@/components/CompanyLogo';
 import { ApplicationStatus, Job } from '@/types';
 import {
   User,
@@ -192,13 +193,16 @@ export default function CandidateDashboard() {
                 return (
                   <div
                     key={app.id}
-                    className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-xl shadow-lg space-y-6"
+                    className="bento-card p-6 rounded-2xl space-y-6"
                   >
                     {/* App Header */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800/80">
-                      <div>
-                        <h3 className="text-base font-bold text-white">{app.jobTitle}</h3>
-                        <p className="text-xs font-semibold text-indigo-400">{app.companyName}</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
+                      <div className="flex items-center gap-3.5">
+                        <CompanyLogo companyName={app.companyName} size="md" />
+                        <div>
+                          <h3 className="text-base font-bold text-white font-heading">{app.jobTitle}</h3>
+                          <p className="text-xs font-semibold text-indigo-400">{app.companyName}</p>
+                        </div>
                       </div>
 
                       <div className="flex items-center gap-3">

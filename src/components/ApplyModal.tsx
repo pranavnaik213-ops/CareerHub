@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert } from 'lucide-react';
+import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { CompanyLogo } from '@/components/CompanyLogo';
 import { trackEvent } from '@/lib/analytics';
 
 interface ApplyModalProps {
@@ -162,9 +163,12 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
         
         {/* Header */}
         <div className="p-6 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
-          <div>
-            <h2 id="modal-apply-title" className="text-lg font-bold text-slate-100">Apply for Position</h2>
-            <p className="text-xs text-indigo-400 font-semibold">{job.title} • {job.company}</p>
+          <div className="flex items-center gap-3.5">
+            <CompanyLogo companyName={job.company} size="md" />
+            <div>
+              <h2 id="modal-apply-title" className="text-base sm:text-lg font-bold text-slate-100 font-heading">Apply for Position</h2>
+              <p className="text-xs text-indigo-400 font-semibold">{job.title} • {job.company}</p>
+            </div>
           </div>
           <button
             onClick={onClose}
@@ -333,8 +337,9 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
 
           {/* Submit CTA */}
           <div className="pt-3 flex items-center justify-between gap-3 border-t border-slate-800/80">
-            <span className="text-[11px] text-slate-400 hidden sm:block">
-              🛡️ Protected with bot & spam verification
+            <span className="text-[11px] text-slate-400 hidden sm:flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 inline" aria-hidden="true" />
+              Protected with bot & spam verification
             </span>
 
             <div className="flex items-center gap-3 ml-auto">

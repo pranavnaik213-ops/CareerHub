@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
+              <span className="text-xl font-bold font-heading tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
                 CareerHub
               </span>
               <span className="px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 rounded-md">

@@ -18,8 +18,10 @@ import {
   CheckCircle2,
   XCircle,
   Eye,
-  Building2
+  Building2,
+  Sparkles
 } from 'lucide-react';
+import { CompanyLogo } from '@/components/CompanyLogo';
 
 export default function RecruiterDashboard() {
   const { jobs, updateJobStatus, deleteJob, applications } = useJobContext();
@@ -42,7 +44,7 @@ export default function RecruiterDashboard() {
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-1">
-              Publish job listings, track applicant pipelines, and manage candidate hiring stages.
+              Publish verified job openings, manage candidates across ATS Kanban stages, and track response metrics.
             </p>
           </div>
         </div>
@@ -130,13 +132,7 @@ export default function RecruiterDashboard() {
                       
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div
-                            role="img"
-                            aria-label={`${job.company} logo`}
-                            className="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-lg flex-shrink-0"
-                          >
-                            {job.logo}
-                          </div>
+                          <CompanyLogo company={job.company} size="sm" />
                           <div>
                             <p className="font-bold text-slate-100">{job.title}</p>
                             <p className="text-[11px] text-slate-400">{job.company}</p>

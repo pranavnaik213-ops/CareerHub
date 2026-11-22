@@ -4,6 +4,7 @@ import React from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
 import { X, MapPin, DollarSign, Clock, Users, Building, CheckCircle2, Bookmark, ArrowRight, ShieldCheck, Gift } from 'lucide-react';
+import { CompanyLogo } from '@/components/CompanyLogo';
 import { trackEvent } from '@/lib/analytics';
 
 interface JobDetailsModalProps {
@@ -36,7 +37,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-job-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in overflow-y-auto"
     >
       <div className="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] sm:max-h-[88vh] flex flex-col my-auto">
         
@@ -45,26 +46,23 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
           
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/60 hover:bg-slate-800 transition-colors"
+            className="absolute top-6 right-6 p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/60 hover:bg-slate-800 transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
             aria-label="Close job details modal"
           >
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
 
           <div className="flex items-start gap-4">
-            <div
-              role="img"
-              aria-label={`${job.company} company avatar`}
-              className="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-3xl shadow-lg flex-shrink-0"
-            >
-              {job.logo}
-            </div>
+            <CompanyLogo company={job.company} size="lg" />
 
             <div className="pr-8">
               <h2 id="modal-job-title" className="text-xl sm:text-2xl font-bold text-slate-100 mb-1">{job.title}</h2>
               
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-300">
-                <span className="font-semibold text-indigo-400">{job.company}</span>
+                <span className="font-semibold text-indigo-400 flex items-center gap-1">
+                  {job.company}
+                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />
+                </span>
                 <span aria-hidden="true">•</span>
                 <span className="flex items-center gap-1 text-slate-300">
                   <MapPin className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
@@ -176,7 +174,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
         <div className="p-6 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
           <button
             onClick={handleToggleSave}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all min-h-[40px] ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all min-h-[44px] ${
               isSaved
                 ? 'bg-indigo-600/20 border-indigo-500/50 text-indigo-300'
                 : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white'
@@ -188,7 +186,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
           </button>
 
           {hasApplied ? (
-            <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+            <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold min-h-[44px]">
               <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
               Applied ({appliedApp?.status})
             </div>
@@ -198,7 +196,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
                 onClose();
                 onApplyClick(job);
               }}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition-all min-h-[40px]"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition-all min-h-[44px]"
             >
               Apply for Position
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
