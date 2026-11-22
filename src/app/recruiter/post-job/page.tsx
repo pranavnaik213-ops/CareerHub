@@ -53,8 +53,8 @@ export default function PostJobPage() {
   const [jobType, setJobType] = useState<JobType>('Full-time');
   const [experienceLevel, setExperienceLevel] = useState<ExperienceLevel>('Senior');
   const [category, setCategory] = useState('Engineering');
-  const [salaryMin, setSalaryMin] = useState(120000);
-  const [salaryMax, setSalaryMax] = useState(160000);
+  const [salaryMin, setSalaryMin] = useState(3500000);
+  const [salaryMax, setSalaryMax] = useState(6000000);
   const [description, setDescription] = useState('');
   const [featured, setFeatured] = useState(true);
 
@@ -105,8 +105,8 @@ export default function PostJobPage() {
       errs.location = 'Please specify a job location.';
     }
 
-    if (salaryMin < 10000) {
-      errs.salaryMin = 'Minimum salary must be at least $10,000.';
+    if (salaryMin < 300000) {
+      errs.salaryMin = 'Minimum salary must be at least ₹3,00,000 (₹3 LPA).';
     }
 
     if (salaryMax < salaryMin) {
@@ -165,7 +165,7 @@ export default function PostJobPage() {
       category,
       salaryMin: Number(salaryMin),
       salaryMax: Number(salaryMax),
-      currency: '$',
+      currency: '₹',
       description: description.trim(),
       responsibilities,
       requirements,
@@ -367,11 +367,11 @@ export default function PostJobPage() {
             </div>
 
             <div>
-              <label htmlFor="salary-min-input" className="block text-xs font-semibold text-slate-300 mb-2">Min Salary (USD / yr) *</label>
+              <label htmlFor="salary-min-input" className="block text-xs font-semibold text-slate-300 mb-2">Min Salary (₹ INR / yr) *</label>
               <input
                 id="salary-min-input"
                 type="number"
-                step="5000"
+                step="100000"
                 value={salaryMin}
                 onChange={(e) => {
                   setSalaryMin(Number(e.target.value));
@@ -385,11 +385,11 @@ export default function PostJobPage() {
             </div>
 
             <div>
-              <label htmlFor="salary-max-input" className="block text-xs font-semibold text-slate-300 mb-2">Max Salary (USD / yr) *</label>
+              <label htmlFor="salary-max-input" className="block text-xs font-semibold text-slate-300 mb-2">Max Salary (₹ INR / yr) *</label>
               <input
                 id="salary-max-input"
                 type="number"
-                step="5000"
+                step="100000"
                 value={salaryMax}
                 onChange={(e) => {
                   setSalaryMax(Number(e.target.value));

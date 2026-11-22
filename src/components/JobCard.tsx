@@ -3,8 +3,10 @@
 import React from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { MapPin, DollarSign, Clock, Bookmark, ArrowRight, Users, CheckCircle2, ShieldCheck, ExternalLink } from 'lucide-react';
+import { MapPin, Clock, Bookmark, ArrowRight, Users, CheckCircle2, ShieldCheck, ExternalLink, Sparkles, Share2 } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
+import { formatSalaryRange } from '@/lib/formatSalary';
+import { calculateJobMatch } from '@/lib/aiAgent';
 import { trackEvent } from '@/lib/analytics';
 
 interface JobCardProps {
@@ -19,9 +21,8 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
   const hasApplied = applications.some((app) => app.jobId === job.id && app.candidateEmail === candidateProfile.email);
   const appliedApp = applications.find((app) => app.jobId === job.id && app.candidateEmail === candidateProfile.email);
 
-  const formatSalary = (val: number) => {
-    return val >= 1000 ? `$${Math.round(val / 1000)}k` : `$${val}`;
-  };
+  // Compute AI Match Score for this job based on candidate profile
+  const matchResult = calculateJobMatch(job, candidateProfile);
 
   const getLocationBadge = (type: string) => {
     switch (type) {
@@ -50,6 +51,13 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
       jobId: job.id,
       title: job.title,
     });
+  };
+
+  const handleShareToLinkedIn = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const shareUrl = encodeURIComponent(job.applyUrl || window.location.href);
+    const title = encodeURIComponent(`Hiring: ${job.title} at ${job.company} (${formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)})`);
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}&summary=${title}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -84,16 +92,25 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
             </div>
           </div>
 
-          {/* Action Icons: Bookmark + External Career Page Link */}
+          {/* Action Icons: Bookmark + LinkedIn Share + External Link */}
           <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={handleShareToLinkedIn}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-[#0A66C2] hover:bg-slate-800 transition-colors"
+              title="Share job to LinkedIn"
+              aria-label="Share job to LinkedIn"
+            >
+              <Share2 className="w-4 h-4" aria-hidden="true" />
+            </button>
+
             {job.applyUrl && (
               <a
                 href={job.applyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
-                title={`Visit ${job.company} Careers Page`}
-                aria-label={`Visit ${job.company} Careers Page`}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
+                title={`Visit ${job.company} Careers Portal`}
+                aria-label={`Visit ${job.company} Careers Portal`}
               >
                 <ExternalLink className="w-4 h-4" aria-hidden="true" />
               </a>
@@ -101,7 +118,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
 
             <button
               onClick={handleToggleSave}
-              className={`p-2 rounded-lg border transition-colors ${
+              className={`p-1.5 rounded-lg border transition-colors ${
                 isSaved
                   ? 'bg-blue-950/40 border-blue-800/60 text-blue-400'
                   : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
@@ -115,7 +132,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
 
         </div>
 
-        {/* Work Setup & Level Chips */}
+        {/* Badges: Setup, Level, AI Match & Agent Tag */}
         <div className="flex flex-wrap items-center gap-1.5 mb-3">
           <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${getLocationBadge(job.locationType)}`}>
             {job.locationType}
@@ -128,12 +145,30 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
           <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">
             {job.experienceLevel}
           </span>
+
+          {/* AI Match Score Pill */}
+          <span className={`px-2 py-0.5 rounded text-[11px] font-semibold border flex items-center gap-1 ${
+            matchResult.score >= 85
+              ? 'bg-emerald-950/40 text-emerald-300 border-emerald-800/50'
+              : 'bg-blue-950/40 text-blue-300 border-blue-800/50'
+          }`}>
+            <Sparkles className="w-3 h-3 text-emerald-400" />
+            {matchResult.score}% AI Match
+          </span>
+
+          {job.isAgentIngested && (
+            <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400 border border-slate-700/60">
+              ● AI Agent Synced
+            </span>
+          )}
         </div>
 
-        {/* Salary Range */}
-        <div className="flex items-center gap-1 text-xs font-semibold text-emerald-400 mb-3 bg-emerald-950/20 px-2.5 py-1 rounded-md border border-emerald-900/40 w-fit">
-          <DollarSign className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>{formatSalary(job.salaryMin)} - {formatSalary(job.salaryMax)} <span className="text-[11px] font-normal text-emerald-400/80">/ year</span></span>
+        {/* Salary Range in Rupees (₹) */}
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400 mb-3 bg-emerald-950/20 px-2.5 py-1 rounded-md border border-emerald-900/40 w-fit">
+          <span className="font-bold text-sm">
+            {formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)}
+          </span>
+          <span className="text-[11px] font-normal text-emerald-400/80">/ year</span>
         </div>
 
         {/* Short description */}

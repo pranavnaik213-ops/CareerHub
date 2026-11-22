@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useJobContext } from '@/context/JobContext';
 import { Application, ApplicationStatus } from '@/types';
-import { User, FileText, Calendar, CheckCircle2, XCircle, Clock, Search, MessageSquare, ChevronRight, Filter, ShieldCheck, Mail, Phone, Tag } from 'lucide-react';
+import { User, FileText, Calendar, CheckCircle2, XCircle, Clock, Search, MessageSquare, ChevronRight, Filter, ShieldCheck, Mail, Phone, Tag, Sparkles, Bot, ExternalLink } from 'lucide-react';
 
 const STAGES: { id: ApplicationStatus; title: string; color: string; border: string; dotColor: string }[] = [
   { id: 'Submitted', title: 'Submitted', color: 'bg-blue-950/40 text-blue-300', border: 'border-blue-800/50', dotColor: 'bg-blue-400' },
@@ -122,17 +122,38 @@ export const AtsKanbanBoard: React.FC = () => {
                       {/* Candidate Avatar & Job Title */}
                       <div className="flex justify-between items-start mb-2.5">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-extrabold text-xs flex items-center justify-center flex-shrink-0 shadow-sm">
+                          <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
                             {app.candidateName.split(' ').map((n) => n[0]).join('')}
                           </div>
                           <div>
-                            <h4 className="text-xs font-bold text-slate-100 group-hover:text-indigo-300 transition-colors">
+                            <h4 className="text-xs font-semibold text-slate-100 group-hover:text-blue-300 transition-colors">
                               {app.candidateName}
                             </h4>
                             <p className="text-[11px] font-medium text-slate-400 line-clamp-1">{app.jobTitle}</p>
                           </div>
                         </div>
+
+                        {app.linkedInVerified && (
+                          <span className="w-4 h-4 rounded-sm bg-[#0A66C2] text-white flex items-center justify-center font-bold text-[9px] flex-shrink-0" title="Verified LinkedIn Profile">
+                            in
+                          </span>
+                        )}
                       </div>
+
+                      {/* AI Screening Score Pill */}
+                      {app.aiScreeningScore !== undefined && (
+                        <div className="mb-2.5 flex items-center justify-between text-[11px] bg-slate-950 px-2 py-1 rounded border border-slate-800">
+                          <span className="text-slate-400 flex items-center gap-1 text-[10px]">
+                            <Sparkles className="w-3 h-3 text-blue-400" />
+                            AI Screen:
+                          </span>
+                          <span className={`font-semibold text-[10px] ${
+                            app.aiScreeningScore >= 80 ? 'text-emerald-400' : 'text-blue-400'
+                          }`}>
+                            {app.aiScreeningScore}% Match
+                          </span>
+                        </div>
+                      )}
 
                       {/* Skills Tags */}
                       <div className="flex flex-wrap gap-1 mb-3">
@@ -219,6 +240,43 @@ export const AtsKanbanBoard: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {/* AI Screener Intelligence Box */}
+              {activeCandidateModal.aiScreeningScore !== undefined && (
+                <div className="p-4 bg-slate-950 border border-blue-900/40 rounded-xl space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-blue-300 flex items-center gap-1.5">
+                      <Bot className="w-4 h-4 text-blue-400" />
+                      AI ATS Candidate Screening & Matching
+                    </span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/60 text-blue-300 border border-blue-800/60">
+                      {activeCandidateModal.aiScreeningScore}/100 Match Score
+                    </span>
+                  </div>
+                  {activeCandidateModal.aiEvaluationNotes && (
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      {activeCandidateModal.aiEvaluationNotes}
+                    </p>
+                  )}
+                  {activeCandidateModal.aiRecommendedStage && (
+                    <div className="pt-1 flex items-center gap-2 text-[11px]">
+                      <span className="text-slate-400">Agent Recommendation:</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (activeCandidateModal.aiRecommendedStage) {
+                            updateApplicationStatus(activeCandidateModal.id, activeCandidateModal.aiRecommendedStage);
+                            setActiveCandidateModal((prev) => (prev ? { ...prev, status: activeCandidateModal.aiRecommendedStage! } : null));
+                          }
+                        }}
+                        className="px-2 py-0.5 rounded bg-emerald-950/40 text-emerald-300 border border-emerald-800/50 hover:bg-emerald-900/40 transition-colors font-semibold"
+                      >
+                        Advance to {activeCandidateModal.aiRecommendedStage}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Cover Letter */}
               <div>

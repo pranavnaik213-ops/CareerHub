@@ -5,6 +5,7 @@ import { useJobContext } from '@/context/JobContext';
 import { Search, RotateCcw, SlidersHorizontal, Check, X } from 'lucide-react';
 import { LocationType, JobType, ExperienceLevel } from '@/types';
 import { trackEvent } from '@/lib/analytics';
+import { formatSalaryLakhs } from '@/lib/formatSalary';
 
 const CATEGORIES = ['All', 'Engineering', 'Design', 'Data & AI', 'Infrastructure'];
 const LOCATION_TYPES: (LocationType | 'All')[] = ['All', 'Remote', 'Hybrid', 'On-site'];
@@ -182,23 +183,23 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
           <div className="flex justify-between items-center mb-1.5">
             <label htmlFor="filter-salary-min" className="text-xs font-medium text-slate-300">Min Annual Salary</label>
             <span className="text-xs font-semibold text-emerald-400">
-              {filters.salaryMin > 0 ? `$${Math.round(filters.salaryMin / 1000)}k+` : 'Any'}
+              {filters.salaryMin > 0 ? `${formatSalaryLakhs(filters.salaryMin)}+` : 'Any'}
             </span>
           </div>
           <input
             id="filter-salary-min"
             type="range"
             min="0"
-            max="250000"
-            step="10000"
+            max="10000000"
+            step="500000"
             value={filters.salaryMin}
             onChange={(e) => setFilters((prev) => ({ ...prev, salaryMin: Number(e.target.value) }))}
             className="w-full accent-blue-500 bg-slate-800 rounded-lg cursor-pointer h-2"
           />
           <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-            <span>$0</span>
-            <span>$125k</span>
-            <span>$250k+</span>
+            <span>₹0</span>
+            <span>₹50 LPA</span>
+            <span>₹1 Cr+</span>
           </div>
         </div>
 

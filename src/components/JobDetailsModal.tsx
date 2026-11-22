@@ -3,8 +3,10 @@
 import React from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, MapPin, DollarSign, Clock, Users, CheckCircle2, Bookmark, ArrowRight, ShieldCheck, Gift, ExternalLink, Globe } from 'lucide-react';
+import { X, MapPin, Users, CheckCircle2, Bookmark, ArrowRight, ShieldCheck, Gift, ExternalLink, Globe, Sparkles, Share2 } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
+import { formatSalaryRange } from '@/lib/formatSalary';
+import { calculateJobMatch } from '@/lib/aiAgent';
 import { trackEvent } from '@/lib/analytics';
 
 interface JobDetailsModalProps {
@@ -22,7 +24,8 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
   const hasApplied = applications.some((app) => app.jobId === job.id && app.candidateEmail === candidateProfile.email);
   const appliedApp = applications.find((app) => app.jobId === job.id && app.candidateEmail === candidateProfile.email);
 
-  const formatSalary = (val: number) => (val >= 1000 ? `$${Math.round(val / 1000)}k` : `$${val}`);
+  // Compute AI Match score
+  const matchResult = calculateJobMatch(job, candidateProfile);
 
   const handleToggleSave = () => {
     toggleSaveJob(job.id);
@@ -30,6 +33,12 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
       jobId: job.id,
       title: job.title,
     });
+  };
+
+  const handleShareToLinkedIn = () => {
+    const shareUrl = encodeURIComponent(job.applyUrl || window.location.href);
+    const title = encodeURIComponent(`Hiring: ${job.title} at ${job.company} (${formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)})`);
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}&summary=${title}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -44,18 +53,28 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
         {/* Top Header Banner */}
         <div className="p-6 sm:p-7 bg-slate-900 border-b border-slate-800">
           
-          <button
-            onClick={onClose}
-            className="absolute top-5 right-5 p-2 text-slate-400 hover:text-white rounded-lg bg-slate-800/80 hover:bg-slate-800 transition-colors"
-            aria-label="Close job details modal"
-          >
-            <X className="w-5 h-5" aria-hidden="true" />
-          </button>
+          <div className="absolute top-5 right-5 flex items-center gap-2">
+            <button
+              onClick={handleShareToLinkedIn}
+              className="p-2 text-slate-400 hover:text-[#0A66C2] rounded-lg bg-slate-800/80 hover:bg-slate-800 transition-colors"
+              title="Share job to LinkedIn"
+              aria-label="Share job to LinkedIn"
+            >
+              <Share2 className="w-4 h-4" aria-hidden="true" />
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-800/80 hover:bg-slate-800 transition-colors"
+              aria-label="Close job details modal"
+            >
+              <X className="w-5 h-5" aria-hidden="true" />
+            </button>
+          </div>
 
           <div className="flex items-start gap-4">
             <CompanyLogo company={job.company} size="lg" />
 
-            <div className="pr-8">
+            <div className="pr-16">
               <h2 id="modal-job-title" className="text-xl sm:text-2xl font-bold text-slate-100 mb-1.5 font-heading">{job.title}</h2>
               
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-300">
@@ -69,8 +88,8 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
                   {job.location} ({job.locationType})
                 </span>
                 <span aria-hidden="true" className="text-slate-600">•</span>
-                <span className="text-emerald-400 font-semibold">
-                  {formatSalary(job.salaryMin)} - {formatSalary(job.salaryMax)} / yr
+                <span className="text-emerald-400 font-bold text-sm">
+                  {formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)} / yr
                 </span>
               </div>
 
@@ -101,6 +120,14 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
             <span className="px-2.5 py-0.5 rounded text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
               {job.category}
             </span>
+            <span className={`px-2.5 py-0.5 rounded text-xs font-semibold border flex items-center gap-1 ${
+              matchResult.score >= 85
+                ? 'bg-emerald-950/40 text-emerald-300 border-emerald-800/50'
+                : 'bg-blue-950/40 text-blue-300 border-blue-800/50'
+            }`}>
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+              {matchResult.score}% Profile Match
+            </span>
           </div>
 
         </div>
@@ -108,6 +135,30 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
         {/* Scrollable Body Content */}
         <div className="p-6 sm:p-7 space-y-6 overflow-y-auto custom-scrollbar flex-1 text-slate-300">
           
+          {/* AI Match Breakdown Card */}
+          <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-white flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-emerald-400" />
+                AI Agent Compatibility Evaluation
+              </span>
+              <span className="text-xs font-bold text-emerald-400">{matchResult.score}% Fit</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">{matchResult.summary}</p>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {matchResult.matchingSkills.map((s, i) => (
+                <span key={i} className="px-2 py-0.5 rounded text-[10px] bg-emerald-950/50 text-emerald-300 border border-emerald-800/50">
+                  ✓ {s}
+                </span>
+              ))}
+              {matchResult.missingSkills.map((s, i) => (
+                <span key={i} className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-400 border border-slate-700">
+                  + {s}
+                </span>
+              ))}
+            </div>
+          </div>
+
           {/* About Position */}
           <div>
             <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-2">About the Role</h3>

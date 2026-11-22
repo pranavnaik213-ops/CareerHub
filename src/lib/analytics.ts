@@ -20,7 +20,9 @@ export type AnalyticsEventName =
   | 'role_switched'
   | 'profile_updated'
   | 'cookie_consent_accepted'
-  | 'cookie_consent_declined';
+  | 'cookie_consent_declined'
+  | 'ai_agent_sync_triggered'
+  | 'linkedin_connected';
 
 export interface AnalyticsEvent {
   name: AnalyticsEventName;

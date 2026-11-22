@@ -8,15 +8,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'google',
     companyUrl: 'https://about.google',
     applyUrl: 'https://careers.google.com/jobs/results/?q=software%20engineer',
-    location: 'Sunnyvale, CA',
+    location: 'Bengaluru, KA, India',
     locationType: 'Hybrid',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Engineering',
-    salaryMin: 210000,
-    salaryMax: 315000,
-    currency: '$',
-    description: 'Join the Google Cloud core infrastructure team architecting planet-scale distributed storage and high-throughput query engines powering Spanner, Bigtable, and Google Cloud Storage. You will lead cross-functional technical strategy, resolve distributed concurrency bottlenecks, and mentor staff engineers across global cloud regions.',
+    salaryMin: 4800000,
+    salaryMax: 7800000,
+    currency: '₹',
+    description: 'Join the Google Cloud core infrastructure team in Bengaluru architecting planet-scale distributed storage and high-throughput query engines powering Spanner, Bigtable, and Google Cloud Storage. You will lead cross-functional technical strategy, resolve distributed concurrency bottlenecks, and mentor staff engineers across global cloud regions.',
     responsibilities: [
       'Architect and scale globally distributed storage clusters processing petabytes per second.',
       'Design consensus protocols and zero-downtime replication systems across multi-region data centers.',
@@ -26,20 +26,22 @@ export const INITIAL_JOBS: Job[] = [
     requirements: [
       '8+ years of professional software engineering experience in C++, Go, or Rust.',
       'Deep domain knowledge of distributed consensus (Raft, Paxos), LSM trees, and cloud RPC architectures.',
-      'Proven track record leading large-scale distributed infrastructure initiatives.',
-      'B.S., M.S., or Ph.D. in Computer Science or equivalent practical experience.'
+      'Proven track record leading large-scale distributed infrastructure initiatives in India / global hubs.',
+      'B.Tech, M.Tech, or Ph.D. in Computer Science or equivalent practical experience.'
     ],
     skills: ['Go', 'C++', 'Distributed Systems', 'Kubernetes', 'Spanner', 'gRPC', 'Linux'],
     benefits: [
-      'Comprehensive Medical, Dental, and Vision coverage with on-site wellness centers',
-      '401(k) retirement plan with 50% company match up to IRS limits',
+      'Comprehensive Medical, Dental, and Vision coverage for employee & family',
+      'Google Provident Fund (PF) and Gratuity matching program',
       'Annual equity grant (Google Class C GSUs) with quarterly vesting',
-      'Generous parental leave (up to 24 weeks) and hybrid remote flexibility'
+      'Flexible hybrid work policy with Bengaluru campus amenities'
     ],
     postedDate: '2026-08-28',
     status: 'Active',
-    applicantsCount: 38,
-    featured: true
+    applicantsCount: 42,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 10m ago by AI Agent'
   },
   {
     id: 'job-stripe-infra',
@@ -48,15 +50,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'stripe',
     companyUrl: 'https://stripe.com',
     applyUrl: 'https://stripe.com/jobs',
-    location: 'San Francisco, CA',
+    location: 'Remote, India',
     locationType: 'Remote',
     jobType: 'Full-time',
     experienceLevel: 'Lead / Executive',
     category: 'Engineering',
-    salaryMin: 195000,
-    salaryMax: 275000,
-    currency: '$',
-    description: 'Stripe powers payments for millions of businesses worldwide. In this role, you will lead the core ledger and payments routing infrastructure that moves hundreds of billions of dollars each year. You will design ultra-reliable event streaming pipelines, enforce strict idempotency guarantees, and harden APIs against regional network partitions.',
+    salaryMin: 4500000,
+    salaryMax: 7200000,
+    currency: '₹',
+    description: 'Stripe powers digital commerce for millions of global companies. In this role, you will lead the core ledger and payments routing infrastructure that moves hundreds of billions of dollars each year. You will design ultra-reliable event streaming pipelines, enforce strict idempotency guarantees, and harden APIs against network partitions.',
     responsibilities: [
       'Own mission-critical ledger pipelines with zero-tolerance for transaction loss or duplicate charging.',
       'Design event-driven stream processing architectures using Apache Kafka and distributed database shards.',
@@ -71,15 +73,17 @@ export const INITIAL_JOBS: Job[] = [
     ],
     skills: ['Java', 'Go', 'Ruby', 'Kafka', 'AWS', 'PostgreSQL', 'Redis', 'Distributed Systems'],
     benefits: [
-      'Competitive base compensation with liquid Stripe equity grants',
-      '100% remote flexibility across North America with regional hub access',
-      '$1,500 annual workspace setup stipend and monthly wellness credits',
-      'Comprehensive global healthcare and mental health benefits'
+      'Competitive INR base compensation with liquid Stripe equity grants',
+      '100% remote flexibility across India with home office setup allowance (₹1,25,000)',
+      'Comprehensive family health insurance and monthly wellness credits',
+      'Annual learning & development stipend (₹2,00,000)'
     ],
     postedDate: '2026-08-29',
     status: 'Active',
-    applicantsCount: 29,
-    featured: true
+    applicantsCount: 35,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 15m ago by AI Agent'
   },
   {
     id: 'job-microsoft-ai',
@@ -88,17 +92,17 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'microsoft',
     companyUrl: 'https://www.microsoft.com',
     applyUrl: 'https://careers.microsoft.com',
-    location: 'Redmond, WA',
+    location: 'Hyderabad, TS, India',
     locationType: 'Hybrid',
     jobType: 'Full-time',
     experienceLevel: 'Lead / Executive',
     category: 'Data & AI',
-    salaryMin: 190000,
-    salaryMax: 285000,
-    currency: '$',
-    description: 'Azure AI powers transformative generative AI services worldwide. As a Principal Engineer, you will build and optimize the hyperscale GPU clusters and inference orchestration systems that serve enterprise frontier models. You will work on kernel optimizations, model sharding, and latency reduction across global Azure regions.',
+    salaryMin: 4200000,
+    salaryMax: 6800000,
+    currency: '₹',
+    description: 'Microsoft India Development Center (IDC) builds foundational generative AI services powering Copilot and Azure globally. As a Principal Engineer in Hyderabad, you will design the hyperscale GPU clusters and inference orchestration systems that serve enterprise frontier models with low latency.',
     responsibilities: [
-      'Architect low-latency model inference pipelines across NVIDIA H100/B200 GPU clusters.',
+      'Architect low-latency model inference pipelines across NVIDIA H100 GPU clusters.',
       'Build distributed model cache and token-streaming layers for Azure OpenAI APIs.',
       'Optimize GPU memory bandwidth and networking using InfiniBand and Triton/CUDA kernels.',
       'Define SLA monitoring and capacity autoscaling policies for Tier-0 AI workloads.'
@@ -111,15 +115,17 @@ export const INITIAL_JOBS: Job[] = [
     ],
     skills: ['Python', 'C#', 'C++', 'Azure', 'CUDA', 'Triton', 'PyTorch', 'Distributed Systems'],
     benefits: [
-      'Robust healthcare package, HSA match, and family medical leave',
+      'Comprehensive family medical coverage with outpatient & maternity cover',
       'Microsoft Employee Stock Purchase Plan (ESPP) with 15% discount',
       'Annual performance bonus and equity refresher program',
-      'Flexible work schedule with hybrid Seattle campus amenities'
+      'Flexible work schedule with state-of-the-art Hyderabad campus amenities'
     ],
     postedDate: '2026-08-30',
     status: 'Active',
-    applicantsCount: 44,
-    featured: true
+    applicantsCount: 51,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 25m ago by AI Agent'
   },
   {
     id: 'job-meta-frontend',
@@ -128,15 +134,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'meta',
     companyUrl: 'https://about.meta.com',
     applyUrl: 'https://www.metacareers.com',
-    location: 'Menlo Park, CA',
+    location: 'Remote, India',
     locationType: 'Remote',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Engineering',
-    salaryMin: 175000,
-    salaryMax: 250000,
-    currency: '$',
-    description: 'Meta is looking for a Senior Frontend Engineer to build responsive, accessible web interfaces used by over 3 billion people across Instagram, Facebook, and Threads. You will pioneer next-generation React architectures, optimize critical rendering paths, and advance our web design system.',
+    salaryMin: 5500000,
+    salaryMax: 9500000,
+    currency: '₹',
+    description: 'Meta is hiring a Senior Frontend Engineer in India to build responsive, accessible web interfaces used by over 3 billion people across Instagram, Facebook, and Threads. You will pioneer next-generation React architectures, optimize critical rendering paths, and advance our web design system.',
     responsibilities: [
       'Build high-performance web components utilizing modern React Server Components and Relay.',
       'Profile client-side JavaScript execution, minimize Total Blocking Time, and optimize Core Web Vitals.',
@@ -152,14 +158,16 @@ export const INITIAL_JOBS: Job[] = [
     skills: ['React', 'TypeScript', 'GraphQL', 'Relay', 'Tailwind CSS', 'Web Vitals', 'JavaScript'],
     benefits: [
       'Industry-leading equity packages (Meta Class A Common Stock) with quarterly vesting',
-      'Full comprehensive health, vision, and dental insurance',
-      'Free meals and wellness stipend or remote equivalent allowance',
-      'Generous 30 days paid time off plus public holidays'
+      'Full comprehensive health, vision, and dental insurance for dependents',
+      'Remote work allowance and home office reimbursement',
+      '30 days paid time off plus national holidays'
     ],
     postedDate: '2026-08-27',
     status: 'Active',
-    applicantsCount: 52,
-    featured: true
+    applicantsCount: 68,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 30m ago by AI Agent'
   },
   {
     id: 'job-vercel-platform',
@@ -168,15 +176,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'vercel',
     companyUrl: 'https://vercel.com',
     applyUrl: 'https://vercel.com/careers',
-    location: 'San Francisco, CA',
+    location: 'Remote, India',
     locationType: 'Remote',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Engineering',
-    salaryMin: 170000,
-    salaryMax: 240000,
-    currency: '$',
-    description: 'Vercel is the creator of Next.js and the platform for frontend developers. We are hiring a Senior Platform Engineer to scale our serverless Edge network and Turbopack bundler infrastructure. You will work directly with open-source maintainers to make web builds and SSR faster for millions of developers.',
+    salaryMin: 3600000,
+    salaryMax: 6200000,
+    currency: '₹',
+    description: 'Vercel is the creator of Next.js and the platform for frontend developers. We are hiring a Senior Platform Engineer in India to scale our serverless Edge network and Turbopack bundler infrastructure. You will work directly with open-source maintainers to make web builds and SSR faster for millions of developers.',
     responsibilities: [
       'Develop low-latency serverless routing and streaming infrastructure for the Vercel Edge Network.',
       'Contribute to Next.js open-source features, Turbopack incremental bundling, and build pipelines.',
@@ -194,12 +202,14 @@ export const INITIAL_JOBS: Job[] = [
       'Work from anywhere: 100% remote-first company culture with global hubs',
       'Generous equity options with extended exercise windows',
       'Unlimited Paid Time Off (PTO) with mandatory minimums',
-      '$2,000 annual home office budget and $1,500 learning stipend'
+      '₹1,50,000 annual home office budget and ₹1,20,000 learning stipend'
     ],
     postedDate: '2026-08-31',
     status: 'Active',
-    applicantsCount: 34,
-    featured: true
+    applicantsCount: 46,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 40m ago by AI Agent'
   },
   {
     id: 'job-aws-sre',
@@ -208,15 +218,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'amazon',
     companyUrl: 'https://aws.amazon.com',
     applyUrl: 'https://www.amazon.jobs',
-    location: 'Seattle, WA',
+    location: 'Bengaluru, KA, India',
     locationType: 'Hybrid',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Infrastructure',
-    salaryMin: 165000,
-    salaryMax: 235000,
-    currency: '$',
-    description: 'Join the AWS Cloud Infrastructure group managing foundational container services, VPC network topologies, and automated multi-region deployment fabrics. You will write Infrastructure-as-Code, engineer self-healing cloud pipelines, and guarantee five-nines reliability for Fortune 500 customers.',
+    salaryMin: 3500000,
+    salaryMax: 5800000,
+    currency: '₹',
+    description: 'Join the AWS Cloud Infrastructure group in Bengaluru managing foundational container services, VPC network topologies, and automated multi-region deployment fabrics. You will write Infrastructure-as-Code, engineer self-healing cloud pipelines, and guarantee five-nines reliability.',
     responsibilities: [
       'Automate cloud infrastructure provisioning using Terraform, AWS CDK, and CloudFormation.',
       'Manage multi-tenant Kubernetes (EKS) clusters operating across high-security compliance zones.',
@@ -232,14 +242,16 @@ export const INITIAL_JOBS: Job[] = [
     skills: ['AWS', 'Kubernetes', 'Terraform', 'Docker', 'Python', 'Prometheus', 'CI/CD', 'Linux'],
     benefits: [
       'Amazon Restricted Stock Units (RSUs) with comprehensive compensation structure',
-      'Full healthcare coverage including medical, dental, and vision insurance',
+      'Full healthcare coverage including medical, dental, and vision insurance for parents',
       'Parental leave benefits and childcare assistance programs',
-      'Relocation assistance package available for Seattle, WA campus'
+      'Relocation assistance package available for Bengaluru campus'
     ],
     postedDate: '2026-08-26',
     status: 'Active',
-    applicantsCount: 27,
-    featured: false
+    applicantsCount: 39,
+    featured: false,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 1h ago by AI Agent'
   },
   {
     id: 'job-openai-systems',
@@ -248,14 +260,14 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'openai',
     companyUrl: 'https://openai.com',
     applyUrl: 'https://openai.com/careers',
-    location: 'San Francisco, CA',
-    locationType: 'On-site',
+    location: 'Remote (India / Global)',
+    locationType: 'Remote',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Data & AI',
-    salaryMin: 230000,
-    salaryMax: 370000,
-    currency: '$',
+    salaryMin: 7500000,
+    salaryMax: 14000000,
+    currency: '₹',
     description: 'OpenAI is dedicated to ensuring artificial general intelligence benefits all of humanity. As an MTS on the Applied AI team, you will build high-throughput, low-latency inference systems serving millions of developers and enterprise users across the ChatGPT and API ecosystems.',
     responsibilities: [
       'Build distributed serving infrastructure for multi-modal and reasoning LLMs.',
@@ -273,13 +285,15 @@ export const INITIAL_JOBS: Job[] = [
     benefits: [
       'Top-tier OpenAI Profit Participation Units (PPU) equity structure',
       '100% covered health, dental, and vision premiums for employees and dependents',
-      'Daily chef-prepared lunches and dinners in San Francisco headquarters',
+      'High-spec M3/M4 Max developer hardware and home cluster access',
       'Generous 20-week parental leave and unlimited PTO'
     ],
     postedDate: '2026-08-25',
     status: 'Active',
-    applicantsCount: 61,
-    featured: true
+    applicantsCount: 84,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 2h ago by AI Agent'
   },
   {
     id: 'job-airbnb-design',
@@ -288,15 +302,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'airbnb',
     companyUrl: 'https://airbnb.com',
     applyUrl: 'https://careers.airbnb.com',
-    location: 'San Francisco, CA',
+    location: 'Remote, India',
     locationType: 'Remote',
     jobType: 'Full-time',
     experienceLevel: 'Lead / Executive',
     category: 'Design',
-    salaryMin: 175000,
-    salaryMax: 245000,
-    currency: '$',
-    description: 'Airbnb is renowned for world-class design craftsmanship. We are seeking a Lead Product Designer to guide the evolution of our global Design Language System (DLS). You will define component guidelines, motion design principles, and multi-platform design tokens supporting millions of guests and hosts.',
+    salaryMin: 3800000,
+    salaryMax: 6500000,
+    currency: '₹',
+    description: 'Airbnb is renowned for world-class design craftsmanship. We are seeking a Lead Product Designer in India to guide the evolution of our global Design Language System (DLS). You will define component guidelines, motion design principles, and multi-platform design tokens supporting millions of guests and hosts.',
     responsibilities: [
       'Architect and curate scalable design component systems in Figma across Web, iOS, and Android.',
       'Collaborate with design engineering leads to establish rigorous token standards and accessibility criteria.',
@@ -313,13 +327,15 @@ export const INITIAL_JOBS: Job[] = [
     benefits: [
       'Competitive compensation with Airbnb RSUs and annual bonus plan',
       'Live and Work Anywhere policy with up to 90 days of international remote work per year',
-      '$2,000 annual Airbnb travel credit to experience listings worldwide',
+      '₹1,75,000 annual Airbnb travel credit to experience listings worldwide',
       'Comprehensive medical, mental health, and wellness coverage'
     ],
     postedDate: '2026-08-24',
     status: 'Active',
-    applicantsCount: 22,
-    featured: false
+    applicantsCount: 29,
+    featured: false,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 3h ago by AI Agent'
   },
   {
     id: 'job-datadog-swe',
@@ -328,15 +344,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'datadog',
     companyUrl: 'https://www.datadoghq.com',
     applyUrl: 'https://www.datadoghq.com/careers',
-    location: 'New York, NY',
+    location: 'Bengaluru, KA, India',
     locationType: 'Hybrid',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Engineering',
-    salaryMin: 160000,
-    salaryMax: 225000,
-    currency: '$',
-    description: 'Datadog processes trillions of observability metrics and distributed traces daily. In this role, you will develop the high-throughput ingestion pipelines and indexing engines that give thousands of enterprise companies real-time visibility into their cloud microservices.',
+    salaryMin: 3600000,
+    salaryMax: 5600000,
+    currency: '₹',
+    description: 'Datadog processes trillions of observability metrics and distributed traces daily. In this role in Bengaluru, you will develop the high-throughput ingestion pipelines and indexing engines that give thousands of enterprise companies real-time visibility into their cloud microservices.',
     responsibilities: [
       'Design high-throughput ingestion microservices in Go and Python processing millions of spans per second.',
       'Optimize distributed datastores and caching tiers (Kafka, Redis, Cassandra) for minimal query latency.',
@@ -347,19 +363,21 @@ export const INITIAL_JOBS: Job[] = [
       '4+ years writing scalable backend code in Go, Java, or Python.',
       'Hands-on experience with high-throughput stream processing systems (Kafka, Flink).',
       'Familiarity with containerized orchestration (Docker, Kubernetes) and cloud providers.',
-      'B.S. in Computer Science or equivalent software engineering background.'
+      'B.Tech / M.Tech in Computer Science or equivalent software engineering background.'
     ],
     skills: ['Go', 'Python', 'Kafka', 'Kubernetes', 'Redis', 'OpenTelemetry', 'Distributed Systems'],
     benefits: [
-      'Competitive base salary, Datadog equity grants, and ESPP participation',
-      'Generous health, dental, and vision insurance with HSA match',
-      'Hybrid flexible work policy with state-of-the-art NYC office perks',
+      'Competitive INR base salary, Datadog equity grants, and ESPP participation',
+      'Comprehensive health insurance for parents and immediate family',
+      'Hybrid flexible work policy with top-tier Bengaluru office perks',
       'Annual education reimbursement and continuous learning stipend'
     ],
     postedDate: '2026-08-23',
     status: 'Active',
-    applicantsCount: 19,
-    featured: false
+    applicantsCount: 31,
+    featured: false,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 4h ago by AI Agent'
   },
   {
     id: 'job-github-copilot',
@@ -368,15 +386,15 @@ export const INITIAL_JOBS: Job[] = [
     logo: 'github',
     companyUrl: 'https://github.com',
     applyUrl: 'https://github.com/about/careers',
-    location: 'San Francisco, CA',
+    location: 'Remote, India',
     locationType: 'Remote',
     jobType: 'Full-time',
     experienceLevel: 'Senior',
     category: 'Engineering',
-    salaryMin: 170000,
-    salaryMax: 240000,
-    currency: '$',
-    description: 'GitHub is the home for all developers. As an engineer on GitHub Copilot, you will develop the next wave of AI-assisted developer workflows: agentic coding, automated PR reviews, and conversational code navigation. You will work across IDE extensions, cloud telemetry, and model orchestration.',
+    salaryMin: 3800000,
+    salaryMax: 6400000,
+    currency: '₹',
+    description: 'GitHub is the home for all developers. As an engineer on GitHub Copilot in India, you will develop the next wave of AI-assisted developer workflows: agentic coding, automated PR reviews, and conversational code navigation. You will work across IDE extensions, cloud telemetry, and model orchestration.',
     responsibilities: [
       'Engineer responsive, robust IDE integrations and VS Code extensions for GitHub Copilot.',
       'Build low-latency context aggregation engines that assemble relevant codebase context for LLMs.',
@@ -392,14 +410,122 @@ export const INITIAL_JOBS: Job[] = [
     skills: ['TypeScript', 'Node.js', 'React', 'VS Code Extensions', 'LLMs', 'Git', 'APIs'],
     benefits: [
       'Competitive salary with Microsoft/GitHub equity package',
-      '100% remote company with flexible working hours worldwide',
-      '$2,000 annual hardware budget and home internet reimbursement',
+      '100% remote company with flexible working hours across India',
+      '₹1,60,000 annual hardware budget and home internet reimbursement',
       'Generous parental leave and comprehensive healthcare plans'
     ],
     postedDate: '2026-08-22',
     status: 'Active',
-    applicantsCount: 31,
-    featured: true
+    applicantsCount: 47,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 5h ago by AI Agent'
+  }
+];
+
+// Pool of real, upcoming tech jobs for the autonomous AI Agent to auto-fetch & sync into the board!
+export const AI_AGENT_JOB_POOL: Omit<Job, 'id' | 'postedDate' | 'applicantsCount' | 'status'>[] = [
+  {
+    title: 'Senior Backend Engineer, Payments Core & UPI Infrastructure',
+    company: 'Razorpay',
+    logo: 'razorpay',
+    companyUrl: 'https://razorpay.com',
+    applyUrl: 'https://razorpay.com/jobs',
+    location: 'Bengaluru, KA, India',
+    locationType: 'Hybrid',
+    jobType: 'Full-time',
+    experienceLevel: 'Senior',
+    category: 'Engineering',
+    salaryMin: 3200000,
+    salaryMax: 5400000,
+    currency: '₹',
+    description: 'Razorpay powers digital payments for over 10 million Indian businesses. In this role, you will build and scale high-throughput UPI, Card, and Netbanking processing engines capable of handling 15,000+ transactions per second during festive flash sales.',
+    responsibilities: [
+      'Architect low-latency payment microservices in Go and Python.',
+      'Optimize database queries and distributed lock mechanisms across PostgreSQL and Redis.',
+      'Ensure 99.99% transaction success rate SLAs with automated fallback routing.'
+    ],
+    requirements: [
+      '4+ years building high-throughput backend services in Go, Java, or Python.',
+      'Strong knowledge of Kafka, Redis, PostgreSQL, and distributed payment protocols.',
+      'Experience with AWS or GCP cloud architectures.'
+    ],
+    skills: ['Go', 'Python', 'Kafka', 'PostgreSQL', 'Redis', 'AWS', 'Microservices'],
+    benefits: [
+      'Comprehensive medical insurance for employee, spouse, children & parents',
+      'ESOP equity grants with generous vesting',
+      'Flexible hybrid work options in Koramangala Bengaluru campus'
+    ],
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Auto-ingested just now by AI Agent'
+  },
+  {
+    title: 'Lead Frontend Architect (React & Design Systems)',
+    company: 'Swiggy',
+    logo: 'swiggy',
+    companyUrl: 'https://www.swiggy.com',
+    applyUrl: 'https://careers.swiggy.com',
+    location: 'Bengaluru, KA, India',
+    locationType: 'Hybrid',
+    jobType: 'Full-time',
+    experienceLevel: 'Lead / Executive',
+    category: 'Engineering',
+    salaryMin: 4000000,
+    salaryMax: 6500000,
+    currency: '₹',
+    description: 'Architect web and mobile web ordering experiences used by over 50 million consumers across India for Swiggy Food and Instamart. Lead web performance optimization, sub-second page loads, and modular micro-frontends.',
+    responsibilities: [
+      'Define web architecture across Swiggy consumer web and restaurant partner dashboards.',
+      'Drive web vitals optimization (LCP < 1.2s, INP < 100ms) on low-bandwidth mobile devices.',
+      'Mentor a team of 15+ frontend engineers on modern React practices.'
+    ],
+    requirements: [
+      '7+ years building large-scale frontend applications with React, Next.js, and TypeScript.',
+      'Deep expertise in bundle optimization, SSR/ISR, and web service workers.'
+    ],
+    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Web Performance', 'Micro-frontends'],
+    benefits: [
+      'Swiggy ESOPs with high growth potential',
+      'Full healthcare coverage including mental wellness support',
+      'Quarterly performance incentives'
+    ],
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Auto-ingested just now by AI Agent'
+  },
+  {
+    title: 'Staff Machine Learning Engineer (Recommendation Engines)',
+    company: 'Flipkart',
+    logo: 'flipkart',
+    companyUrl: 'https://www.flipkart.com',
+    applyUrl: 'https://www.flipkartcareers.com',
+    location: 'Bengaluru, KA, India',
+    locationType: 'Hybrid',
+    jobType: 'Full-time',
+    experienceLevel: 'Senior',
+    category: 'Data & AI',
+    salaryMin: 4500000,
+    salaryMax: 7500000,
+    currency: '₹',
+    description: 'Design deep learning recommendation algorithms and vector search pipelines for Flipkart Big Billion Days, delivering personalized product discovery to 400+ million registered users.',
+    responsibilities: [
+      'Train two-tower neural networks and transformer ranking models for real-time personalization.',
+      'Deploy low-latency GPU inference pipelines serving 100k queries per second.'
+    ],
+    requirements: [
+      '6+ years in machine learning with specialization in recommender systems or NLP.',
+      'Hands-on expertise with PyTorch, TensorFlow, CUDA, and distributed training.'
+    ],
+    skills: ['Python', 'PyTorch', 'Machine Learning', 'Recommender Systems', 'Transformers', 'Spark'],
+    benefits: [
+      'Walmart / Flipkart equity incentives',
+      'Comprehensive wellness and family medical coverage',
+      'Continuous learning and conference sponsorship'
+    ],
+    featured: false,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Auto-ingested just now by AI Agent'
   }
 ];
 
@@ -407,35 +533,38 @@ export const INITIAL_CANDIDATE: CandidateProfile = {
   id: 'cand-pranav',
   name: 'Pranav Naik',
   email: 'pranavnaik213@gmail.com',
-  phone: '+1 (555) 345-6789',
+  phone: '+91 98765 43210',
   headline: 'Full Stack Software Engineer | Next.js, TypeScript & Distributed Cloud Specialist',
   bio: 'Full stack software engineer passionate about high-performance web systems, accessible UI/UX, and cloud architecture. Creator of CareerHub, a modern tech recruitment and ATS platform built with Next.js App Router, TypeScript, and Tailwind CSS.',
-  location: 'San Francisco, CA (Open to Remote)',
+  location: 'Bengaluru, KA, India (Open to Remote)',
   skills: ['TypeScript', 'React', 'Next.js', 'Node.js', 'PostgreSQL', 'Tailwind CSS', 'GraphQL', 'Docker', 'Go', 'Git'],
   experienceYears: 4,
   portfolioUrl: 'https://github.com/pranavnaik213-ops/CareerHub',
   githubUrl: 'https://github.com/pranavnaik213-ops',
-  linkedinUrl: 'https://linkedin.com/in/pranav-naik',
+  linkedinUrl: 'https://www.linkedin.com/in/pranav-naik',
+  linkedInConnected: true,
+  linkedInVerified: true,
+  linkedInSyncDate: '2026-11-22',
   resumeName: 'Pranav_Naik_FullStack_Resume.pdf',
   resumeLastUpdated: '2026-08-28',
   experience: [
     {
       title: 'Full Stack Developer & Open Source Creator',
-      company: 'CareerHub Project',
+      company: 'CareerHub Platform',
       period: '2025 - Present',
       description: 'Architected and built CareerHub, an open-source Next.js 16 recruitment and candidate ATS platform featuring real-time job matching, Kanban pipeline tracking, and responsive design systems.'
     },
     {
       title: 'Software Engineer',
-      company: 'Digital Systems Inc.',
+      company: 'CloudTech Solutions India',
       period: '2024 - 2025',
       description: 'Developed client web applications and REST microservices in Node.js and React. Optimized SQL queries in PostgreSQL and reduced Core Web Vitals LCP by 35%.'
     }
   ],
   education: [
     {
-      degree: 'B.S. in Computer Science',
-      school: 'University of California',
+      degree: 'B.Tech in Computer Science & Engineering',
+      school: 'National Institute of Technology',
       year: '2020 - 2024'
     }
   ]
@@ -449,15 +578,19 @@ export const INITIAL_APPLICATIONS: Application[] = [
     companyName: 'Google',
     candidateName: 'Pranav Naik',
     candidateEmail: 'pranavnaik213@gmail.com',
-    candidatePhone: '+1 (555) 345-6789',
+    candidatePhone: '+91 98765 43210',
     candidateHeadline: 'Full Stack Software Engineer',
     skills: ['Go', 'TypeScript', 'Kubernetes', 'Next.js', 'PostgreSQL'],
     resumeName: 'Pranav_Naik_FullStack_Resume.pdf',
     coverLetter: 'Dear Google Cloud Hiring Team,\n\nI am writing to express my strong enthusiasm for the Staff Software Engineer position in Google Cloud Distributed Storage. Having built full-stack distributed web platforms with Next.js, Node.js, and cloud datastores, I am deeply fascinated by Google\'s work on Spanner and planet-scale storage architectures.\n\nThank you for considering my application.\n\nBest regards,\nPranav Naik',
     appliedDate: '2026-08-29',
     status: 'Interview Scheduled',
-    interviewDate: '2026-09-08 11:00 PST (Google Meet)',
-    recruiterNotes: 'Candidate screened positively on distributed systems fundamentals. Technical interview scheduled with Cloud Infrastructure Staff Lead.'
+    interviewDate: '2026-09-08 11:00 IST (Google Meet)',
+    recruiterNotes: 'Candidate screened positively on distributed systems fundamentals. Technical interview scheduled with Cloud Infrastructure Staff Lead.',
+    aiScreeningScore: 94,
+    aiEvaluationNotes: 'Strong profile match: 94% skills alignment (Go, TypeScript, Next.js, PostgreSQL). Recommend scheduling System Design round.',
+    aiRecommendedStage: 'Interview Scheduled',
+    linkedInVerified: true
   },
   {
     id: 'app-stripe-1',
@@ -466,14 +599,18 @@ export const INITIAL_APPLICATIONS: Application[] = [
     companyName: 'Stripe',
     candidateName: 'Pranav Naik',
     candidateEmail: 'pranavnaik213@gmail.com',
-    candidatePhone: '+1 (555) 345-6789',
+    candidatePhone: '+91 98765 43210',
     candidateHeadline: 'Full Stack Software Engineer',
     skills: ['TypeScript', 'Node.js', 'Go', 'PostgreSQL', 'AWS'],
     resumeName: 'Pranav_Naik_FullStack_Resume.pdf',
     coverLetter: 'Dear Stripe Engineering Team,\n\nI have long admired Stripe\'s engineering standards, attention to API developer ergonomics, and rock-solid ledger infrastructure. I would welcome the opportunity to contribute to your core payments routing and reliability initiatives.\n\nSincerely,\nPranav Naik',
     appliedDate: '2026-08-30',
     status: 'Under Review',
-    recruiterNotes: 'Application received. Forwarded to Payments Infrastructure engineering manager for resume review.'
+    recruiterNotes: 'Application received. Forwarded to Payments Infrastructure engineering manager for resume review.',
+    aiScreeningScore: 89,
+    aiEvaluationNotes: 'High alignment with distributed payments and API design. Recommend fast-tracking to hiring manager review.',
+    aiRecommendedStage: 'Under Review',
+    linkedInVerified: true
   },
   {
     id: 'app-vercel-1',
@@ -482,7 +619,7 @@ export const INITIAL_APPLICATIONS: Application[] = [
     companyName: 'Vercel',
     candidateName: 'Pranav Naik',
     candidateEmail: 'pranavnaik213@gmail.com',
-    candidatePhone: '+1 (555) 345-6789',
+    candidatePhone: '+91 98765 43210',
     candidateHeadline: 'Full Stack Software Engineer',
     skills: ['Next.js', 'TypeScript', 'React', 'Node.js', 'Tailwind CSS'],
     resumeName: 'Pranav_Naik_FullStack_Resume.pdf',
@@ -490,6 +627,10 @@ export const INITIAL_APPLICATIONS: Application[] = [
     appliedDate: '2026-08-31',
     status: 'Offer Extended',
     interviewDate: 'Completed',
-    recruiterNotes: 'Strong evaluation on frontend architecture and deep knowledge of Next.js internals. Offer package extended.'
+    recruiterNotes: 'Strong evaluation on frontend architecture and deep knowledge of Next.js internals. Offer package extended.',
+    aiScreeningScore: 98,
+    aiEvaluationNotes: 'Exceptional match (98%). Deep mastery of Next.js App Router, SSR runtime, and TypeScript.',
+    aiRecommendedStage: 'Offer Extended',
+    linkedInVerified: true
   }
 ];

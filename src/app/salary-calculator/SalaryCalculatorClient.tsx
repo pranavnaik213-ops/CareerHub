@@ -1,32 +1,33 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DollarSign, Award, ShieldCheck } from 'lucide-react';
+import { Award, ShieldCheck } from 'lucide-react';
+import { formatSalaryLakhs } from '@/lib/formatSalary';
 
 const SALARY_BENCHMARKS: Record<string, Record<string, { median: number; range: [number, number]; count: number }>> = {
   Engineering: {
-    'Entry-level': { median: 110000, range: [95000, 130000], count: 320 },
-    'Mid-level': { median: 155000, range: [135000, 180000], count: 540 },
-    Senior: { median: 195000, range: [170000, 240000], count: 480 },
-    'Lead / Executive': { median: 255000, range: [215000, 320000], count: 190 },
+    'Entry-level': { median: 1800000, range: [1200000, 2400000], count: 320 },
+    'Mid-level': { median: 3600000, range: [2800000, 4800000], count: 540 },
+    Senior: { median: 6500000, range: [5000000, 8500000], count: 480 },
+    'Lead / Executive': { median: 11000000, range: [8500000, 15000000], count: 190 },
   },
   'Data & AI': {
-    'Entry-level': { median: 115000, range: [100000, 135000], count: 210 },
-    'Mid-level': { median: 165000, range: [140000, 195000], count: 390 },
-    Senior: { median: 220000, range: [185000, 275000], count: 310 },
-    'Lead / Executive': { median: 285000, range: [240000, 370000], count: 140 },
+    'Entry-level': { median: 2000000, range: [1400000, 2600000], count: 210 },
+    'Mid-level': { median: 4000000, range: [3000000, 5500000], count: 390 },
+    Senior: { median: 7500000, range: [5800000, 9500000], count: 310 },
+    'Lead / Executive': { median: 12500000, range: [9500000, 18000000], count: 140 },
   },
   Design: {
-    'Entry-level': { median: 90000, range: [75000, 110000], count: 180 },
-    'Mid-level': { median: 135000, range: [115000, 155000], count: 290 },
-    Senior: { median: 175000, range: [150000, 210000], count: 220 },
-    'Lead / Executive': { median: 225000, range: [190000, 275000], count: 95 },
+    'Entry-level': { median: 1400000, range: [1000000, 1800000], count: 180 },
+    'Mid-level': { median: 2800000, range: [2200000, 3800000], count: 290 },
+    Senior: { median: 5000000, range: [4000000, 6800000], count: 220 },
+    'Lead / Executive': { median: 8500000, range: [6500000, 12000000], count: 95 },
   },
   Infrastructure: {
-    'Entry-level': { median: 105000, range: [90000, 125000], count: 160 },
-    'Mid-level': { median: 150000, range: [130000, 175000], count: 270 },
-    Senior: { median: 195000, range: [170000, 235000], count: 240 },
-    'Lead / Executive': { median: 250000, range: [215000, 310000], count: 110 },
+    'Entry-level': { median: 1600000, range: [1100000, 2200000], count: 160 },
+    'Mid-level': { median: 3400000, range: [2600000, 4500000], count: 270 },
+    Senior: { median: 6200000, range: [4800000, 8200000], count: 240 },
+    'Lead / Executive': { median: 10500000, range: [8000000, 14000000], count: 110 },
   },
 };
 
@@ -113,17 +114,17 @@ export const SalaryCalculatorClient: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
           <div>
             <span className="text-xs font-medium text-slate-400 block mb-1">
-              Estimated 50th Percentile Median Base
+              Estimated 50th Percentile Median Base (INR)
             </span>
             <div className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-heading">
-              ${(adjustedMedian / 1000).toFixed(0)}k <span className="text-sm font-normal text-slate-400">/ year</span>
+              {formatSalaryLakhs(adjustedMedian)} <span className="text-sm font-normal text-slate-400">/ year</span>
             </div>
           </div>
 
           <div className="bg-slate-900 p-3.5 rounded-lg border border-slate-800 text-left sm:text-right">
-            <span className="text-xs text-slate-400 block">Verified Range</span>
+            <span className="text-xs text-slate-400 block">Verified Range (INR)</span>
             <div className="text-lg sm:text-xl font-semibold text-slate-200 mt-0.5">
-              ${(minRange / 1000).toFixed(0)}k – ${(maxRange / 1000).toFixed(0)}k
+              {formatSalaryLakhs(minRange)} – {formatSalaryLakhs(maxRange)}
             </div>
             <p className="text-[11px] text-slate-500 mt-0.5">{benchmark.count} verified tech compensation records</p>
           </div>
@@ -132,9 +133,9 @@ export const SalaryCalculatorClient: React.FC = () => {
         {/* Distribution Bar */}
         <div className="space-y-2">
           <div className="flex justify-between text-xs text-slate-400">
-            <span>25th Percentile: ${(minRange / 1000).toFixed(0)}k</span>
-            <span className="text-emerald-400 font-semibold">Median: ${(adjustedMedian / 1000).toFixed(0)}k</span>
-            <span>90th Percentile: ${(maxRange / 1000).toFixed(0)}k</span>
+            <span>25th Percentile: {formatSalaryLakhs(minRange)}</span>
+            <span className="text-emerald-400 font-semibold">Median: {formatSalaryLakhs(adjustedMedian)}</span>
+            <span>90th Percentile: {formatSalaryLakhs(maxRange)}</span>
           </div>
 
           <div className="h-2.5 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-800">

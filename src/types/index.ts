@@ -14,7 +14,7 @@ export interface Job {
   id: string;
   title: string;
   company: string;
-  logo: string; // URL or icon identifier
+  logo: string; // URL or company identifier
   companyUrl?: string; // Real company website
   applyUrl?: string; // Real company careers page / direct job application URL
   location: string;
@@ -22,9 +22,9 @@ export interface Job {
   jobType: JobType;
   experienceLevel: ExperienceLevel;
   category: string;
-  salaryMin: number;
-  salaryMax: number;
-  currency: string;
+  salaryMin: number; // in INR (₹)
+  salaryMax: number; // in INR (₹)
+  currency: string; // '₹' | '$'
   description: string;
   responsibilities: string[];
   requirements: string[];
@@ -34,6 +34,9 @@ export interface Job {
   status: JobStatus;
   applicantsCount: number;
   featured?: boolean;
+  isAgentIngested?: boolean; // Autonomously crawled and ingested by AI Agent
+  agentVerifiedDate?: string;
+  matchScore?: number; // AI match score calculated for candidate
 }
 
 export interface Application {
@@ -52,6 +55,10 @@ export interface Application {
   status: ApplicationStatus;
   recruiterNotes?: string;
   interviewDate?: string;
+  aiScreeningScore?: number; // 0 - 100 AI ATS match evaluation
+  aiEvaluationNotes?: string;
+  aiRecommendedStage?: ApplicationStatus;
+  linkedInVerified?: boolean;
 }
 
 export interface CandidateProfile {
@@ -67,6 +74,9 @@ export interface CandidateProfile {
   portfolioUrl?: string;
   githubUrl?: string;
   linkedinUrl?: string;
+  linkedInConnected?: boolean;
+  linkedInVerified?: boolean;
+  linkedInSyncDate?: string;
   resumeName: string;
   resumeLastUpdated: string;
   experience: {

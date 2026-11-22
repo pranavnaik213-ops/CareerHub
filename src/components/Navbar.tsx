@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useJobContext } from '@/context/JobContext';
 import { Briefcase, Bookmark, PlusCircle, User, Building2, Menu, X, Calculator } from 'lucide-react';
+import { LinkedInConnectModal } from '@/components/LinkedInConnectModal';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const { role, setRole, savedJobIds, candidateProfile } = useJobContext();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLinkedInModalOpen, setIsLinkedInModalOpen] = useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -141,6 +143,20 @@ export const Navbar: React.FC = () => {
               <span className="hidden sm:inline">Recruiter</span>
             </button>
           </div>
+
+          {/* LinkedIn Connect Pill */}
+          <button
+            onClick={() => setIsLinkedInModalOpen(true)}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+              candidateProfile.linkedInConnected
+                ? 'bg-[#0A66C2]/15 border-[#0A66C2]/40 text-[#70b5f9]'
+                : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
+            }`}
+            title={candidateProfile.linkedInConnected ? 'LinkedIn Profile Connected & Verified' : 'Connect LinkedIn Profile'}
+          >
+            <span className="w-4 h-4 rounded-sm bg-[#0A66C2] text-white flex items-center justify-center font-bold text-[10px]">in</span>
+            <span className="hidden sm:inline">{candidateProfile.linkedInConnected ? 'Verified' : 'Connect'}</span>
+          </button>
 
           {/* Bookmarked Jobs pill for Seeker */}
           {role === 'seeker' && (
@@ -274,8 +290,30 @@ export const Navbar: React.FC = () => {
           >
             Terms of Service
           </Link>
+
+          <button
+            onClick={() => {
+              closeMobileMenu();
+              setIsLinkedInModalOpen(true);
+            }}
+            className="w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-900 text-left"
+          >
+            <span className="flex items-center gap-2">
+              <span className="w-4 h-4 rounded-sm bg-[#0A66C2] text-white flex items-center justify-center font-bold text-[10px]">in</span>
+              LinkedIn Profile
+            </span>
+            <span className={candidateProfile.linkedInConnected ? 'text-emerald-400 font-semibold' : 'text-slate-400'}>
+              {candidateProfile.linkedInConnected ? 'Verified' : 'Connect'}
+            </span>
+          </button>
         </div>
       )}
+
+      {/* LinkedIn Connect Modal */}
+      <LinkedInConnectModal
+        isOpen={isLinkedInModalOpen}
+        onClose={() => setIsLinkedInModalOpen(false)}
+      />
     </header>
   );
 };

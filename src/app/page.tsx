@@ -7,6 +7,7 @@ import { JobCard } from '@/components/JobCard';
 import { JobFilterSidebar } from '@/components/JobFilterSidebar';
 import { JobDetailsModal } from '@/components/JobDetailsModal';
 import { ApplyModal } from '@/components/ApplyModal';
+import { AiAgentHub } from '@/components/AiAgentHub';
 import {
   Search,
   Briefcase,
@@ -90,7 +91,7 @@ export default function HomePage() {
           {/* Quick Filter Pills with Real Tech Companies & Keywords */}
           <div className="flex flex-wrap items-center gap-2 pt-2">
             <span className="text-xs text-slate-400 mr-1">Quick Search:</span>
-            {['Google', 'Stripe', 'Microsoft', 'Vercel', 'OpenAI', 'Remote', 'Go', 'Next.js'].map((term, i) => (
+            {['Google', 'Razorpay', 'Microsoft', 'Swiggy', 'Flipkart', 'Stripe', 'Remote', 'Next.js'].map((term, i) => (
               <button
                 key={i}
                 onClick={() => {
@@ -117,17 +118,17 @@ export default function HomePage() {
               <Building2 className="w-4 h-4 text-blue-400" aria-hidden="true" />
               Top Employers
             </div>
-            <p className="text-xl font-bold text-white font-heading">10 Companies</p>
-            <p className="text-xs text-slate-400 mt-0.5">Google, Stripe, Meta, OpenAI, Vercel, and more</p>
+            <p className="text-xl font-bold text-white font-heading">13+ Tech Leaders</p>
+            <p className="text-xs text-slate-400 mt-0.5">Google, Stripe, Microsoft, Razorpay, Swiggy, Flipkart</p>
           </div>
 
           <div className="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
             <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold mb-1">
-              <DollarSign className="w-4 h-4 text-emerald-400" aria-hidden="true" />
-              Transparent Pay
+              <span className="font-bold text-emerald-400 text-sm">₹</span>
+              Indian Tech Salaries
             </div>
-            <p className="text-xl font-bold text-white font-heading">$160k – $370k</p>
-            <p className="text-xs text-slate-400 mt-0.5">Verified salary ranges published with every listing</p>
+            <p className="text-xl font-bold text-white font-heading">₹35 LPA – ₹1.4 Cr</p>
+            <p className="text-xs text-slate-400 mt-0.5">Verified Indian Rupee compensation ranges</p>
           </div>
 
           <div className="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
@@ -188,6 +189,9 @@ export default function HomePage() {
           <JobFilterSidebar onCloseMobile={() => setIsMobileFilterOpen(false)} />
         </div>
       )}
+
+      {/* Autonomous AI Agent Real-Time Crawler & Hub */}
+      <AiAgentHub />
 
       {/* Main Job Directory Grid */}
       <div id="jobs-directory" className="grid grid-cols-1 lg:grid-cols-4 gap-8 scroll-mt-20">

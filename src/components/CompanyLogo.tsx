@@ -175,6 +175,42 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, companyName, 
     );
   }
 
+  if (lowerName.includes('razorpay')) {
+    return (
+      <div
+        role="img"
+        aria-label="Razorpay logo"
+        className={`bg-[#0C2340] text-[#3395FF] border border-slate-700 shadow-sm flex items-center justify-center flex-shrink-0 font-black ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-sm font-black tracking-tight text-[#3395FF]">R</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('swiggy')) {
+    return (
+      <div
+        role="img"
+        aria-label="Swiggy logo"
+        className={`bg-[#FC8019] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-sm font-black tracking-tight">S</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('flipkart')) {
+    return (
+      <div
+        role="img"
+        aria-label="Flipkart logo"
+        className={`bg-[#2874F0] text-[#FFE500] shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-sm font-black italic">f</span>
+      </div>
+    );
+  }
+
   if (lowerName.includes('datadog')) {
     return (
       <div

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Job, Application, CandidateProfile, FilterState, UserRole, ApplicationStatus, JobStatus } from '@/types';
 import { INITIAL_JOBS, INITIAL_CANDIDATE, INITIAL_APPLICATIONS } from '@/data/mockData';
+import { generateAiScreening } from '@/lib/aiAgent';
 
 interface ToastState {
   id: number;
@@ -135,6 +136,8 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return false;
     }
 
+    const screening = generateAiScreening(targetJob, { skills: candidateProfile.skills });
+
     const newApp: Application = {
       id: `app-${Date.now()}`,
       jobId,
@@ -148,7 +151,11 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       resumeName: customResumeName || candidateProfile.resumeName,
       coverLetter,
       appliedDate: new Date().toISOString().split('T')[0],
-      status: 'Submitted'
+      status: 'Submitted',
+      linkedInVerified: Boolean(candidateProfile.linkedInVerified),
+      aiScreeningScore: screening.score,
+      aiEvaluationNotes: screening.notes,
+      aiRecommendedStage: screening.recommendedStage,
     };
 
     setApplications((prev) => [newApp, ...prev]);
@@ -168,6 +175,7 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       id: `job-${Date.now()}`,
       postedDate: new Date().toISOString().split('T')[0],
       applicantsCount: 0,
+      currency: jobData.currency || '₹',
       status: 'Active'
     };
 

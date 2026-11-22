@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert, ShieldCheck, Sparkles } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
 import { trackEvent } from '@/lib/analytics';
+import { generateTailoredCoverLetter } from '@/lib/aiAgent';
 
 interface ApplyModalProps {
   job: Job | null;
@@ -23,6 +24,13 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
   );
   const [customResume, setCustomResume] = useState(candidateProfile.resumeName);
   const [authorized, setAuthorized] = useState(true);
+
+  const handleAutoTailorCoverLetter = () => {
+    if (!job) return;
+    const tailored = generateTailoredCoverLetter(job, candidateProfile);
+    setCoverLetter(tailored);
+    showToast('AI Agent generated a tailored cover letter matching your credentials & job requirements!', 'success');
+  };
   
   // Validation error states
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -264,6 +272,30 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
                 {errors.phone && <p className="text-[11px] text-rose-400 mt-1">{errors.phone}</p>}
               </div>
             </div>
+
+            {/* LinkedIn Verified Fast-Track Card */}
+            <div className="flex items-center justify-between p-3 rounded-lg bg-blue-950/20 border border-blue-800/40 text-xs">
+              <div className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded-sm bg-[#0A66C2] text-white flex items-center justify-center font-bold text-xs">in</span>
+                <div>
+                  <span className="text-slate-200 font-medium">
+                    {candidateProfile.linkedInConnected ? 'Verified LinkedIn Profile Attached' : 'Fast-Track with LinkedIn'}
+                  </span>
+                  <span className="text-[11px] text-slate-400 block">
+                    {candidateProfile.linkedInConnected
+                      ? candidateProfile.linkedinUrl
+                      : 'Connecting LinkedIn adds a verified credential badge to your application'}
+                  </span>
+                </div>
+              </div>
+              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                candidateProfile.linkedInConnected
+                  ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/50'
+                  : 'bg-slate-800 text-slate-300'
+              }`}>
+                {candidateProfile.linkedInConnected ? 'Verified' : 'Unconnected'}
+              </span>
+            </div>
           </div>
 
           {/* Resume Upload Section */}
@@ -295,7 +327,18 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
           {/* Cover Letter */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className="text-xs font-semibold text-slate-300">Cover Letter *</label>
+              <div className="flex items-center gap-2">
+                <label className="text-xs font-semibold text-slate-300">Cover Letter *</label>
+                <button
+                  type="button"
+                  onClick={handleAutoTailorCoverLetter}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-blue-950/40 text-blue-300 border border-blue-800/50 hover:bg-blue-900/50 hover:text-white transition-colors"
+                  title="Use CareerHub AI Agent to draft a tailored cover letter"
+                >
+                  <Sparkles className="w-3 h-3 text-blue-400" />
+                  <span>AI Auto-Tailor</span>
+                </button>
+              </div>
               <span className={`text-[11px] ${coverLetter.length > 2500 ? 'text-amber-400 font-bold' : 'text-slate-400'}`}>
                 {coverLetter.length} / 3000 chars
               </span>
