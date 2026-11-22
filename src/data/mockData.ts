@@ -420,6 +420,90 @@ export const INITIAL_JOBS: Job[] = [
     featured: true,
     isAgentIngested: true,
     agentVerifiedDate: 'Verified 5h ago by AI Agent'
+  },
+  {
+    id: 'job-uber-systems',
+    title: 'Staff Systems Engineer, Distributed Infrastructure & Core Trip Platform',
+    company: 'Uber',
+    logo: 'uber',
+    companyUrl: 'https://www.uber.com',
+    applyUrl: 'https://www.uber.com/us/en/careers/list',
+    location: 'Bengaluru, KA, India',
+    locationType: 'Hybrid',
+    jobType: 'Full-time',
+    experienceLevel: 'Senior',
+    category: 'Engineering',
+    salaryMin: 4600000,
+    salaryMax: 7400000,
+    currency: '₹',
+    description: 'Uber Engineering India powers global marketplace matching, real-time trip dispatch, and geo-spatial routing engines processing millions of concurrent rides and deliveries. You will architect high-throughput RPC microservices, optimize distributed event streaming, and lead resilient system design across multi-region datacenters.',
+    responsibilities: [
+      'Architect sub-millisecond dispatch and geolocation routing services in Go and Java.',
+      'Scale Kafka event streaming clusters processing over 10 million transactions per minute.',
+      'Ensure multi-region active-active disaster recovery with zero data divergence.',
+      'Mentor senior engineers on distributed consensus, tracing, and high-concurrency patterns.'
+    ],
+    requirements: [
+      '7+ years architecting high-throughput distributed backend services.',
+      'Deep expertise in Go or Java with production concurrency tuning and memory profiling.',
+      'Proven experience with Kafka, Cassandra, Redis, and high-performance RPC protocols (gRPC).',
+      'Strong background in distributed transactions, rate-limiting algorithms, and fault tolerance.'
+    ],
+    skills: ['Go', 'Java', 'Distributed Systems', 'Kafka', 'Kubernetes', 'gRPC', 'Redis', 'Microservices'],
+    benefits: [
+      'Top-tier base INR compensation with liquid Uber RSUs and annual bonus',
+      'Comprehensive health coverage for employee, spouse, children, and parents',
+      'Uber ride credits and monthly meal subsidies',
+      'Flexible hybrid schedule with campus wellness amenities in Bengaluru'
+    ],
+    postedDate: '2026-08-21',
+    status: 'Active',
+    applicantsCount: 38,
+    featured: true,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 6h ago by AI Agent'
+  },
+  {
+    id: 'job-atlassian-cloud',
+    title: 'Principal Cloud Platform Engineer, Jira & Confluence Microservices',
+    company: 'Atlassian',
+    logo: 'atlassian',
+    companyUrl: 'https://www.atlassian.com',
+    applyUrl: 'https://www.atlassian.com/company/careers',
+    location: 'Remote, India',
+    locationType: 'Remote',
+    jobType: 'Full-time',
+    experienceLevel: 'Lead / Executive',
+    category: 'Engineering',
+    salaryMin: 4400000,
+    salaryMax: 7000000,
+    currency: '₹',
+    description: 'Atlassian unleashes the potential of every team. As a Principal Engineer in India working on TEAM Cloud, you will steer cloud platform architecture for Jira and Confluence, decoupling legacy monoliths into cloud-native microservices serving over 300,000 enterprise organizations worldwide.',
+    responsibilities: [
+      'Spearhead multi-tenant cloud service architecture on AWS with zero single-points-of-failure.',
+      'Design reliable asynchronous event pipelines and real-time collaboration engines.',
+      'Establish company-wide architectural standards, RFC review processes, and engineering roadmaps.',
+      'Drive operational observability, synthetic testing, and cloud cost efficiency initiatives.'
+    ],
+    requirements: [
+      '8+ years in software engineering with leadership experience on large-scale SaaS systems.',
+      'Mastery of modern Java, Kotlin, or Go within event-driven AWS cloud environments.',
+      'Deep domain knowledge in DynamoDB, PostgreSQL, Kafka, and Kubernetes container architectures.',
+      'Outstanding cross-functional alignment and asynchronous written communication skills.'
+    ],
+    skills: ['Java', 'Kotlin', 'AWS', 'Kubernetes', 'DynamoDB', 'Kafka', 'Microservices', 'Docker'],
+    benefits: [
+      'Work from anywhere in India with our Team Anywhere remote policy',
+      'Generous Atlassian equity grants (NASDAQ: TEAM) with annual refreshers',
+      '₹1,50,000 annual home office ergonomic allowance and internet stipend',
+      'Comprehensive medical insurance and mental wellness days'
+    ],
+    postedDate: '2026-08-20',
+    status: 'Active',
+    applicantsCount: 32,
+    featured: false,
+    isAgentIngested: true,
+    agentVerifiedDate: 'Verified 7h ago by AI Agent'
   }
 ];
 
@@ -631,6 +715,46 @@ export const INITIAL_APPLICATIONS: Application[] = [
     aiScreeningScore: 98,
     aiEvaluationNotes: 'Exceptional match (98%). Deep mastery of Next.js App Router, SSR runtime, and TypeScript.',
     aiRecommendedStage: 'Offer Extended',
+    linkedInVerified: true
+  },
+  {
+    id: 'app-microsoft-1',
+    jobId: 'job-microsoft-ai',
+    jobTitle: 'Principal Software Engineer, Azure AI & Cloud Infrastructure',
+    companyName: 'Microsoft',
+    candidateName: 'Pranav Naik',
+    candidateEmail: 'pranavnaik213@gmail.com',
+    candidatePhone: '+91 98765 43210',
+    candidateHeadline: 'Full Stack Software Engineer',
+    skills: ['Python', 'Distributed Systems', 'Azure', 'PyTorch', 'TypeScript'],
+    resumeName: 'Pranav_Naik_FullStack_Resume.pdf',
+    coverLetter: 'Dear Microsoft IDC Recruitment Team,\n\nI am thrilled to submit my candidacy for the Principal Software Engineer role in Azure AI. Having architected complex Next.js applications and cloud microservices, I am eager to apply my systems background to hyperscale GPU inference and frontier model orchestration at Microsoft India.\n\nBest regards,\nPranav Naik',
+    appliedDate: '2026-09-01',
+    status: 'Under Review',
+    recruiterNotes: 'Candidate resume passed initial AI screening. Forwarded to Azure AI Engineering Director for technical evaluation.',
+    aiScreeningScore: 91,
+    aiEvaluationNotes: 'Solid alignment (91%) across cloud infrastructure and distributed systems. Recommend scheduling recruiter phone screen.',
+    aiRecommendedStage: 'Under Review',
+    linkedInVerified: true
+  },
+  {
+    id: 'app-uber-1',
+    jobId: 'job-uber-systems',
+    jobTitle: 'Staff Systems Engineer, Distributed Infrastructure & Core Trip Platform',
+    companyName: 'Uber',
+    candidateName: 'Pranav Naik',
+    candidateEmail: 'pranavnaik213@gmail.com',
+    candidatePhone: '+91 98765 43210',
+    candidateHeadline: 'Full Stack Software Engineer',
+    skills: ['Go', 'TypeScript', 'Distributed Systems', 'Redis', 'Docker'],
+    resumeName: 'Pranav_Naik_FullStack_Resume.pdf',
+    coverLetter: 'Dear Uber Engineering Team,\n\nUber\'s marketplace matching and real-time trip dispatch architecture are world-class benchmarks in distributed engineering. I would love to bring my systems passion to your Bengaluru infrastructure team.\n\nWarm regards,\nPranav Naik',
+    appliedDate: '2026-09-02',
+    status: 'Submitted',
+    recruiterNotes: 'Application submitted via verified LinkedIn candidate fast-track.',
+    aiScreeningScore: 88,
+    aiEvaluationNotes: 'Candidate demonstrates strong competency in Go, distributed microservices, and database optimization.',
+    aiRecommendedStage: 'Submitted',
     linkedInVerified: true
   }
 ];

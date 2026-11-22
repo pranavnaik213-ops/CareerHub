@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 const TIERS = [
   {
     name: 'Starter',
-    price: '$0',
+    price: '₹0',
     period: 'forever free',
     badge: 'Free Tier',
-    description: 'Ideal for early-stage startups and engineering teams hiring their first developers.',
+    description: 'Ideal for early-stage startups and engineering teams hiring their first developers in India.',
     features: [
       'Up to 3 Active Job Postings',
       'ATS Kanban Candidate Pipeline',
@@ -30,7 +30,7 @@ const TIERS = [
   },
   {
     name: 'Growth',
-    price: '$149',
+    price: '₹9,999',
     period: 'per month',
     badge: 'Recommended',
     description: 'For growing tech companies actively expanding engineering, product, and infrastructure squads.',
@@ -49,7 +49,7 @@ const TIERS = [
   },
   {
     name: 'Enterprise',
-    price: '$399',
+    price: '₹24,999',
     period: 'per month',
     badge: 'High Volume',
     description: 'For organizations with multi-team hiring needs, dedicated account coordination, and custom ATS workflows.',
@@ -59,7 +59,7 @@ const TIERS = [
       'Custom Webhook & ATS Ingestion Sync',
       'Dedicated Account Manager',
       'Custom Data Retention & Privacy SLA',
-      'Custom Invoicing & Procurement Support',
+      'Custom GST Invoicing & Procurement Support',
     ],
     cta: 'Contact Sales',
     featured: false,

@@ -223,6 +223,32 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, companyName, 
     );
   }
 
+  if (lowerName.includes('uber')) {
+    return (
+      <div
+        role="img"
+        aria-label="Uber logo"
+        className={`bg-black text-white border border-slate-700 shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <span className="text-xs font-bold tracking-tight text-white">Uber</span>
+      </div>
+    );
+  }
+
+  if (lowerName.includes('atlassian')) {
+    return (
+      <div
+        role="img"
+        aria-label="Atlassian logo"
+        className={`bg-[#0052CC] text-white shadow-sm flex items-center justify-center flex-shrink-0 font-bold ${sizeClasses[size]} ${className}`}
+      >
+        <svg width={iconPx} height={iconPx} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M11.666 12.02c-.22.253-.532.398-.86.398H5.972c-.378 0-.719-.2-.906-.525a1.042 1.042 0 0 1 .035-1.07l5.053-7.58a1.053 1.053 0 0 1 1.472-.284 1.04 1.04 0 0 1 .284.284l1.637 2.456-1.881 6.321zm.668-3.414l1.882-6.321a1.04 1.04 0 0 1 .284-.284 1.053 1.053 0 0 1 1.472.284l5.053 7.58c.245.367.258.841.035 1.07a1.042 1.042 0 0 1-.906.525h-4.834c-.328 0-.64-.145-.86-.398l-2.126-2.456z"/>
+        </svg>
+      </div>
+    );
+  }
+
   // Fallback: Clean, restrained professional dark tile
   const initials = name
     .split(' ')

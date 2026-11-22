@@ -6,6 +6,7 @@ import { RecruiterMetrics } from '@/components/RecruiterMetrics';
 import { AtsKanbanBoard } from '@/components/AtsKanbanBoard';
 import { Job, JobStatus } from '@/types';
 import Link from 'next/link';
+import { formatSalaryRange } from '@/lib/formatSalary';
 import {
   Briefcase,
   Users,
@@ -147,7 +148,7 @@ export default function RecruiterDashboard() {
                       </td>
 
                       <td className="p-4 font-semibold text-emerald-400">
-                        ${Math.round(job.salaryMin / 1000)}k - ${Math.round(job.salaryMax / 1000)}k
+                        {formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)}
                       </td>
 
                       <td className="p-4">
