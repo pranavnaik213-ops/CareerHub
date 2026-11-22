@@ -6,11 +6,11 @@ import { Application, ApplicationStatus } from '@/types';
 import { User, FileText, Calendar, CheckCircle2, XCircle, Clock, Search, MessageSquare, ChevronRight, Filter, ShieldCheck, Mail, Phone, Tag } from 'lucide-react';
 
 const STAGES: { id: ApplicationStatus; title: string; color: string; border: string; dotColor: string }[] = [
-  { id: 'Submitted', title: 'Submitted', color: 'bg-blue-500/15 text-blue-300', border: 'border-blue-500/30', dotColor: 'bg-blue-400' },
-  { id: 'Under Review', title: 'Under Review', color: 'bg-amber-500/15 text-amber-300', border: 'border-amber-500/30', dotColor: 'bg-amber-400' },
-  { id: 'Interview Scheduled', title: 'Interview Scheduled', color: 'bg-violet-500/15 text-violet-300', border: 'border-violet-500/30', dotColor: 'bg-violet-400' },
-  { id: 'Offer Extended', title: 'Offer Extended', color: 'bg-emerald-500/15 text-emerald-300', border: 'border-emerald-500/30', dotColor: 'bg-emerald-400' },
-  { id: 'Rejected', title: 'Rejected', color: 'bg-rose-500/15 text-rose-300', border: 'border-rose-500/30', dotColor: 'bg-rose-400' }
+  { id: 'Submitted', title: 'Submitted', color: 'bg-blue-950/40 text-blue-300', border: 'border-blue-800/50', dotColor: 'bg-blue-400' },
+  { id: 'Under Review', title: 'Under Review', color: 'bg-amber-950/40 text-amber-300', border: 'border-amber-800/50', dotColor: 'bg-amber-400' },
+  { id: 'Interview Scheduled', title: 'Interview Scheduled', color: 'bg-purple-950/40 text-purple-300', border: 'border-purple-800/50', dotColor: 'bg-purple-400' },
+  { id: 'Offer Extended', title: 'Offer Extended', color: 'bg-emerald-950/40 text-emerald-300', border: 'border-emerald-800/50', dotColor: 'bg-emerald-400' },
+  { id: 'Rejected', title: 'Rejected', color: 'bg-rose-950/40 text-rose-300', border: 'border-rose-800/50', dotColor: 'bg-rose-400' }
 ];
 
 export const AtsKanbanBoard: React.FC = () => {
@@ -60,7 +60,7 @@ export const AtsKanbanBoard: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search candidate name, position, or skill..."
-            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-4 py-2.5 text-xs text-slate-100 placeholder-slate-400 outline-none transition-all"
+            className="w-full bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-400 outline-none"
           />
         </div>
 
@@ -70,7 +70,7 @@ export const AtsKanbanBoard: React.FC = () => {
           <select
             value={selectedJobIdFilter}
             onChange={(e) => setSelectedJobIdFilter(e.target.value)}
-            className="bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 outline-none w-full sm:w-auto"
+            className="bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none w-full sm:w-auto"
           >
             <option value="All">All Posted Jobs ({jobs.length})</option>
             {jobs.map((job) => (
@@ -91,7 +91,7 @@ export const AtsKanbanBoard: React.FC = () => {
           return (
             <div
               key={stage.id}
-              className="bg-slate-900/50 border border-slate-800/80 rounded-3xl p-4 min-w-[270px] flex flex-col h-full shadow-lg"
+              className="bg-[#11141c] border border-slate-800 rounded-xl p-3.5 min-w-[260px] flex flex-col h-full"
             >
               {/* Column Header */}
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
@@ -288,7 +288,7 @@ export const AtsKanbanBoard: React.FC = () => {
               </button>
               <button
                 onClick={handleSaveNotes}
-                className="px-5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md min-h-[38px]"
+                className="px-4 py-2 text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors min-h-[36px]"
               >
                 Save Changes
               </button>

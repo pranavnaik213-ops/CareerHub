@@ -6,9 +6,9 @@ import { Search, RotateCcw, SlidersHorizontal, Check, X } from 'lucide-react';
 import { LocationType, JobType, ExperienceLevel } from '@/types';
 import { trackEvent } from '@/lib/analytics';
 
-const CATEGORIES = ['All', 'Engineering', 'Design', 'Data & AI', 'Marketing', 'Infrastructure'];
+const CATEGORIES = ['All', 'Engineering', 'Design', 'Data & AI', 'Infrastructure'];
 const LOCATION_TYPES: (LocationType | 'All')[] = ['All', 'Remote', 'Hybrid', 'On-site'];
-const JOB_TYPES: (JobType | 'All')[] = ['All', 'Full-time', 'Part-time', 'Contract', 'Internship'];
+const JOB_TYPES: (JobType | 'All')[] = ['All', 'Full-time', 'Part-time', 'Contract'];
 const EXPERIENCE_LEVELS: (ExperienceLevel | 'All')[] = ['All', 'Entry-level', 'Mid-level', 'Senior', 'Lead / Executive'];
 
 interface JobFilterSidebarProps {
@@ -41,29 +41,29 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
   };
 
   return (
-    <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 backdrop-blur-xl shadow-xl">
+    <div className="bg-[#11141c] border border-slate-800 rounded-xl p-5 space-y-5">
       
       {/* Sidebar Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="w-4 h-4 text-indigo-400" aria-hidden="true" />
-          <h2 className="text-sm font-bold text-slate-100 uppercase tracking-wider">Filter Jobs</h2>
+          <SlidersHorizontal className="w-4 h-4 text-slate-300" aria-hidden="true" />
+          <h2 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">Filter Jobs</h2>
         </div>
         
         <div className="flex items-center gap-2">
           <button
             onClick={resetFilters}
-            className="flex items-center gap-1 text-xs text-slate-400 hover:text-indigo-300 transition-colors p-1 rounded-lg"
+            className="flex items-center gap-1 text-xs text-slate-400 hover:text-white transition-colors"
             title="Reset all filters"
           >
-            <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
+            <RotateCcw className="w-3 h-3" aria-hidden="true" />
             Reset
           </button>
 
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="lg:hidden p-1 text-slate-400 hover:text-white rounded-lg bg-slate-800"
+              className="lg:hidden p-1 text-slate-400 hover:text-white rounded bg-slate-800"
               aria-label="Close filters"
             >
               <X className="w-4 h-4" />
@@ -72,11 +72,11 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         
         {/* Search Query */}
         <div>
-          <label htmlFor="filter-search-query" className="block text-xs font-semibold text-slate-300 mb-2">Search Keywords</label>
+          <label htmlFor="filter-search-query" className="block text-xs font-medium text-slate-300 mb-1.5">Search Keywords</label>
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
             <input
@@ -84,15 +84,15 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
               type="text"
               value={filters.query}
               onChange={(e) => handleQueryChange(e.target.value)}
-              placeholder="Title, skill, company..."
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl pl-9 pr-4 py-2.5 text-xs text-slate-100 placeholder-slate-400 outline-none transition-all"
+              placeholder="Company, title, skill..."
+              className="w-full bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-100 placeholder-slate-400 outline-none"
             />
           </div>
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">Category</label>
+          <label className="block text-xs font-medium text-slate-300 mb-1.5">Category</label>
           <div className="space-y-1">
             {CATEGORIES.map((cat) => {
               const active = filters.category === cat;
@@ -100,14 +100,14 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all min-h-[36px] ${
+                  className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     active
-                      ? 'bg-indigo-600/20 border border-indigo-500/40 text-indigo-300 font-semibold'
-                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-slate-100'
+                      ? 'bg-blue-950/60 border border-blue-800/60 text-blue-300'
+                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
                   }`}
                 >
                   <span>{cat}</span>
-                  {active && <Check className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />}
+                  {active && <Check className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />}
                 </button>
               );
             })}
@@ -116,7 +116,7 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
 
         {/* Location Type */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">Work Setup</label>
+          <label className="block text-xs font-medium text-slate-300 mb-1.5">Work Setup</label>
           <div className="grid grid-cols-2 gap-1.5">
             {LOCATION_TYPES.map((loc) => {
               const active = filters.locationType === loc;
@@ -124,10 +124,10 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
                 <button
                   key={loc}
                   onClick={() => handleLocationTypeChange(loc)}
-                  className={`px-3 py-2 rounded-xl text-xs font-medium text-center transition-all min-h-[36px] ${
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-medium text-center transition-colors ${
                     active
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25'
-                      : 'bg-slate-950 border border-slate-800 text-slate-300 hover:border-slate-700 hover:text-slate-100'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-900 border border-slate-800 text-slate-300 hover:text-white'
                   }`}
                 >
                   {loc}
@@ -139,7 +139,7 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
 
         {/* Job Type */}
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">Employment Type</label>
+          <label className="block text-xs font-medium text-slate-300 mb-1.5">Employment Type</label>
           <div className="flex flex-wrap gap-1.5">
             {JOB_TYPES.map((type) => {
               const active = filters.jobType === type;
@@ -147,10 +147,10 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
                 <button
                   key={type}
                   onClick={() => handleJobTypeChange(type)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all min-h-[32px] ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                     active
-                      ? 'bg-violet-600 text-white'
-                      : 'bg-slate-950 border border-slate-800 text-slate-300 hover:text-slate-100'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-900 border border-slate-800 text-slate-300 hover:text-white'
                   }`}
                 >
                   {type}
@@ -162,12 +162,12 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
 
         {/* Experience Level */}
         <div>
-          <label htmlFor="filter-exp-level" className="block text-xs font-semibold text-slate-300 mb-2">Experience Level</label>
+          <label htmlFor="filter-exp-level" className="block text-xs font-medium text-slate-300 mb-1.5">Experience Level</label>
           <select
             id="filter-exp-level"
             value={filters.experienceLevel}
             onChange={(e) => setFilters((prev) => ({ ...prev, experienceLevel: e.target.value as any }))}
-            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-3 py-2.5 text-xs text-slate-200 outline-none"
+            className="w-full bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg px-2.5 py-2 text-xs text-slate-200 outline-none"
           >
             {EXPERIENCE_LEVELS.map((exp) => (
               <option key={exp} value={exp} className="bg-slate-900 text-slate-200">
@@ -179,9 +179,9 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
 
         {/* Minimum Salary Range Slider */}
         <div>
-          <div className="flex justify-between items-center mb-2">
-            <label htmlFor="filter-salary-min" className="text-xs font-semibold text-slate-300">Min Annual Salary</label>
-            <span className="text-xs font-bold text-emerald-400">
+          <div className="flex justify-between items-center mb-1.5">
+            <label htmlFor="filter-salary-min" className="text-xs font-medium text-slate-300">Min Annual Salary</label>
+            <span className="text-xs font-semibold text-emerald-400">
               {filters.salaryMin > 0 ? `$${Math.round(filters.salaryMin / 1000)}k+` : 'Any'}
             </span>
           </div>
@@ -189,16 +189,16 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
             id="filter-salary-min"
             type="range"
             min="0"
-            max="200000"
+            max="250000"
             step="10000"
             value={filters.salaryMin}
             onChange={(e) => setFilters((prev) => ({ ...prev, salaryMin: Number(e.target.value) }))}
-            className="w-full accent-indigo-500 bg-slate-800 rounded-lg cursor-pointer h-2"
+            className="w-full accent-blue-500 bg-slate-800 rounded-lg cursor-pointer h-2"
           />
-          <div className="flex justify-between text-[11px] text-slate-400 mt-1">
+          <div className="flex justify-between text-[10px] text-slate-400 mt-1">
             <span>$0</span>
-            <span>$100k</span>
-            <span>$200k+</span>
+            <span>$125k</span>
+            <span>$250k+</span>
           </div>
         </div>
 

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useJobContext } from '@/context/JobContext';
-import { Briefcase, Bookmark, PlusCircle, User, Building2, Menu, X, Sparkles, Calculator, DollarSign } from 'lucide-react';
+import { Briefcase, Bookmark, PlusCircle, User, Building2, Menu, X, Calculator } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -15,42 +15,34 @@ export const Navbar: React.FC = () => {
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800 bg-[#090a0f]/95 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Brand Logo - Clean, Professional */}
         <Link
           href="/"
           onClick={closeMobileMenu}
-          className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-xl"
+          className="flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
           aria-label="CareerHub Homepage"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-emerald-400 p-[2px] shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Briefcase className="w-5 h-5 text-indigo-400 group-hover:text-emerald-400 transition-colors" aria-hidden="true" />
-            </div>
+          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-sm">
+            <Briefcase className="w-4 h-4" aria-hidden="true" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-xl font-bold font-heading tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
-                CareerHub
-              </span>
-              <span className="px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 rounded-md">
-                PRO
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-400 font-medium hidden sm:block">Next-Gen Recruitment Platform</p>
+            <span className="text-lg font-bold font-heading tracking-tight text-white">
+              CareerHub
+            </span>
           </div>
         </Link>
 
-        {/* Center Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/60" aria-label="Desktop Navigation">
+        {/* Center Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-lg" aria-label="Desktop Navigation">
           <Link
             href="/"
-            className={`px-4 py-2 text-xs font-semibold rounded-full transition-all duration-200 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
               pathname === '/'
-                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/25'
-                : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
             }`}
           >
             Find Jobs
@@ -59,10 +51,10 @@ export const Navbar: React.FC = () => {
           {role === 'seeker' ? (
             <Link
               href="/seeker/dashboard"
-              className={`px-4 py-2 text-xs font-semibold rounded-full transition-all duration-200 ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 pathname.startsWith('/seeker')
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/25'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                  ? 'bg-slate-800 text-white'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
               }`}
             >
               My Applications
@@ -70,23 +62,23 @@ export const Navbar: React.FC = () => {
           ) : (
             <Link
               href="/recruiter/dashboard"
-              className={`px-4 py-2 text-xs font-semibold rounded-full transition-all duration-200 ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 pathname.startsWith('/recruiter') && pathname !== '/recruiter/post-job'
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/25'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                  ? 'bg-slate-800 text-white'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
               }`}
             >
-              Recruiter Dashboard & ATS
+              ATS Pipeline
             </Link>
           )}
 
           {role === 'recruiter' && (
             <Link
               href="/recruiter/post-job"
-              className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full transition-all duration-200 ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 pathname === '/recruiter/post-job'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25'
-                  : 'text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-blue-400 hover:text-blue-300 hover:bg-blue-950/40'
               }`}
             >
               <PlusCircle className="w-3.5 h-3.5" aria-hidden="true" />
@@ -96,13 +88,24 @@ export const Navbar: React.FC = () => {
 
           <Link
             href="/salary-calculator"
-            className={`px-3.5 py-2 text-xs font-semibold rounded-full transition-all duration-200 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
               pathname === '/salary-calculator'
-                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/25'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
             }`}
           >
-            Salary Tool
+            Salaries
+          </Link>
+
+          <Link
+            href="/pricing"
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              pathname === '/pricing'
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            Pricing
           </Link>
         </nav>
 
@@ -110,29 +113,29 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           
           {/* Role Switcher Pill */}
-          <div className="flex items-center bg-slate-900 border border-slate-800 p-1 rounded-xl">
+          <div className="flex items-center bg-slate-900 border border-slate-800 p-0.5 rounded-lg">
             <button
               onClick={() => setRole('seeker')}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all min-h-[36px] ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                 role === 'seeker'
-                  ? 'bg-indigo-600 text-white shadow-sm'
+                  ? 'bg-blue-600 text-white'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
-              title="Switch to Job Seeker View"
-              aria-label="Switch to Job Seeker View"
+              title="Job Seeker View"
+              aria-label="Job Seeker View"
             >
               <User className="w-3.5 h-3.5" aria-hidden="true" />
               <span className="hidden sm:inline">Job Seeker</span>
             </button>
             <button
               onClick={() => setRole('recruiter')}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all min-h-[36px] ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                 role === 'recruiter'
-                  ? 'bg-violet-600 text-white shadow-sm'
+                  ? 'bg-slate-800 text-white'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
-              title="Switch to Recruiter View"
-              aria-label="Switch to Recruiter View"
+              title="Recruiter View"
+              aria-label="Recruiter View"
             >
               <Building2 className="w-3.5 h-3.5" aria-hidden="true" />
               <span className="hidden sm:inline">Recruiter</span>
@@ -144,13 +147,13 @@ export const Navbar: React.FC = () => {
             <Link
               href="/seeker/dashboard?tab=saved"
               onClick={closeMobileMenu}
-              className="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-all min-w-[40px] min-h-[40px] flex items-center justify-center"
+              className="relative p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-colors flex items-center justify-center min-w-[36px] min-h-[36px]"
               title="View Bookmarked Jobs"
               aria-label={`View ${savedJobIds.length} bookmarked jobs`}
             >
-              <Bookmark className="w-4 h-4 text-indigo-400" aria-hidden="true" />
+              <Bookmark className="w-4 h-4 text-slate-300" aria-hidden="true" />
               {savedJobIds.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-950 shadow-md">
+                <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   {savedJobIds.length}
                 </span>
               )}
@@ -162,9 +165,9 @@ export const Navbar: React.FC = () => {
             <Link
               href="/recruiter/post-job"
               onClick={closeMobileMenu}
-              className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/20 hover:brightness-110 transition-all min-h-[40px]"
+              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white hover:bg-blue-500 transition-colors"
             >
-              <PlusCircle className="w-4 h-4" aria-hidden="true" />
+              <PlusCircle className="w-3.5 h-3.5" aria-hidden="true" />
               Post Job
             </Link>
           )}
@@ -173,29 +176,28 @@ export const Navbar: React.FC = () => {
           <Link
             href="/seeker/dashboard?tab=profile"
             onClick={closeMobileMenu}
-            className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all min-h-[40px]"
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors"
             aria-label={`Profile for ${candidateProfile.name}`}
           >
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500 text-white font-bold text-xs flex items-center justify-center shadow-inner" aria-hidden="true">
+            <div className="w-6 h-6 rounded-md bg-slate-800 text-white font-semibold text-xs flex items-center justify-center">
               {candidateProfile.name.split(' ').map((n) => n[0]).join('')}
             </div>
-            <div className="hidden xl:block text-left">
-              <p className="text-xs font-semibold text-slate-200 leading-tight">{candidateProfile.name}</p>
-              <p className="text-[10px] text-slate-400 capitalize">{role}</p>
+            <div className="hidden lg:block text-left">
+              <p className="text-xs font-medium text-slate-200 leading-tight">{candidateProfile.name}</p>
             </div>
           </Link>
 
           {/* Mobile Hamburger Button */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-all min-w-[42px] min-h-[42px] flex items-center justify-center"
+            className="md:hidden p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
             aria-label={isMobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
-              <X className="w-5 h-5 text-indigo-400" aria-hidden="true" />
+              <X className="w-5 h-5 text-slate-200" aria-hidden="true" />
             ) : (
-              <Menu className="w-5 h-5 text-slate-300" aria-hidden="true" />
+              <Menu className="w-5 h-5 text-slate-200" aria-hidden="true" />
             )}
           </button>
 
@@ -205,109 +207,73 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-slate-950/95 border-b border-slate-800 px-4 pt-3 pb-6 space-y-3 animate-fade-in shadow-2xl">
-          <div className="flex flex-col space-y-1">
+        <div className="md:hidden bg-slate-950 border-b border-slate-800 px-4 pt-3 pb-6 space-y-2 animate-fade-in">
+          <Link
+            href="/"
+            onClick={closeMobileMenu}
+            className={`block px-3 py-2 rounded-md text-xs font-medium ${
+              pathname === '/' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
+            }`}
+          >
+            Find Jobs
+          </Link>
+
+          {role === 'seeker' ? (
             <Link
-              href="/"
+              href="/seeker/dashboard"
               onClick={closeMobileMenu}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
-                pathname === '/'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-slate-300 hover:bg-slate-900 hover:text-white'
+              className={`block px-3 py-2 rounded-md text-xs font-medium ${
+                pathname.startsWith('/seeker') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
               }`}
             >
-              <span>Find Verified Jobs</span>
-              <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full">Explore</span>
+              My Applications
             </Link>
-
-            {role === 'seeker' ? (
-              <Link
-                href="/seeker/dashboard"
-                onClick={closeMobileMenu}
-                className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
-                  pathname.startsWith('/seeker')
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-300 hover:bg-slate-900 hover:text-white'
-                }`}
-              >
-                <span>My Applications</span>
-                <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">Candidate</span>
-              </Link>
-            ) : (
-              <Link
-                href="/recruiter/dashboard"
-                onClick={closeMobileMenu}
-                className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
-                  pathname.startsWith('/recruiter') && pathname !== '/recruiter/post-job'
-                    ? 'bg-violet-600 text-white'
-                    : 'text-slate-300 hover:bg-slate-900 hover:text-white'
-                }`}
-              >
-                <span>Recruiter ATS Dashboard</span>
-                <span className="text-[10px] bg-violet-500/20 text-violet-300 px-2 py-0.5 rounded-full">ATS</span>
-              </Link>
-            )}
-
+          ) : (
             <Link
-              href="/recruiter/post-job"
+              href="/recruiter/dashboard"
               onClick={closeMobileMenu}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
-                pathname === '/recruiter/post-job'
-                  ? 'bg-emerald-600 text-white'
-                  : 'text-emerald-400 hover:bg-slate-900'
+              className={`block px-3 py-2 rounded-md text-xs font-medium ${
+                pathname.startsWith('/recruiter') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
               }`}
             >
-              <span className="flex items-center gap-1.5">
-                <PlusCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                Post a Job Opening
-              </span>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Free</span>
+              ATS Pipeline
             </Link>
+          )}
 
-            <Link
-              href="/salary-calculator"
-              onClick={closeMobileMenu}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
-                pathname === '/salary-calculator'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-slate-300 hover:bg-slate-900 hover:text-white'
-              }`}
-            >
-              <span className="flex items-center gap-1.5">
-                <Calculator className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-                Tech Salary Calculator
-              </span>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Tool</span>
-            </Link>
+          <Link
+            href="/salary-calculator"
+            onClick={closeMobileMenu}
+            className={`block px-3 py-2 rounded-md text-xs font-medium ${
+              pathname === '/salary-calculator' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
+            }`}
+          >
+            Tech Salaries
+          </Link>
 
-            <Link
-              href="/pricing"
-              onClick={closeMobileMenu}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
-                pathname === '/pricing'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-slate-300 hover:bg-slate-900 hover:text-white'
-              }`}
-            >
-              <span>Enterprise Pricing</span>
-              <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">Plans</span>
-            </Link>
+          <Link
+            href="/pricing"
+            onClick={closeMobileMenu}
+            className={`block px-3 py-2 rounded-md text-xs font-medium ${
+              pathname === '/pricing' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900'
+            }`}
+          >
+            Pricing
+          </Link>
 
-            <Link
-              href="/privacy"
-              onClick={closeMobileMenu}
-              className="px-4 py-2 text-xs text-slate-400 hover:text-white transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              onClick={closeMobileMenu}
-              className="px-4 py-2 text-xs text-slate-400 hover:text-white transition-colors"
-            >
-              Terms of Service
-            </Link>
-          </div>
+          <Link
+            href="/privacy"
+            onClick={closeMobileMenu}
+            className="block px-3 py-2 text-xs text-slate-400 hover:text-white"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            href="/terms"
+            onClick={closeMobileMenu}
+            className="block px-3 py-2 text-xs text-slate-400 hover:text-white"
+          >
+            Terms of Service
+          </Link>
         </div>
       )}
     </header>

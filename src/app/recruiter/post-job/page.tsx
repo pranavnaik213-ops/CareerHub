@@ -202,7 +202,7 @@ export default function PostJobPage() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-10 backdrop-blur-xl shadow-2xl space-y-8"
+        className="bg-[#11141c] border border-slate-800 rounded-xl p-6 sm:p-8 space-y-6"
       >
         {/* Anti-spam honeypot */}
         <div className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none" aria-hidden="true">
@@ -494,7 +494,7 @@ export default function PostJobPage() {
 
           <button
             type="submit"
-            className="flex items-center gap-2 px-8 py-3 rounded-2xl text-xs font-bold bg-gradient-to-r from-emerald-500 via-teal-600 to-indigo-600 text-white shadow-xl shadow-emerald-500/20 hover:brightness-110 transition-all min-h-[44px]"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors min-h-[40px]"
           >
             <Send className="w-4 h-4" aria-hidden="true" />
             Publish Job Listing

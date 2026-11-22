@@ -115,57 +115,57 @@ export default function CandidateDashboard() {
     <div className="space-y-8">
       
       {/* Dashboard Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 shadow-xl">
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-extrabold text-2xl flex items-center justify-center shadow-lg" aria-hidden="true">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-xl bg-slate-900 border border-slate-800">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 text-white font-bold text-lg flex items-center justify-center" aria-hidden="true">
             {candidateProfile.name.split(' ').map((n) => n[0]).join('')}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">{candidateProfile.name}</h1>
-            <p className="text-xs text-indigo-300 font-medium">{candidateProfile.headline}</p>
-            <p className="text-xs text-slate-300 mt-1 flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
+            <h1 className="text-xl font-bold text-white tracking-tight font-heading">{candidateProfile.name}</h1>
+            <p className="text-xs text-slate-300 font-medium">{candidateProfile.headline}</p>
+            <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
               {candidateProfile.location}
             </p>
           </div>
         </div>
 
         {/* Tab Selection Navigation */}
-        <div className="flex items-center bg-slate-950 p-1.5 rounded-2xl border border-slate-800 w-full sm:w-auto">
+        <div className="flex items-center bg-[#11141c] p-1 rounded-lg border border-slate-800 w-full sm:w-auto">
           <button
             onClick={() => setActiveTab('applications')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
               activeTab === 'applications'
-                ? 'bg-indigo-600 text-white shadow-md'
+                ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
             <Briefcase className="w-3.5 h-3.5" aria-hidden="true" />
-            My Applications ({candidateApps.length})
+            Applications ({candidateApps.length})
           </button>
 
           <button
             onClick={() => setActiveTab('saved')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
               activeTab === 'saved'
-                ? 'bg-indigo-600 text-white shadow-md'
+                ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
             <Bookmark className="w-3.5 h-3.5" aria-hidden="true" />
-            Saved Jobs ({savedJobs.length})
+            Saved ({savedJobs.length})
           </button>
 
           <button
             onClick={() => setActiveTab('profile')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
               activeTab === 'profile'
-                ? 'bg-indigo-600 text-white shadow-md'
+                ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
             <User className="w-3.5 h-3.5" aria-hidden="true" />
-            Resume & Profile
+            Profile & Links
           </button>
         </div>
       </div>
@@ -230,18 +230,18 @@ export default function CandidateDashboard() {
                             return (
                               <div key={idx} className="flex flex-col items-center text-center space-y-2">
                                 <div
-                                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all ${
+                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border transition-colors ${
                                     isCompleted
-                                      ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/30'
-                                      : 'bg-slate-950 border-slate-800 text-slate-500'
+                                      ? 'bg-blue-600 border-blue-500 text-white'
+                                      : 'bg-slate-900 border-slate-800 text-slate-500'
                                   }`}
                                 >
-                                  {isCompleted ? <CheckCircle2 className="w-4 h-4" aria-hidden="true" /> : idx + 1}
+                                  {isCompleted ? <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> : idx + 1}
                                 </div>
                                 <span
-                                  className={`text-[11px] font-medium leading-tight ${
+                                  className={`text-[11px] leading-tight ${
                                     isCurrent
-                                      ? 'text-indigo-300 font-bold'
+                                      ? 'text-blue-400 font-semibold'
                                       : isCompleted
                                       ? 'text-slate-200'
                                       : 'text-slate-500'
@@ -262,11 +262,11 @@ export default function CandidateDashboard() {
 
                     {/* Recruiter Interview Details or Notes */}
                     {app.interviewDate && (
-                      <div className="p-4 rounded-xl bg-violet-950/30 border border-violet-500/30 flex items-center gap-3">
-                        <Calendar className="w-5 h-5 text-violet-400 flex-shrink-0" aria-hidden="true" />
+                      <div className="p-3.5 rounded-lg bg-blue-950/30 border border-blue-800/40 flex items-center gap-2.5">
+                        <Calendar className="w-4 h-4 text-blue-400 flex-shrink-0" aria-hidden="true" />
                         <div>
-                          <p className="text-xs font-bold text-violet-200">Interview Scheduled!</p>
-                          <p className="text-xs text-violet-300">{app.interviewDate}</p>
+                          <p className="text-xs font-semibold text-blue-200">Interview Scheduled</p>
+                          <p className="text-xs text-blue-300/80">{app.interviewDate}</p>
                         </div>
                       </div>
                     )}
@@ -317,18 +317,18 @@ export default function CandidateDashboard() {
 
       {/* TAB 3: RESUME & PROFILE EDITOR */}
       {activeTab === 'profile' && (
-        <form onSubmit={handleSaveProfile} noValidate className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl space-y-8">
+        <form onSubmit={handleSaveProfile} noValidate className="bg-[#11141c] border border-slate-800 rounded-xl p-5 sm:p-7 space-y-6">
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div>
-              <h2 className="text-lg font-bold text-slate-100">Candidate Profile & Resume</h2>
-              <p className="text-xs text-slate-400">Keep your information up-to-date for fast 1-click job applications.</p>
+              <h2 className="text-base font-bold text-slate-100 font-heading">Candidate Profile & Resume</h2>
+              <p className="text-xs text-slate-400">Keep your details up-to-date for 1-click applications.</p>
             </div>
             <button
               type="submit"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/25 hover:brightness-110 transition-all min-h-[40px] w-fit"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors min-h-[38px] w-fit"
             >
-              <Save className="w-4 h-4" aria-hidden="true" />
+              <Save className="w-3.5 h-3.5" aria-hidden="true" />
               Save Profile Changes
             </button>
           </div>
@@ -436,23 +436,23 @@ export default function CandidateDashboard() {
               <button
                 type="button"
                 onClick={handleAddSkill}
-                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1 transition-colors"
+                className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" aria-hidden="true" />
                 Add Skill
               </button>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {profileForm.skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-slate-800 text-indigo-300 border border-slate-700"
+                  className="flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-medium bg-slate-800 text-slate-200 border border-slate-700"
                 >
                   {skill}
                   <button
                     type="button"
                     onClick={() => handleRemoveSkill(skill)}
-                    className="text-slate-400 hover:text-rose-400"
+                    className="text-slate-400 hover:text-rose-400 ml-0.5"
                     aria-label={`Remove skill ${skill}`}
                   >
                     ×
@@ -462,18 +462,61 @@ export default function CandidateDashboard() {
             </div>
           </div>
 
-          {/* Resume Upload Simulation */}
-          <div className="p-6 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20" aria-hidden="true">
-                <FileText className="w-6 h-6" />
+          {/* Real Links Card */}
+          <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+            <h3 className="text-xs font-semibold text-slate-200">Verified Professional Links</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div>
+                <span className="text-slate-400 block text-[11px]">GitHub Profile:</span>
+                <a
+                  href={profileForm.githubUrl || 'https://github.com/pranavnaik213-ops'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
+                >
+                  <span>github.com/pranavnaik213-ops</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-200">{profileForm.resumeName}</p>
-                <p className="text-[11px] text-slate-400">Last updated: {profileForm.resumeLastUpdated}</p>
+                <span className="text-slate-400 block text-[11px]">Project Repository:</span>
+                <a
+                  href={profileForm.portfolioUrl || 'https://github.com/pranavnaik213-ops/CareerHub'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
+                >
+                  <span>CareerHub GitHub Repo</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+              <div>
+                <span className="text-slate-400 block text-[11px]">LinkedIn:</span>
+                <a
+                  href={profileForm.linkedinUrl || 'https://linkedin.com/in/pranav-naik'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
+                >
+                  <span>linkedin.com/in/pranav-naik</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             </div>
-            <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">
+          </div>
+
+          {/* Resume Upload Simulation */}
+          <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-slate-800 rounded-lg text-slate-300 border border-slate-700" aria-hidden="true">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-200">{profileForm.resumeName}</p>
+                <p className="text-[11px] text-slate-400">Verified PDF • Last updated: {profileForm.resumeLastUpdated}</p>
+              </div>
+            </div>
+            <span className="text-xs font-medium text-emerald-400 bg-emerald-950/40 px-2.5 py-1 rounded border border-emerald-800/50">
               Resume Active
             </span>
           </div>

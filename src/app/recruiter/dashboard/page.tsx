@@ -31,27 +31,27 @@ export default function RecruiterDashboard() {
     <div className="space-y-8">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-violet-950/40 to-slate-900 border border-slate-800 shadow-xl">
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg" aria-hidden="true">
-            <Building2 className="w-8 h-8" />
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-xl bg-slate-900 border border-slate-800">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-lg bg-slate-800 border border-slate-700 text-white flex items-center justify-center shadow-sm" aria-hidden="true">
+            <Building2 className="w-5 h-5 text-blue-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-white tracking-tight">Recruiter Control Hub</h1>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-violet-500/20 text-violet-300 border border-violet-500/30">
-                Employer Edition
+              <h1 className="text-xl font-bold text-white tracking-tight font-heading">Recruiter Control Hub</h1>
+              <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                Employer ATS
               </span>
             </div>
-            <p className="text-xs text-slate-300 mt-1">
-              Publish verified job openings, manage candidates across ATS Kanban stages, and track response metrics.
+            <p className="text-xs text-slate-400 mt-0.5">
+              Publish job openings, advance applicants across ATS stages, and track pipeline metrics.
             </p>
           </div>
         </div>
 
         <Link
           href="/recruiter/post-job"
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/20 hover:brightness-110 transition-all min-h-[40px]"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors min-h-[38px]"
         >
           <PlusCircle className="w-4 h-4" aria-hidden="true" />
           Post New Job
@@ -63,12 +63,12 @@ export default function RecruiterDashboard() {
 
       {/* Navigation Tabs */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
-        <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
+        <div className="flex items-center gap-1.5 bg-[#11141c] p-1 rounded-lg border border-slate-800">
           <button
             onClick={() => setActiveTab('ats')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
               activeTab === 'ats'
-                ? 'bg-violet-600 text-white shadow-md'
+                ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -78,9 +78,9 @@ export default function RecruiterDashboard() {
 
           <button
             onClick={() => setActiveTab('postings')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[38px] ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
               activeTab === 'postings'
-                ? 'bg-violet-600 text-white shadow-md'
+                ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -95,16 +95,16 @@ export default function RecruiterDashboard() {
 
       {/* TAB 2: MANAGE JOB POSTINGS TABLE */}
       {activeTab === 'postings' && (
-        <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl space-y-6">
+        <div className="bg-[#11141c] border border-slate-800 rounded-xl p-5 sm:p-6 space-y-5">
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div>
-              <h2 className="text-base font-bold text-slate-100">Job Listings Directory</h2>
+              <h2 className="text-base font-bold text-slate-100 font-heading">Job Listings Directory</h2>
               <p className="text-xs text-slate-400">Manage status visibility or remove inactive job postings.</p>
             </div>
             <Link
               href="/recruiter/post-job"
-              className="px-4 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white shadow-md w-fit min-h-[36px] flex items-center justify-center"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors w-fit min-h-[34px] flex items-center justify-center"
             >
               + Create Posting
             </Link>

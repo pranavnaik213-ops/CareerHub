@@ -5,27 +5,24 @@
   --font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   
-  /* UI-UX Pro Max Color Tokens */
-  --color-primary: #6366f1;
-  --color-primary-light: #818cf8;
-  --color-primary-dark: #4f46e5;
-  --color-accent: #10b981;
-  --color-accent-light: #34d399;
-  --color-secondary: #8b5cf6;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
+  /* Clean, authentic tech palette (No neon glows) */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-accent: #059669;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
 
-  /* Surfaces & Glassmorphism */
-  --bg-app: #080c14;
-  --bg-card: rgba(15, 23, 42, 0.75);
-  --bg-card-hover: rgba(15, 23, 42, 0.95);
+  /* Restrained, professional surfaces */
+  --bg-app: #090a0f;
+  --bg-card: #11141c;
+  --bg-card-hover: #161b26;
   --border-card: rgba(255, 255, 255, 0.08);
-  --border-card-hover: rgba(99, 102, 241, 0.4);
+  --border-card-hover: rgba(255, 255, 255, 0.16);
 }
 
 body {
-  background-color: #080c14;
-  color: #f8fafc;
+  background-color: #090a0f;
+  color: #f1f5f9;
   font-family: var(--font-body);
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
@@ -38,40 +35,36 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   letter-spacing: -0.025em;
 }
 
-/* Glassmorphic Surfaces */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* Restrained, Clean Card Surfaces (No neon box-shadows) */
+.clean-card {
+  background-color: #11141c;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.clean-card:hover {
+  background-color: #161b26;
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
-.glass-panel-hover:hover {
-  background: rgba(15, 23, 42, 0.9);
-  border-color: rgba(99, 102, 241, 0.45);
-  box-shadow: 0 12px 35px -10px rgba(99, 102, 241, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Bento Grid Cards */
+/* Bento grid without artificial neon glow */
 .bento-card {
-  position: relative;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 15, 25, 0.9) 100%);
+  background-color: #11141c;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .bento-card:hover {
-  border-color: rgba(99, 102, 241, 0.4);
-  box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.18);
-  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.glass-panel {
+  background: rgba(17, 20, 28, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Custom Scrollbar */
@@ -81,22 +74,22 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     height: 6px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.6);
+    background: #090a0f;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(99, 102, 241, 0.35);
+    background: #27272a;
     border-radius: 9999px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(99, 102, 241, 0.7);
+    background: #3f3f46;
   }
 }
 
-/* Animations conforming to UI-UX Pro Max timing rules */
-@keyframes slideUpFade {
+/* Fade in animation */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -104,39 +97,11 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.15;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.25;
-    transform: scale(1.05);
-  }
-}
-
-.animate-slide-up {
-  animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
 .animate-fade-in {
   animation: fadeIn 0.2s ease-out forwards;
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 6s ease-in-out infinite;
-}
-
-/* Reduced Motion Override (WCAG 2.2 AA / UI-UX Pro Max Priority 1) */
+/* Accessibility: reduce motion overrides */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

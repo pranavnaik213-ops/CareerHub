@@ -15,6 +15,8 @@ export interface Job {
   title: string;
   company: string;
   logo: string; // URL or icon identifier
+  companyUrl?: string; // Real company website
+  applyUrl?: string; // Real company careers page / direct job application URL
   location: string;
   locationType: LocationType;
   jobType: JobType;

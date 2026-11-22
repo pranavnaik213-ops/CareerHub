@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useJobContext } from '@/context/JobContext';
-import { Briefcase, Users, CalendarCheck, Award, TrendingUp, Clock } from 'lucide-react';
+import { Briefcase, Users, CalendarCheck, Award } from 'lucide-react';
 
 export const RecruiterMetrics: React.FC = () => {
   const { jobs, applications } = useJobContext();
@@ -19,28 +19,24 @@ export const RecruiterMetrics: React.FC = () => {
       value: activeJobs,
       subtitle: `Out of ${totalJobs} total postings`,
       icon: Briefcase,
-      color: 'from-indigo-500/20 to-violet-500/20 text-indigo-300 border-indigo-500/30'
     },
     {
       title: 'Total Applications',
       value: totalApps,
       subtitle: 'Across all active listings',
       icon: Users,
-      color: 'from-blue-500/20 to-indigo-500/20 text-blue-300 border-blue-500/30'
     },
     {
       title: 'Interviews Scheduled',
       value: interviewing,
-      subtitle: 'Upcoming candidate rounds',
+      subtitle: 'Active candidate rounds',
       icon: CalendarCheck,
-      color: 'from-violet-500/20 to-purple-500/20 text-violet-300 border-violet-500/30'
     },
     {
       title: 'Offers Extended',
       value: offersExtended,
       subtitle: 'Final candidate stage',
       icon: Award,
-      color: 'from-emerald-500/20 to-teal-500/20 text-emerald-300 border-emerald-500/30'
     }
   ];
 
@@ -51,16 +47,18 @@ export const RecruiterMetrics: React.FC = () => {
         return (
           <div
             key={i}
-            className={`p-5 rounded-2xl bg-gradient-to-br border backdrop-blur-xl shadow-lg ${stat.color} bg-slate-900/90`}
+            className="p-5 rounded-xl bg-[#11141c] border border-slate-800 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold text-slate-200">{stat.title}</span>
-              <div className="p-2 rounded-xl bg-slate-950/70 border border-slate-800">
-                <Icon className="w-4 h-4 text-slate-200" aria-hidden="true" />
+              <span className="text-xs font-medium text-slate-300">{stat.title}</span>
+              <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                <Icon className="w-4 h-4 text-blue-400" aria-hidden="true" />
               </div>
             </div>
-            <div className="text-3xl font-extrabold text-white tracking-tight mb-1">{stat.value}</div>
-            <p className="text-[11px] text-slate-400 font-medium">{stat.subtitle}</p>
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-heading mb-0.5">{stat.value}</div>
+              <p className="text-[11px] text-slate-400">{stat.subtitle}</p>
+            </div>
           </div>
         );
       })}

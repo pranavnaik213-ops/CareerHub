@@ -17,14 +17,24 @@ export const Footer: React.FC = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white" aria-hidden="true">
+            <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white" aria-hidden="true">
               <Briefcase className="w-4 h-4" />
             </div>
             <span className="text-base font-bold text-white tracking-tight">CareerHub</span>
           </div>
           <p className="text-slate-400 text-xs leading-relaxed">
-            Empowering top tech talent and hiring teams with modern recruitment automation, ATS candidate pipelines, and real-time job matching.
+            Tech job directory and candidate applicant tracking system for verified engineering, product, and AI positions.
           </p>
+          <div className="pt-1">
+            <a
+              href="https://github.com/pranavnaik213-ops/CareerHub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 font-medium"
+            >
+              <span>GitHub: pranavnaik213-ops/CareerHub</span>
+            </a>
+          </div>
         </div>
 
         <div>
