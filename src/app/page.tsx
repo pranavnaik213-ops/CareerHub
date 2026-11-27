@@ -9,15 +9,12 @@ import { JobDetailsModal } from '@/components/JobDetailsModal';
 import { ApplyModal } from '@/components/ApplyModal';
 import { AiAgentHub } from '@/components/AiAgentHub';
 import {
-  Search,
   Briefcase,
   Building2,
   ArrowRight,
-  ShieldCheck,
   FilterX,
   SlidersHorizontal,
-  ExternalLink,
-  DollarSign
+  ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 import { trackEvent } from '@/lib/analytics';

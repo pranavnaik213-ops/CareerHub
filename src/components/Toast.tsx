@@ -13,8 +13,8 @@ export const ToastContainer: React.FC = () => {
     <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-md w-full px-4 pointer-events-none">
       {toasts.map((toast) => {
         let Icon = Info;
-        let borderClass = 'border-indigo-500/50 text-indigo-200 bg-slate-900/90';
-        let iconColor = 'text-indigo-400';
+        let borderClass = 'border-blue-500/50 text-blue-200 bg-slate-900/95';
+        let iconColor = 'text-blue-400';
 
         if (toast.type === 'success') {
           Icon = CheckCircle2;
@@ -29,7 +29,7 @@ export const ToastContainer: React.FC = () => {
         return (
           <div
             key={toast.id}
-            className={`pointer-events-auto flex items-center justify-between p-4 rounded-xl border backdrop-blur-xl shadow-2xl transition-all duration-300 animate-slide-up ${borderClass}`}
+            className={`pointer-events-auto flex items-center justify-between p-4 rounded-xl border backdrop-blur-xl shadow-2xl transition-opacity duration-200 animate-slide-up ${borderClass}`}
           >
             <div className="flex items-center gap-3">
               <Icon className={`w-5 h-5 flex-shrink-0 ${iconColor}`} />

@@ -14,14 +14,11 @@ import {
   CheckCircle2,
   Clock,
   Calendar,
-  Building,
   MapPin,
   ExternalLink,
   Plus,
-  Trash2,
   Save,
-  Briefcase,
-  AlertCircle
+  Briefcase
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
@@ -39,8 +36,7 @@ export default function CandidateDashboard() {
     candidateProfile,
     savedJobIds,
     updateCandidateProfile,
-    showToast,
-    role
+    showToast
   } = useJobContext();
 
   const [activeTab, setActiveTab] = useState<'applications' | 'saved' | 'profile'>('applications');

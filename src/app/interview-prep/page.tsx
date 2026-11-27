@@ -1,21 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { COMPANY_INTERVIEW_GUIDES, CompanyGuide } from '@/data/companyInterviewGuides';
+import { COMPANY_INTERVIEW_GUIDES } from '@/data/companyInterviewGuides';
 import { CompanyLogo } from '@/components/CompanyLogo';
 import {
   BookOpen,
-  Code2,
-  Cpu,
-  Layers,
   Sparkles,
   CheckCircle2,
-  Clock,
-  ArrowRight,
-  ShieldCheck,
-  ChevronDown,
-  ChevronUp,
-  HelpCircle,
   Award
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';

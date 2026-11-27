@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Application } from '@/types';
-import { X, Sparkles, CheckCircle2, Bot, Calendar, FileText, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, Sparkles, Bot, Calendar, Check } from 'lucide-react';
 
 interface CandidateComparisonModalProps {
   isOpen: boolean;
@@ -89,7 +89,7 @@ export const CandidateComparisonModal: React.FC<CandidateComparisonModalProps> =
                 }`}
               >
                 <span>{app.candidateName}</span>
-                {isSelected && <span className="text-[10px] bg-blue-700 px-1.5 rounded-full">✓</span>}
+                {isSelected && <Check className="w-3 h-3 text-white" />}
               </button>
             );
           })}
@@ -154,14 +154,14 @@ export const CandidateComparisonModal: React.FC<CandidateComparisonModalProps> =
                         return (
                           <span
                             key={skill}
-                            className={`px-2 py-0.5 rounded text-[10px] font-medium border ${
+                            className={`px-2 py-0.5 rounded text-[10px] font-medium border flex items-center gap-1 ${
                               hasSkill
                                 ? 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60'
                                 : 'bg-slate-900/60 text-slate-500 border-slate-800'
                             }`}
                           >
-                            {hasSkill ? '✓ ' : '– '}
-                            {skill}
+                            {hasSkill ? <Check className="w-2.5 h-2.5 text-emerald-400" /> : <span className="opacity-40">–</span>}
+                            <span>{skill}</span>
                           </span>
                         );
                       })}

@@ -20,50 +20,33 @@ export default async function Image() {
           alignItems: 'flex-start',
           justifyContent: 'space-between',
           backgroundColor: '#090d16',
-          backgroundImage: 'radial-gradient(circle at 25px 25px, rgba(99, 102, 241, 0.15) 2%, transparent 0%), radial-gradient(circle at 75px 75px, rgba(168, 85, 247, 0.15) 2%, transparent 0%)',
-          backgroundSize: '100px 100px',
           padding: '80px',
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Glow blur background */}
-        <div
-          style={{
-            position: 'absolute',
-            top: -100,
-            right: -100,
-            width: 500,
-            height: 500,
-            borderRadius: 9999,
-            background: 'rgba(99, 102, 241, 0.25)',
-            filter: 'blur(120px)',
-          }}
-        />
-
         {/* Brand Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div
             style={{
               width: 56,
               height: 56,
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #10b981 100%)',
+              borderRadius: 14,
+              background: '#2563eb',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 10px 25px rgba(99, 102, 241, 0.4)',
             }}
           >
             <div
               style={{
                 width: 48,
                 height: 48,
-                borderRadius: 12,
+                borderRadius: 10,
                 backgroundColor: '#090d16',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#818cf8',
+                color: '#60a5fa',
                 fontSize: 26,
               }}
             >

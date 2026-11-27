@@ -45,6 +45,8 @@ const DEFAULT_FILTERS: FilterState = {
 
 const JobContext = createContext<JobContextType | undefined>(undefined);
 
+let nextToastId = 1;
+
 export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [role, setRoleState] = useState<UserRole>('seeker');
   const [jobs, setJobs] = useState<Job[]>(REAL_JOB_OPENINGS);
@@ -57,63 +59,65 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Load state from localStorage on initial render
   useEffect(() => {
-    try {
-      // 1. Purge legacy demo/fake localStorage data if present
-      localStorage.removeItem('careerhub_jobs');
-      localStorage.removeItem('careerhub_applications');
-      localStorage.removeItem('careerhub_profile');
-      localStorage.removeItem('careerhub_saved_jobs');
+    queueMicrotask(() => {
+      try {
+        // 1. Purge legacy demo/fake localStorage data if present
+        localStorage.removeItem('careerhub_jobs');
+        localStorage.removeItem('careerhub_applications');
+        localStorage.removeItem('careerhub_profile');
+        localStorage.removeItem('careerhub_saved_jobs');
 
-      const savedRole = localStorage.getItem('careerhub_role');
-      if (savedRole === 'seeker' || savedRole === 'recruiter') setRoleState(savedRole);
+        const savedRole = localStorage.getItem('careerhub_role');
+        if (savedRole === 'seeker' || savedRole === 'recruiter') setRoleState(savedRole);
 
-      // 2. Load verified real INR tech jobs
-      const savedJobs = localStorage.getItem('careerhub_real_inr_jobs_v1');
-      if (savedJobs) {
-        const parsed: Job[] = JSON.parse(savedJobs);
-        const hasLegacyFakeJobs = parsed.some(
-          (j) =>
-            j.currency === '$' ||
-            ['Vortex Tech', 'Lumina Design Lab', 'Cognitive AI', 'Pulse Digital', 'Quantum', 'Nexus'].includes(j.company) ||
-            j.salaryMax < 1000000
-        );
-        if (!hasLegacyFakeJobs && parsed.length > 0) {
-          setJobs(parsed);
+        // 2. Load verified real INR tech jobs
+        const savedJobs = localStorage.getItem('careerhub_real_inr_jobs_v1');
+        if (savedJobs) {
+          const parsed: Job[] = JSON.parse(savedJobs);
+          const hasLegacyFakeJobs = parsed.some(
+            (j) =>
+              j.currency === '$' ||
+              ['Vortex Tech', 'Lumina Design Lab', 'Cognitive AI', 'Pulse Digital', 'Quantum', 'Nexus'].includes(j.company) ||
+              j.salaryMax < 1000000
+          );
+          if (!hasLegacyFakeJobs && parsed.length > 0) {
+            setJobs(parsed);
+          } else {
+            setJobs(REAL_JOB_OPENINGS);
+            localStorage.setItem('careerhub_real_inr_jobs_v1', JSON.stringify(REAL_JOB_OPENINGS));
+          }
         } else {
           setJobs(REAL_JOB_OPENINGS);
-          localStorage.setItem('careerhub_real_inr_jobs_v1', JSON.stringify(REAL_JOB_OPENINGS));
         }
-      } else {
-        setJobs(REAL_JOB_OPENINGS);
-      }
 
-      // 3. Load verified applications
-      const savedApps = localStorage.getItem('careerhub_real_inr_apps_v1');
-      if (savedApps) {
-        const parsedApps: Application[] = JSON.parse(savedApps);
-        const hasLegacyFakeApps = parsedApps.some((a) =>
-          ['Vortex Tech', 'Lumina Design Lab', 'Cognitive AI', 'Pulse Digital'].includes(a.companyName)
-        );
-        if (!hasLegacyFakeApps && parsedApps.length > 0) {
-          setApplications(parsedApps);
+        // 3. Load verified applications
+        const savedApps = localStorage.getItem('careerhub_real_inr_apps_v1');
+        if (savedApps) {
+          const parsedApps: Application[] = JSON.parse(savedApps);
+          const hasLegacyFakeApps = parsedApps.some((a) =>
+            ['Vortex Tech', 'Lumina Design Lab', 'Cognitive AI', 'Pulse Digital'].includes(a.companyName)
+          );
+          if (!hasLegacyFakeApps && parsedApps.length > 0) {
+            setApplications(parsedApps);
+          } else {
+            setApplications(REAL_APPLICATIONS);
+            localStorage.setItem('careerhub_real_inr_apps_v1', JSON.stringify(REAL_APPLICATIONS));
+          }
         } else {
           setApplications(REAL_APPLICATIONS);
-          localStorage.setItem('careerhub_real_inr_apps_v1', JSON.stringify(REAL_APPLICATIONS));
         }
-      } else {
-        setApplications(REAL_APPLICATIONS);
+
+        const savedProfile = localStorage.getItem('careerhub_real_inr_profile_v1');
+        if (savedProfile) setCandidateProfile(JSON.parse(savedProfile));
+
+        const savedBookmarks = localStorage.getItem('careerhub_real_inr_saved_v1');
+        if (savedBookmarks) setSavedJobIds(JSON.parse(savedBookmarks));
+      } catch (e) {
+        console.error('Error loading data from localStorage', e);
+      } finally {
+        setIsLoaded(true);
       }
-
-      const savedProfile = localStorage.getItem('careerhub_real_inr_profile_v1');
-      if (savedProfile) setCandidateProfile(JSON.parse(savedProfile));
-
-      const savedBookmarks = localStorage.getItem('careerhub_real_inr_saved_v1');
-      if (savedBookmarks) setSavedJobIds(JSON.parse(savedBookmarks));
-    } catch (e) {
-      console.error('Error loading data from localStorage', e);
-    } finally {
-      setIsLoaded(true);
-    }
+    });
   }, []);
 
   // Save to localStorage when state updates
@@ -131,7 +135,7 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [role, jobs, applications, candidateProfile, savedJobIds, isLoaded]);
 
   const showToast = (message: string, type: 'success' | 'info' | 'error' = 'info') => {
-    const id = Date.now() + Math.random();
+    const id = nextToastId++;
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
       removeToast(id);

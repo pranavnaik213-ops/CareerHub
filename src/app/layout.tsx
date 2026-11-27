@@ -88,12 +88,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="bg-[#090d16] text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white antialiased">
+      <body className="bg-[#090d16] text-slate-100 min-h-screen flex flex-col selection:bg-blue-600 selection:text-white antialiased">
         <JobProvider>
           {/* Skip link for accessibility / keyboard navigation */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-indigo-600 focus:text-white focus:top-2 focus:left-2 focus:rounded-xl"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-blue-600 focus:text-white focus:top-2 focus:left-2 focus:rounded-lg"
           >
             Skip to main content
           </a>

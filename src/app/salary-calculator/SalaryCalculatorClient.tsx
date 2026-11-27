@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Award, ShieldCheck, IndianRupee, Calculator, Building2, TrendingUp, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Calculator, Building2, TrendingUp, ArrowRight } from 'lucide-react';
 import { formatSalaryLakhs } from '@/lib/formatSalary';
 import { calculateIndianCTCBreakdown } from '@/lib/taxCalculator';
 import { COMPANY_INTERVIEW_GUIDES } from '@/data/companyInterviewGuides';

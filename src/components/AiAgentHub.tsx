@@ -3,15 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { useJobContext } from '@/context/JobContext';
 import { fetchNextAgentJob, calculateJobMatch } from '@/lib/aiAgent';
-import { Bot, RefreshCw, Sparkles, CheckCircle2, ChevronRight, X, ShieldCheck, Zap } from 'lucide-react';
+import { Bot, RefreshCw, Sparkles, X, ShieldCheck, Zap } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 export const AiAgentHub: React.FC = () => {
-  const { jobs, postJob, candidateProfile, showToast, role } = useJobContext();
+  const { jobs, postJob, candidateProfile, showToast } = useJobContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<string>('Just now');
-  const [syncedCount, setSyncedCount] = useState<number>(3);
 
   // Background auto-sync simulation: every 90 seconds, agent checks for new openings
   useEffect(() => {
@@ -39,14 +38,13 @@ export const AiAgentHub: React.FC = () => {
           benefits: newJob.benefits,
           featured: newJob.featured,
         });
-        setSyncedCount((c) => c + 1);
         setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
         showToast(`AI Agent auto-ingested new verified opening: ${newJob.company} (${newJob.title})`, 'info');
       }
     }, 90000);
 
     return () => clearInterval(timer);
-  }, [jobs, postJob]);
+  }, [jobs, postJob, showToast]);
 
   const handleManualSync = () => {
     setIsSyncing(true);
@@ -78,7 +76,6 @@ export const AiAgentHub: React.FC = () => {
           benefits: newJob.benefits,
           featured: newJob.featured,
         });
-        setSyncedCount((c) => c + 1);
         setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
         showToast(`AI Agent verified and synced new opening: ${newJob.company} - ${newJob.title}!`, 'success');
       } else {

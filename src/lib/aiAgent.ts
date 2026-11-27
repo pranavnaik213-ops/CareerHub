@@ -1,4 +1,4 @@
-import { Job, CandidateProfile, Application, ApplicationStatus } from '@/types';
+import { Job, CandidateProfile, ApplicationStatus } from '@/types';
 import { AI_AGENT_REAL_JOB_POOL } from '@/data/realJobOpenings';
 
 /**

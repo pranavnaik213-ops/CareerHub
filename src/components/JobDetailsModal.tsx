@@ -3,7 +3,7 @@
 import React from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, MapPin, Users, CheckCircle2, Bookmark, ArrowRight, ShieldCheck, Gift, ExternalLink, Globe, Sparkles, Share2 } from 'lucide-react';
+import { X, MapPin, CheckCircle2, Bookmark, ArrowRight, ShieldCheck, Gift, ExternalLink, Globe, Sparkles, Share2 } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
 import { formatSalaryRange } from '@/lib/formatSalary';
 import { calculateJobMatch } from '@/lib/aiAgent';

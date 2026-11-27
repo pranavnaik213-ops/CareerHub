@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, Calculator, DollarSign, TrendingUp, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Calculator } from 'lucide-react';
 import { SalaryCalculatorClient } from './SalaryCalculatorClient';
 
 export const metadata: Metadata = {

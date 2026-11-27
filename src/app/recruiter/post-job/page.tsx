@@ -1,21 +1,12 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useJobContext } from '@/context/JobContext';
 import { useRouter } from 'next/navigation';
 import { LocationType, JobType, ExperienceLevel } from '@/types';
 import {
-  Briefcase,
-  Building,
-  MapPin,
-  DollarSign,
-  Plus,
-  X,
   ArrowLeft,
   Send,
-  Sparkles,
-  AlertCircle,
-  ShieldAlert,
   Zap,
   Cpu,
   ShieldCheck,
@@ -24,21 +15,21 @@ import {
   Building2,
   Flame,
   Code2,
-  Gem
+  Gem,
+  X
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 const BRAND_ICONS = [
-  { id: 'zap', name: 'Fast Energy', Icon: Zap, gradient: 'from-amber-500 to-orange-500' },
-  { id: 'sparkles', name: 'Innovation', Icon: Sparkles, gradient: 'from-indigo-500 to-violet-500' },
-  { id: 'cpu', name: 'AI & Data', Icon: Cpu, gradient: 'from-cyan-500 to-blue-500' },
-  { id: 'shield', name: 'Security', Icon: ShieldCheck, gradient: 'from-emerald-500 to-teal-500' },
-  { id: 'layers', name: 'Full Stack', Icon: Layers, gradient: 'from-purple-500 to-pink-500' },
-  { id: 'globe', name: 'Distributed', Icon: Globe, gradient: 'from-blue-500 to-indigo-500' },
-  { id: 'building', name: 'Enterprise', Icon: Building2, gradient: 'from-slate-600 to-slate-800' },
-  { id: 'flame', name: 'High Growth', Icon: Flame, gradient: 'from-rose-500 to-red-500' },
-  { id: 'code', name: 'Engineering', Icon: Code2, gradient: 'from-violet-500 to-indigo-500' },
-  { id: 'gem', name: 'Premium Tier', Icon: Gem, gradient: 'from-teal-500 to-emerald-500' },
+  { id: 'zap', name: 'Fast Energy', Icon: Zap },
+  { id: 'code', name: 'Engineering', Icon: Code2 },
+  { id: 'cpu', name: 'AI & Data', Icon: Cpu },
+  { id: 'shield', name: 'Security', Icon: ShieldCheck },
+  { id: 'layers', name: 'Full Stack', Icon: Layers },
+  { id: 'globe', name: 'Distributed', Icon: Globe },
+  { id: 'building', name: 'Enterprise', Icon: Building2 },
+  { id: 'flame', name: 'High Growth', Icon: Flame },
+  { id: 'gem', name: 'Premium Tier', Icon: Gem },
 ];
 
 export default function PostJobPage() {
@@ -48,10 +39,10 @@ export default function PostJobPage() {
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('CareerHub Recruiting Partner');
   const [selectedIconId, setSelectedIconId] = useState('zap');
-  const [location, setLocation] = useState('Remote (Worldwide)');
+  const [location, setLocation] = useState('Remote (India & Global)');
   const [locationType, setLocationType] = useState<LocationType>('Remote');
   const [jobType, setJobType] = useState<JobType>('Full-time');
-  const [experienceLevel, setExperienceLevel] = useState<ExperienceLevel>('Senior');
+  const [experienceLevel] = useState<ExperienceLevel>('Senior');
   const [category, setCategory] = useState('Engineering');
   const [salaryMin, setSalaryMin] = useState(3500000);
   const [salaryMax, setSalaryMax] = useState(6000000);
@@ -59,36 +50,37 @@ export default function PostJobPage() {
   const [featured, setFeatured] = useState(true);
 
   // Dynamic Lists
-  const [responsibilities, setResponsibilities] = useState<string[]>([
+  const [responsibilities] = useState<string[]>([
     'Architect and implement scalable feature modules.',
     'Participate in code reviews and architectural discussions.',
-    'Collaborate across cross-functional engineering and design teams.',
+    'Collaborate across cross-functional engineering and design squads.',
   ]);
-  const [newResp, setNewResp] = useState('');
 
-  const [requirements, setRequirements] = useState<string[]>([
-    '3+ years of experience with modern web technologies.',
+  const [requirements] = useState<string[]>([
+    '3+ years of experience with modern high-scale distributed systems.',
     'Strong communication skills and collaborative mindset.',
   ]);
-  const [newReq, setNewReq] = useState('');
 
   const [skills, setSkills] = useState<string[]>(['TypeScript', 'React', 'Next.js', 'Node.js']);
   const [newSkill, setNewSkill] = useState('');
 
-  const [benefits, setBenefits] = useState<string[]>([
-    'Unlimited PTO',
-    'Full Health, Dental & Vision Insurance',
-    'Annual Learning & Development Stipend',
+  const [benefits] = useState<string[]>([
+    'Competitive Base + Annual RSUs',
+    'Comprehensive Family Health Insurance',
+    'Annual Learning & Development Budget',
   ]);
-  const [newBen, setNewBen] = useState('');
 
   // Form Validation & Errors
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Spam / Bot Protection
   const [honeypotField, setHoneypotField] = useState('');
-  const pageLoadedTimestamp = useRef<number>(Date.now());
+  const pageLoadedTimestamp = useRef<number>(0);
   const lastSubmitTimestamp = useRef<number>(0);
+
+  useEffect(() => {
+    pageLoadedTimestamp.current = Date.now();
+  }, []);
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {};
@@ -130,14 +122,12 @@ export default function PostJobPage() {
 
     // Honeypot check
     if (honeypotField.trim().length > 0) {
-      // eslint-disable-next-line no-console
-      console.warn('[Security] Bot detected via job posting honeypot.');
       showToast('Automated listing rejected.', 'error');
       return;
     }
 
     // Speed check (at least 1.5 seconds)
-    if (Date.now() - pageLoadedTimestamp.current < 1500) {
+    if (pageLoadedTimestamp.current > 0 && Date.now() - pageLoadedTimestamp.current < 1500) {
       showToast('Form submission too fast. Please verify listing parameters.', 'error');
       return;
     }
@@ -220,17 +210,17 @@ export default function PostJobPage() {
 
         <div className="pb-6 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Publish New Job Listing</h1>
-            <p className="text-xs text-slate-400 mt-1">Fill out the role parameters to broadcast your opening to verified candidates.</p>
+            <h1 className="text-2xl font-bold text-white tracking-tight font-heading">Publish Job Opening</h1>
+            <p className="text-xs text-slate-400 mt-1">Broadcast an engineering position to verified software developers.</p>
           </div>
-          <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 w-fit">
+          <span className="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 w-fit">
             Active Recruiter Session
           </span>
         </div>
 
         {/* Basic Info */}
         <div className="space-y-6">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Position Basics</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-300">Position Basics</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="sm:col-span-2">
@@ -238,56 +228,56 @@ export default function PostJobPage() {
               <input
                 id="job-title-input"
                 type="text"
-                placeholder="e.g. Senior Frontend Engineer (React & TypeScript)"
                 value={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
                   if (errors.title) setErrors((prev) => ({ ...prev, title: '' }));
                 }}
-                className={`w-full bg-slate-950 border ${
-                  errors.title ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-                } rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none`}
+                placeholder="e.g. Senior Backend Engineer (Distributed Systems)"
+                className={`w-full bg-slate-950 border rounded-lg px-4 py-2.5 text-xs text-slate-100 outline-none transition-colors ${
+                  errors.title ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+                }`}
               />
-              {errors.title && <p className="text-[11px] text-rose-400 mt-1">{errors.title}</p>}
+              {errors.title && <p className="text-[11px] text-rose-400 mt-1.5">{errors.title}</p>}
             </div>
 
             <div>
-              <label htmlFor="company-name-input" className="block text-xs font-semibold text-slate-300 mb-2">Company Name *</label>
+              <label htmlFor="job-company-input" className="block text-xs font-semibold text-slate-300 mb-2">Hiring Entity / Company *</label>
               <input
-                id="company-name-input"
+                id="job-company-input"
                 type="text"
                 value={company}
                 onChange={(e) => {
                   setCompany(e.target.value);
                   if (errors.company) setErrors((prev) => ({ ...prev, company: '' }));
                 }}
-                className={`w-full bg-slate-950 border ${
-                  errors.company ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-                } rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none`}
+                className={`w-full bg-slate-950 border rounded-lg px-4 py-2.5 text-xs text-slate-100 outline-none transition-colors ${
+                  errors.company ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+                }`}
               />
-              {errors.company && <p className="text-[11px] text-rose-400 mt-1">{errors.company}</p>}
+              {errors.company && <p className="text-[11px] text-rose-400 mt-1.5">{errors.company}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Company Brand Icon</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-2">Badge Symbol</label>
               <div className="flex flex-wrap gap-2">
                 {BRAND_ICONS.map((brand) => {
-                  const Icon = brand.Icon;
+                  const IconComp = brand.Icon;
                   const isSelected = selectedIconId === brand.id;
                   return (
                     <button
                       key={brand.id}
                       type="button"
                       onClick={() => setSelectedIconId(brand.id)}
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all ${
+                      className={`p-2 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors ${
                         isSelected
-                          ? 'bg-indigo-600/30 border-indigo-500 text-white shadow-md shadow-indigo-600/25 ring-2 ring-indigo-500/40'
-                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                          ? 'bg-blue-600 border-blue-500 text-white'
+                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
                       }`}
                       title={brand.name}
-                      aria-label={`Select ${brand.name} icon`}
                     >
-                      <Icon className="w-4 h-4" aria-hidden="true" />
+                      <IconComp className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline text-[11px]">{brand.name}</span>
                     </button>
                   );
                 })}
@@ -296,36 +286,35 @@ export default function PostJobPage() {
           </div>
         </div>
 
-        {/* Location & Setup */}
-        <div className="space-y-6 pt-4 border-t border-slate-800/80">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-violet-400">Work Environment & Salary</h2>
+        {/* Work Environment & Salary */}
+        <div className="space-y-6 pt-6 border-t border-slate-800">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-300">Work Setup & Compensation (INR)</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div>
-              <label htmlFor="location-input" className="block text-xs font-semibold text-slate-300 mb-2">Location Name *</label>
+              <label htmlFor="job-location-input" className="block text-xs font-semibold text-slate-300 mb-2">Location String *</label>
               <input
-                id="location-input"
+                id="job-location-input"
                 type="text"
                 value={location}
                 onChange={(e) => {
                   setLocation(e.target.value);
                   if (errors.location) setErrors((prev) => ({ ...prev, location: '' }));
                 }}
-                placeholder="e.g. San Francisco, CA or Remote"
-                className={`w-full bg-slate-950 border ${
-                  errors.location ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-                } rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none`}
+                className={`w-full bg-slate-950 border rounded-lg px-4 py-2.5 text-xs text-slate-100 outline-none transition-colors ${
+                  errors.location ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+                }`}
               />
-              {errors.location && <p className="text-[11px] text-rose-400 mt-1">{errors.location}</p>}
+              {errors.location && <p className="text-[11px] text-rose-400 mt-1.5">{errors.location}</p>}
             </div>
 
             <div>
-              <label htmlFor="location-type-select" className="block text-xs font-semibold text-slate-300 mb-2">Location Type</label>
+              <label htmlFor="job-location-type" className="block text-xs font-semibold text-slate-300 mb-2">Work Setup</label>
               <select
-                id="location-type-select"
+                id="job-location-type"
                 value={locationType}
                 onChange={(e) => setLocationType(e.target.value as LocationType)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none"
+                className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2.5 text-xs text-slate-100 outline-none"
               >
                 <option value="Remote">Remote</option>
                 <option value="Hybrid">Hybrid</option>
@@ -334,42 +323,39 @@ export default function PostJobPage() {
             </div>
 
             <div>
-              <label htmlFor="job-type-select" className="block text-xs font-semibold text-slate-300 mb-2">Employment Type</label>
+              <label htmlFor="job-type-select" className="block text-xs font-semibold text-slate-300 mb-2">Contract Type</label>
               <select
                 id="job-type-select"
                 value={jobType}
                 onChange={(e) => setJobType(e.target.value as JobType)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none"
+                className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2.5 text-xs text-slate-100 outline-none"
               >
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
                 <option value="Contract">Contract</option>
                 <option value="Internship">Internship</option>
-                <option value="Freelance">Freelance</option>
               </select>
             </div>
 
             <div>
-              <label htmlFor="category-select" className="block text-xs font-semibold text-slate-300 mb-2">Category</label>
+              <label htmlFor="job-category-select" className="block text-xs font-semibold text-slate-300 mb-2">Category</label>
               <select
-                id="category-select"
+                id="job-category-select"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none"
+                className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2.5 text-xs text-slate-100 outline-none"
               >
                 <option value="Engineering">Engineering</option>
                 <option value="Design">Design</option>
                 <option value="Data & AI">Data & AI</option>
-                <option value="Marketing">Marketing</option>
                 <option value="Infrastructure">Infrastructure</option>
-                <option value="Product">Product</option>
               </select>
             </div>
 
             <div>
-              <label htmlFor="salary-min-input" className="block text-xs font-semibold text-slate-300 mb-2">Min Salary (₹ INR / yr) *</label>
+              <label htmlFor="job-salary-min" className="block text-xs font-semibold text-slate-300 mb-2">Min CTC (INR / year)</label>
               <input
-                id="salary-min-input"
+                id="job-salary-min"
                 type="number"
                 step="100000"
                 value={salaryMin}
@@ -377,17 +363,17 @@ export default function PostJobPage() {
                   setSalaryMin(Number(e.target.value));
                   if (errors.salaryMin) setErrors((prev) => ({ ...prev, salaryMin: '' }));
                 }}
-                className={`w-full bg-slate-950 border ${
-                  errors.salaryMin ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-                } rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none`}
+                className={`w-full bg-slate-950 border rounded-lg px-4 py-2.5 text-xs text-slate-100 outline-none transition-colors font-mono ${
+                  errors.salaryMin ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+                }`}
               />
-              {errors.salaryMin && <p className="text-[11px] text-rose-400 mt-1">{errors.salaryMin}</p>}
+              {errors.salaryMin && <p className="text-[11px] text-rose-400 mt-1.5">{errors.salaryMin}</p>}
             </div>
 
             <div>
-              <label htmlFor="salary-max-input" className="block text-xs font-semibold text-slate-300 mb-2">Max Salary (₹ INR / yr) *</label>
+              <label htmlFor="job-salary-max" className="block text-xs font-semibold text-slate-300 mb-2">Max CTC (INR / year)</label>
               <input
-                id="salary-max-input"
+                id="job-salary-max"
                 type="number"
                 step="100000"
                 value={salaryMax}
@@ -395,47 +381,47 @@ export default function PostJobPage() {
                   setSalaryMax(Number(e.target.value));
                   if (errors.salaryMax) setErrors((prev) => ({ ...prev, salaryMax: '' }));
                 }}
-                className={`w-full bg-slate-950 border ${
-                  errors.salaryMax ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-                } rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none`}
+                className={`w-full bg-slate-950 border rounded-lg px-4 py-2.5 text-xs text-slate-100 outline-none transition-colors font-mono ${
+                  errors.salaryMax ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+                }`}
               />
-              {errors.salaryMax && <p className="text-[11px] text-rose-400 mt-1">{errors.salaryMax}</p>}
+              {errors.salaryMax && <p className="text-[11px] text-rose-400 mt-1.5">{errors.salaryMax}</p>}
             </div>
           </div>
         </div>
 
         {/* Detailed Description */}
-        <div className="space-y-6 pt-4 border-t border-slate-800/80">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-emerald-400">Role Description & Skills</h2>
+        <div className="space-y-6 pt-6 border-t border-slate-800">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-300">Description & Required Skills</h2>
 
           <div>
-            <label htmlFor="description-input" className="block text-xs font-semibold text-slate-300 mb-2">Overview / Description *</label>
+            <label htmlFor="job-desc-textarea" className="block text-xs font-semibold text-slate-300 mb-2">Job Overview & Impact *</label>
             <textarea
-              id="description-input"
+              id="job-desc-textarea"
               rows={4}
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
                 if (errors.description) setErrors((prev) => ({ ...prev, description: '' }));
               }}
-              placeholder="Describe the role responsibilities, team culture, and objectives (min 30 characters)..."
-              className={`w-full bg-slate-950 border ${
-                errors.description ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-              } rounded-xl p-4 text-xs text-slate-100 leading-relaxed outline-none`}
+              placeholder="Outline role objectives, high-throughput systems worked on, and team impact..."
+              className={`w-full bg-slate-950 border rounded-lg p-4 text-xs text-slate-100 outline-none transition-colors ${
+                errors.description ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+              }`}
             />
-            {errors.description && <p className="text-[11px] text-rose-400 mt-1">{errors.description}</p>}
+            {errors.description && <p className="text-[11px] text-rose-400 mt-1.5">{errors.description}</p>}
           </div>
 
-          {/* Skills Tag Adder */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-2">Required Skills *</label>
+            <label htmlFor="job-skill-input" className="block text-xs font-semibold text-slate-300 mb-2">Skill Badges *</label>
             <div className="flex gap-2 mb-2">
               <input
+                id="job-skill-input"
                 type="text"
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
-                placeholder="Add skill tag (e.g. Next.js, AWS)..."
-                className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-100 outline-none"
+                placeholder="Type a skill and press Enter..."
+                className="flex-1 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-4 py-2 text-xs text-slate-100 outline-none"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
@@ -456,7 +442,7 @@ export default function PostJobPage() {
                     if (errors.skills) setErrors((prev) => ({ ...prev, skills: '' }));
                   }
                 }}
-                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-colors"
+                className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-colors"
               >
                 Add Skill
               </button>
@@ -464,7 +450,7 @@ export default function PostJobPage() {
             {errors.skills && <p className="text-[11px] text-rose-400 mb-2">{errors.skills}</p>}
             <div className="flex flex-wrap gap-2">
               {skills.map((s, i) => (
-                <span key={i} className="px-3 py-1 rounded-xl text-xs bg-slate-800 text-indigo-300 flex items-center gap-1.5 border border-slate-700">
+                <span key={i} className="px-2.5 py-1 rounded-md text-xs bg-slate-900 text-slate-200 flex items-center gap-1.5 border border-slate-800">
                   {s}
                   <button
                     type="button"
@@ -472,7 +458,7 @@ export default function PostJobPage() {
                     className="text-slate-400 hover:text-rose-400"
                     aria-label={`Remove skill ${s}`}
                   >
-                    ×
+                    <X className="w-3 h-3" />
                   </button>
                 </span>
               ))}
@@ -487,9 +473,9 @@ export default function PostJobPage() {
               type="checkbox"
               checked={featured}
               onChange={(e) => setFeatured(e.target.checked)}
-              className="accent-indigo-500 h-4 w-4 rounded cursor-pointer"
+              className="accent-blue-600 h-4 w-4 rounded cursor-pointer"
             />
-            <span>Highlight as Featured Job Listing</span>
+            <span>Highlight as Featured Opening</span>
           </label>
 
           <button

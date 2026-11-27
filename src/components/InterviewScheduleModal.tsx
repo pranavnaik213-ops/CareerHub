@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Application } from '@/types';
-import { X, Calendar, Video, Clock, Check, Copy, UserCheck, Sparkles, Building2 } from 'lucide-react';
+import { X, Calendar, Video, Check, Copy, UserCheck } from 'lucide-react';
 
 interface InterviewScheduleModalProps {
   isOpen: boolean;
@@ -158,7 +158,7 @@ Please join 5 minutes before scheduled start time with a stable internet connect
               <select
                 id="platform-select"
                 value={platform}
-                onChange={(e) => setPlatform(e.target.value as any)}
+                onChange={(e) => setPlatform(e.target.value as 'Google Meet' | 'Microsoft Teams' | 'Zoom')}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 outline-none focus:border-blue-500"
               >
                 <option value="Google Meet">Google Meet</option>

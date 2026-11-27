@@ -38,27 +38,26 @@ export const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="text-slate-200 font-bold mb-3 uppercase tracking-wider text-[11px]">For Job Seekers</h4>
+          <h4 className="text-slate-200 font-semibold mb-3 uppercase tracking-wider text-[11px]">For Job Seekers</h4>
           <ul className="space-y-2">
-            <li><Link href="/" className="text-slate-400 hover:text-indigo-400 transition-colors">Browse Verified Jobs</Link></li>
-            <li><Link href="/seeker/dashboard" className="text-slate-400 hover:text-indigo-400 transition-colors">Track Applications</Link></li>
-            <li><Link href="/seeker/dashboard?tab=profile" className="text-slate-400 hover:text-indigo-400 transition-colors">Resume & Candidate Profile</Link></li>
-            <li><Link href="/salary-calculator" className="text-slate-400 hover:text-indigo-400 transition-colors">Tech Salary Calculator</Link></li>
+            <li><Link href="/" className="text-slate-400 hover:text-blue-400 transition-colors">Browse Verified Jobs</Link></li>
+            <li><Link href="/resume-analyzer" className="text-slate-400 hover:text-blue-400 transition-colors">AI Resume ATS Scanner</Link></li>
+            <li><Link href="/interview-prep" className="text-slate-400 hover:text-blue-400 transition-colors">Technical Interview Prep</Link></li>
+            <li><Link href="/salary-calculator" className="text-slate-400 hover:text-blue-400 transition-colors">Tech Salary & Tax Calculator</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-slate-200 font-bold mb-3 uppercase tracking-wider text-[11px]">For Employers</h4>
+          <h4 className="text-slate-200 font-semibold mb-3 uppercase tracking-wider text-[11px]">For Employers</h4>
           <ul className="space-y-2">
-            <li><Link href="/recruiter/post-job" className="text-slate-400 hover:text-indigo-400 transition-colors">Post a New Job</Link></li>
-            <li><Link href="/recruiter/dashboard" className="text-slate-400 hover:text-indigo-400 transition-colors">ATS Kanban Pipeline</Link></li>
-            <li><Link href="/recruiter/dashboard" className="text-slate-400 hover:text-indigo-400 transition-colors">Recruitment Metrics</Link></li>
-            <li><Link href="/pricing" className="text-slate-400 hover:text-indigo-400 transition-colors">Enterprise Pricing</Link></li>
+            <li><Link href="/recruiter/post-job" className="text-slate-400 hover:text-blue-400 transition-colors">Post a New Job</Link></li>
+            <li><Link href="/recruiter/dashboard" className="text-slate-400 hover:text-blue-400 transition-colors">ATS Kanban Pipeline</Link></li>
+            <li><Link href="/pricing" className="text-slate-400 hover:text-blue-400 transition-colors">Enterprise Pricing</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-slate-200 font-bold mb-3 uppercase tracking-wider text-[11px]">Technology & Trust</h4>
+          <h4 className="text-slate-200 font-semibold mb-3 uppercase tracking-wider text-[11px]">Technology & Trust</h4>
           <div className="flex flex-wrap gap-1.5 mb-4">
             {['Next.js 16', 'TypeScript', 'Tailwind CSS', 'PostgreSQL Ready', 'ATS Engine', 'Lucide Icons'].map((tech, i) => (
               <span key={i} className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[10px] font-medium text-slate-300">
@@ -67,17 +66,17 @@ export const Footer: React.FC = () => {
             ))}
           </div>
           <div className="flex flex-col gap-1.5 text-xs">
-            <Link href="/privacy" className="text-slate-400 hover:text-indigo-300 transition-colors">
+            <Link href="/privacy" className="text-slate-400 hover:text-slate-200 transition-colors">
               Privacy Policy (GDPR/CCPA)
             </Link>
-            <Link href="/terms" className="text-slate-400 hover:text-indigo-300 transition-colors">
+            <Link href="/terms" className="text-slate-400 hover:text-slate-200 transition-colors">
               Terms & Conditions
             </Link>
             <button
               onClick={handleOpenCookieSettings}
-              className="text-left text-slate-400 hover:text-indigo-300 transition-colors flex items-center gap-1"
+              className="text-left text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1"
             >
-              <Cookie className="w-3 h-3 text-indigo-400" aria-hidden="true" />
+              <Cookie className="w-3 h-3 text-blue-400" aria-hidden="true" />
               Cookie Preferences
             </button>
           </div>

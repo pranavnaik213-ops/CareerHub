@@ -29,8 +29,8 @@ export default async function TwitterImage() {
             style={{
               width: 48,
               height: 48,
-              borderRadius: 14,
-              background: 'linear-gradient(135deg, #6366f1, #10b981)',
+              borderRadius: 12,
+              background: '#2563eb',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -39,21 +39,21 @@ export default async function TwitterImage() {
           >
             💼
           </div>
-          <span style={{ fontSize: 28, fontWeight: 800, color: '#ffffff' }}>
+          <span style={{ fontSize: 28, fontWeight: 700, color: '#ffffff' }}>
             CareerHub
           </span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <h1 style={{ fontSize: 52, fontWeight: 900, color: '#ffffff', margin: 0 }}>
+          <h1 style={{ fontSize: 50, fontWeight: 800, color: '#ffffff', margin: 0 }}>
             Find Your Next High-Impact Tech Role
           </h1>
           <p style={{ fontSize: 22, color: '#94a3b8', margin: 0 }}>
-            Remote & Hybrid Software Engineering, Design, AI, and Product positions.
+            Verified Indian & Global Software Engineering, Design, AI, and Infrastructure positions.
           </p>
         </div>
 
-        <div style={{ fontSize: 16, color: '#818cf8', fontWeight: 700 }}>
+        <div style={{ fontSize: 16, color: '#60a5fa', fontWeight: 600 }}>
           careerhub.example.com
         </div>
       </div>

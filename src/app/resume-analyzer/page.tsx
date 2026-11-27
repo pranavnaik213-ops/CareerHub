@@ -5,18 +5,12 @@ import { useJobContext } from '@/context/JobContext';
 import { CompanyLogo } from '@/components/CompanyLogo';
 import {
   FileText,
-  Upload,
   CheckCircle2,
   AlertTriangle,
   Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-  Tag,
   ExternalLink
 } from 'lucide-react';
 import { formatSalaryRange } from '@/lib/formatSalary';
-import Link from 'next/link';
 import { trackEvent } from '@/lib/analytics';
 
 export default function ResumeAnalyzerPage() {
@@ -30,7 +24,6 @@ export default function ResumeAnalyzerPage() {
     candidateProfile.education.map((ed) => `${ed.degree} - ${ed.school} (${ed.year})`).join('\n')
   );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analyzed, setAnalyzed] = useState(true);
 
   const selectedJob = jobs.find((j) => j.id === selectedJobId) || jobs[0];
 
@@ -40,7 +33,6 @@ export default function ResumeAnalyzerPage() {
 
     setTimeout(() => {
       setIsAnalyzing(false);
-      setAnalyzed(true);
       showToast(`Resume ATS Analysis complete for ${selectedJob.company}!`, 'success');
     }, 700);
   };
@@ -95,7 +87,6 @@ export default function ResumeAnalyzerPage() {
               value={selectedJobId}
               onChange={(e) => {
                 setSelectedJobId(e.target.value);
-                setAnalyzed(false);
               }}
               className="w-full bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2.5 text-xs text-slate-200 outline-none"
             >
@@ -150,7 +141,6 @@ export default function ResumeAnalyzerPage() {
             value={resumeText}
             onChange={(e) => {
               setResumeText(e.target.value);
-              setAnalyzed(false);
             }}
             placeholder="Paste your resume content or candidate summary here..."
             className="w-full bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-xl p-3.5 text-xs text-slate-200 font-mono leading-relaxed outline-none"

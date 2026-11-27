@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import { useJobContext } from '@/context/JobContext';
 import { Application, ApplicationStatus } from '@/types';
-import { User, FileText, Calendar, CheckCircle2, XCircle, Clock, Search, MessageSquare, ChevronRight, Filter, ShieldCheck, Mail, Phone, Tag, Sparkles, Bot, ExternalLink, ArrowRight, Video, Layers } from 'lucide-react';
+import { FileText, Calendar, Clock, Search, ChevronRight, Filter, Mail, Phone, Sparkles, Bot, Video, Layers, X } from 'lucide-react';
 import { CandidateComparisonModal } from '@/components/CandidateComparisonModal';
 import { InterviewScheduleModal } from '@/components/InterviewScheduleModal';
 
 const STAGES: { id: ApplicationStatus; title: string; color: string; border: string; dotColor: string }[] = [
   { id: 'Submitted', title: 'Submitted', color: 'bg-blue-950/40 text-blue-300', border: 'border-blue-800/50', dotColor: 'bg-blue-400' },
   { id: 'Under Review', title: 'Under Review', color: 'bg-amber-950/40 text-amber-300', border: 'border-amber-800/50', dotColor: 'bg-amber-400' },
-  { id: 'Interview Scheduled', title: 'Interview Scheduled', color: 'bg-purple-950/40 text-purple-300', border: 'border-purple-800/50', dotColor: 'bg-purple-400' },
+  { id: 'Interview Scheduled', title: 'Interview Scheduled', color: 'bg-blue-950/40 text-blue-300', border: 'border-blue-800/50', dotColor: 'bg-blue-400' },
   { id: 'Offer Extended', title: 'Offer Extended', color: 'bg-emerald-950/40 text-emerald-300', border: 'border-emerald-800/50', dotColor: 'bg-emerald-400' },
   { id: 'Rejected', title: 'Rejected', color: 'bg-rose-950/40 text-rose-300', border: 'border-rose-800/50', dotColor: 'bg-rose-400' }
 ];
@@ -146,7 +146,7 @@ export const AtsKanbanBoard: React.FC = () => {
                     <div
                       key={app.id}
                       onClick={() => openCandidateDetails(app)}
-                      className="group bg-slate-900/90 border border-slate-800/90 hover:border-blue-500/50 p-4 rounded-2xl shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
+                      className="group bg-slate-900/90 border border-slate-800/90 hover:border-blue-500/50 p-4 rounded-xl shadow-sm transition-colors cursor-pointer"
                     >
                       {/* Candidate Avatar & Job Title */}
                       <div className="flex justify-between items-start mb-2.5">
@@ -195,7 +195,7 @@ export const AtsKanbanBoard: React.FC = () => {
 
                       {/* Quick Schedule or Interview Notice */}
                       {app.interviewDate ? (
-                        <div className="mb-2 text-[10px] text-purple-300 bg-purple-950/40 border border-purple-800/40 px-2 py-1 rounded flex items-center gap-1">
+                        <div className="mb-2 text-[10px] text-blue-300 bg-blue-950/40 border border-blue-800/40 px-2 py-1 rounded flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           <span className="truncate">{app.interviewDate}</span>
                         </div>
@@ -204,7 +204,7 @@ export const AtsKanbanBoard: React.FC = () => {
                       {/* Applied Date & Chevron */}
                       <div className="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-800/50">
                         <span>Applied: {app.appliedDate}</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
                       </div>
                     </div>
                   ))
@@ -223,7 +223,7 @@ export const AtsKanbanBoard: React.FC = () => {
           aria-modal="true"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] sm:max-h-[88vh] flex flex-col">
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] sm:max-h-[88vh] flex flex-col">
             
             <div className="p-6 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -237,10 +237,10 @@ export const AtsKanbanBoard: React.FC = () => {
               </div>
               <button
                 onClick={() => setActiveCandidateModal(null)}
-                className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                 aria-label="Close candidate modal"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 

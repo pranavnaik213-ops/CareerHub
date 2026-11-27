@@ -167,7 +167,7 @@ export const JobFilterSidebar: React.FC<JobFilterSidebarProps> = ({ onCloseMobil
           <select
             id="filter-exp-level"
             value={filters.experienceLevel}
-            onChange={(e) => setFilters((prev) => ({ ...prev, experienceLevel: e.target.value as any }))}
+            onChange={(e) => setFilters((prev) => ({ ...prev, experienceLevel: e.target.value as ExperienceLevel | 'All' }))}
             className="w-full bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg px-2.5 py-2 text-xs text-slate-200 outline-none"
           >
             {EXPERIENCE_LEVELS.map((exp) => (

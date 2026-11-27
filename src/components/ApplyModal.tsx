@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Job } from '@/types';
 import { useJobContext } from '@/context/JobContext';
-import { X, Upload, FileText, Send, CheckCircle2, User, Mail, Phone, AlertCircle, ShieldAlert, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
+import { X, Upload, FileText, Send, User, Mail, Phone, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
 import { trackEvent } from '@/lib/analytics';
 import { generateTailoredCoverLetter } from '@/lib/aiAgent';
@@ -38,12 +38,12 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
 
   // Spam / Bot Protection
   const [honeypotValue, setHoneypotValue] = useState(''); // Invisible to real users
-  const formOpenedTimestamp = useRef<number>(Date.now());
+  const formOpenedTimestamp = useRef<number>(0);
   const lastSubmitAttempt = useRef<number>(0);
 
   useEffect(() => {
+    formOpenedTimestamp.current = Date.now();
     if (job) {
-      formOpenedTimestamp.current = Date.now();
       trackEvent('job_apply_initiated', {
         jobId: job.id,
         title: job.title,
@@ -95,7 +95,6 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
 
     // 1. Bot Honeypot Check: If the hidden honeypot input contains any text, it was filled by a spam bot
     if (honeypotValue.trim().length > 0) {
-      // eslint-disable-next-line no-console
       console.warn('[Security] Bot submission caught by honeypot.');
       showToast('Automated bot submission detected.', 'error');
       onClose();
@@ -332,9 +331,9 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
           {/* Resume Upload Section */}
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-2">Resume / CV Document *</label>
-            <div className="flex items-center justify-between p-4 bg-slate-950/80 border border-slate-800 rounded-2xl">
+            <div className="flex items-center justify-between p-4 bg-slate-950/80 border border-slate-800 rounded-xl">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20" aria-hidden="true">
+                <div className="p-2 bg-blue-600/10 rounded-lg text-blue-400 border border-blue-500/20" aria-hidden="true">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
@@ -342,7 +341,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
                   <p className="text-[11px] text-slate-400">PDF, DOCX up to 5MB</p>
                 </div>
               </div>
-              <label className="cursor-pointer px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5 min-h-[38px]">
+              <label className="cursor-pointer px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5 min-h-[38px]">
                 <Upload className="w-3.5 h-3.5" aria-hidden="true" />
                 Replace File
                 <input
@@ -382,8 +381,8 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
                 if (errors.coverLetter) setErrors((prev) => ({ ...prev, coverLetter: '' }));
               }}
               className={`w-full bg-slate-950 border ${
-                errors.coverLetter ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
-              } rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-400 outline-none leading-relaxed`}
+                errors.coverLetter ? 'border-rose-500' : 'border-slate-800 focus:border-blue-500'
+              } rounded-xl p-4 text-xs text-slate-200 placeholder-slate-400 outline-none leading-relaxed`}
               placeholder="Introduce yourself and explain why you're a great fit for this position..."
             />
             {errors.coverLetter && <p className="text-[11px] text-rose-400 mt-1">{errors.coverLetter}</p>}
@@ -391,7 +390,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
 
           {/* Screening Checkbox */}
           <div className="space-y-1">
-            <div className="flex items-start gap-3 p-3.5 bg-indigo-950/20 border border-indigo-500/20 rounded-xl">
+            <div className="flex items-start gap-3 p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl">
               <input
                 type="checkbox"
                 id="authorize"
@@ -400,7 +399,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
                   setAuthorized(e.target.checked);
                   if (errors.authorized) setErrors((prev) => ({ ...prev, authorized: '' }));
                 }}
-                className="mt-0.5 accent-indigo-500 h-4 w-4 rounded cursor-pointer"
+                className="mt-0.5 accent-blue-600 h-4 w-4 rounded cursor-pointer"
               />
               <label htmlFor="authorize" className="text-xs text-slate-300 leading-snug cursor-pointer">
                 I certify that the provided experience details, contact information, and resume are truthful and accurate.

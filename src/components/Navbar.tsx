@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useJobContext } from '@/context/JobContext';
-import { Briefcase, Bookmark, PlusCircle, User, Building2, Menu, X, Calculator } from 'lucide-react';
+import { Briefcase, Bookmark, PlusCircle, User, Building2, Menu, X } from 'lucide-react';
 import { LinkedInConnectModal } from '@/components/LinkedInConnectModal';
 
 export const Navbar: React.FC = () => {

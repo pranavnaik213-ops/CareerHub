@@ -86,7 +86,6 @@ export function trackEvent(
 
   // Developer logging in non-production or for verification
   if (process.env.NODE_ENV !== 'production' || process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === 'true') {
-    // eslint-disable-next-line no-console
     console.debug('[CareerHub Analytics]', name, eventPayload.properties);
   }
 }

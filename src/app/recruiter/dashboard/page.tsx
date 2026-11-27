@@ -4,23 +4,15 @@ import React, { useState } from 'react';
 import { useJobContext } from '@/context/JobContext';
 import { RecruiterMetrics } from '@/components/RecruiterMetrics';
 import { AtsKanbanBoard } from '@/components/AtsKanbanBoard';
-import { Job, JobStatus } from '@/types';
+import { JobStatus } from '@/types';
 import Link from 'next/link';
 import { formatSalaryRange } from '@/lib/formatSalary';
 import {
-  Briefcase,
-  Users,
   PlusCircle,
   Kanban,
   Table,
-  MapPin,
-  Clock,
   Trash2,
-  CheckCircle2,
-  XCircle,
-  Eye,
-  Building2,
-  Sparkles
+  Building2
 } from 'lucide-react';
 import { CompanyLogo } from '@/components/CompanyLogo';
 

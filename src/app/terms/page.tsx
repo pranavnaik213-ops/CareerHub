@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { FileText, ArrowLeft, CheckCircle2, AlertTriangle, ShieldCheck, Scale, Briefcase } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Scale } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Terms and Conditions',

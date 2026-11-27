@@ -11,15 +11,15 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 20,
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          fontSize: 18,
+          background: '#2563eb',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
-          borderRadius: 8,
+          borderRadius: 6,
         }}
       >
         💼
