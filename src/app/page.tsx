@@ -14,7 +14,7 @@ import {
   ArrowRight,
   FilterX,
   SlidersHorizontal,
-  ExternalLink
+  Search
 } from 'lucide-react';
 import Link from 'next/link';
 import { trackEvent } from '@/lib/analytics';
@@ -49,95 +49,50 @@ export default function HomePage() {
   return (
     <div className="space-y-10">
 
-      {/* Clean, Simple Hero Section */}
-      <section className="pt-4 pb-8 border-b border-slate-800">
-        <div className="max-w-4xl space-y-5">
-          
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-xs font-medium bg-slate-900 border border-slate-800 text-slate-300">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-            <span>Verified Tech Openings from Industry-Leading Companies</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight font-heading">
-            Find Your Next Engineering Role at Top Tech Companies
+      <section className="border-b border-slate-800 pb-8 pt-2 sm:pb-10">
+        <div className="max-w-3xl space-y-5">
+          <p className="text-sm font-medium text-blue-400">CareerHub · Technology careers</p>
+          <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+            Find work that moves your career forward.
           </h1>
-
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
-            Explore authentic open positions from Google, Stripe, Microsoft, Meta, Vercel, OpenAI, and more. Features transparent compensation, real company career links, and candidate ATS tracking.
+          <p className="max-w-2xl text-sm leading-6 text-slate-400 sm:text-base">
+            Explore current engineering, design, and data roles from technology companies. Compare details and apply directly.
           </p>
 
-          {/* Action Row */}
-          <div className="flex flex-wrap items-center gap-3 pt-1">
+          <form
+            className="flex max-w-2xl flex-col gap-2 rounded-xl border border-slate-700 bg-slate-900 p-2 sm:flex-row"
+            onSubmit={(event) => {
+              event.preventDefault();
+              scrollToDirectory();
+            }}
+            role="search"
+          >
+            <label className="flex min-h-11 flex-1 items-center gap-3 px-3">
+              <Search className="h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+              <span className="sr-only">Search jobs by title, company, or skill</span>
+              <input
+                value={filters.query}
+                onChange={(event) => setFilters((previous) => ({ ...previous, query: event.target.value }))}
+                placeholder="Job title, company, or skill"
+                className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+              />
+            </label>
             <button
-              onClick={scrollToDirectory}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors min-h-[44px]"
+              type="submit"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
-              <span>Explore {activeJobsCount} Verified Jobs</span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              Search jobs <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
+          </form>
 
-            <Link
-              href="/recruiter/post-job"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-xs sm:text-sm font-medium bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition-colors min-h-[44px]"
-            >
-              <Building2 className="w-4 h-4 text-slate-400" aria-hidden="true" />
-              <span>Post a Job</span>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1 text-sm text-slate-400">
+            <span><span className="font-medium text-slate-200 tabular-nums">{activeJobsCount}</span> current openings</span>
+            <span>Roles across engineering, design, and data</span>
+            <Link href="/recruiter/post-job" className="inline-flex items-center gap-1 font-medium text-slate-200 transition-colors hover:text-blue-400">
+              Hiring? Post a job <Building2 className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-
-          {/* Quick Filter Pills with Real Tech Companies & Keywords */}
-          <div className="flex flex-wrap items-center gap-2 pt-2">
-            <span className="text-xs text-slate-400 mr-1">Quick Search:</span>
-            {['Google', 'Microsoft', 'PhonePe', 'Uber', 'Stripe', 'Razorpay', 'Apple', 'Remote'].map((term, i) => (
-              <button
-                key={i}
-                onClick={() => {
-                  setFilters((prev) => ({
-                    ...prev,
-                    query: term === 'Remote' ? '' : term,
-                    locationType: term === 'Remote' ? 'Remote' : prev.locationType,
-                  }));
-                  scrollToDirectory();
-                }}
-                className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors min-h-[28px]"
-              >
-                {term}
-              </button>
-            ))}
-          </div>
-
         </div>
-
-        {/* 3 Real Value Metrics */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 mt-8 border-t border-slate-800/60">
-          <div className="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-            <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold mb-1">
-              <Building2 className="w-4 h-4 text-blue-400" aria-hidden="true" />
-              Top Employers
-            </div>
-            <p className="text-xl font-bold text-white font-heading">22+ Tech Leaders</p>
-            <p className="text-xs text-slate-400 mt-0.5">Google, Microsoft, Apple, Stripe, Uber, PhonePe, Meta, Netflix</p>
-          </div>
-
-          <div className="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-            <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold mb-1">
-              <span className="font-bold text-emerald-400 text-sm">₹</span>
-              Indian Tech Salaries
-            </div>
-            <p className="text-xl font-bold text-white font-heading">₹35 LPA – ₹1.4 Cr</p>
-            <p className="text-xs text-slate-400 mt-0.5">Verified Indian Rupee compensation ranges</p>
-          </div>
-
-          <div className="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-            <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold mb-1">
-              <ExternalLink className="w-4 h-4 text-slate-400" aria-hidden="true" />
-              Direct Careers Portals
-            </div>
-            <p className="text-xl font-bold text-white font-heading">Direct Links</p>
-            <p className="text-xs text-slate-400 mt-0.5">Apply on company site or via 1-click ATS application</p>
-          </div>
-        </div>
-
       </section>
 
       {/* Recruiter Notice Bar if in Recruiter Mode */}

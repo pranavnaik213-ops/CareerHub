@@ -86,39 +86,31 @@ export const AiAgentHub: React.FC = () => {
 
   return (
     <>
-      {/* Top Banner Status Bar */}
-      <div className="bg-[#11141c] border border-slate-800 rounded-lg p-2.5 sm:px-4 flex flex-wrap items-center justify-between gap-2.5 text-xs">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-slate-300 font-medium">
-            AI Agent Engine: <span className="text-white font-semibold">Active</span> • Monitoring 14 Tech Career Portals
-          </span>
-          <span className="hidden md:inline-block text-slate-500">•</span>
-          <span className="hidden md:inline-block text-slate-400">
-            {jobs.length} Verified Roles Live
-          </span>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-y border-slate-800 py-3 text-sm">
+        <div className="flex min-w-0 items-center gap-2 text-slate-400">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" aria-hidden="true" />
+          <span className="truncate">Listings sync automatically</span>
+          <span className="hidden text-slate-600 sm:inline" aria-hidden="true">·</span>
+          <span className="hidden tabular-nums text-slate-500 sm:inline">{jobs.length} open roles</span>
         </div>
 
-        <div className="flex items-center gap-2 ml-auto">
+        <div className="ml-auto flex items-center gap-2">
           <button
             onClick={handleManualSync}
             disabled={isSyncing}
-            className="flex items-center gap-1.5 px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors text-[11px] font-medium"
+            className="flex items-center gap-1.5 rounded-md px-3 py-2 text-xs font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-white disabled:opacity-60"
             title="Trigger AI Agent crawler to check for new tech openings"
           >
-            <RefreshCw className={`w-3 h-3 text-blue-400 ${isSyncing ? 'animate-spin' : ''}`} />
-            <span>{isSyncing ? 'Crawling Portals...' : 'Sync New Openings'}</span>
+            <RefreshCw className={`h-3.5 w-3.5 text-slate-400 ${isSyncing ? 'animate-spin' : ''}`} />
+            <span>{isSyncing ? 'Checking listings' : 'Sync listings'}</span>
           </button>
 
           <button
             onClick={() => setIsOpen(true)}
-            className="flex items-center gap-1 px-2.5 py-1 rounded bg-blue-950/40 border border-blue-800/40 text-blue-300 hover:text-white transition-colors text-[11px] font-medium"
+            className="flex items-center gap-1.5 rounded-md border border-slate-700 px-3 py-2 text-xs font-medium text-slate-200 transition-colors hover:border-slate-600 hover:bg-slate-800"
           >
-            <Bot className="w-3 h-3 text-blue-400" />
-            <span>AI Copilot</span>
+            <Bot className="h-3.5 w-3.5 text-slate-400" />
+            <span>Career assistant</span>
           </button>
         </div>
       </div>
