@@ -257,8 +257,45 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     showToast(`Applicant status updated to: ${newStatus}`, 'success');
   };
 
+  // Safe Profile Updater with strict field whitelisting (Prevents mass-assignment / state pollution)
   const updateCandidateProfile = (updated: Partial<CandidateProfile>) => {
-    setCandidateProfile((prev) => ({ ...prev, ...updated }));
+    setCandidateProfile((prev) => {
+      const allowedKeys: (keyof CandidateProfile)[] = [
+        'name',
+        'email',
+        'phone',
+        'headline',
+        'bio',
+        'location',
+        'skills',
+        'experienceYears',
+        'portfolioUrl',
+        'githubUrl',
+        'linkedinUrl',
+        'linkedInConnected',
+        'linkedInVerified',
+        'linkedInSyncDate',
+        'resumeName',
+        'resumeLastUpdated',
+        'experience',
+        'education',
+      ];
+
+      const sanitized: Partial<CandidateProfile> = {};
+      for (const key of allowedKeys) {
+        if (key in updated && updated[key] !== undefined) {
+          // @ts-expect-error Whitelisted key copy
+          sanitized[key] = updated[key];
+        }
+      }
+
+      // Preserve immutable system identity 'id'
+      return {
+        ...prev,
+        ...sanitized,
+        id: prev.id,
+      };
+    });
     showToast('Profile details updated successfully', 'success');
   };
 

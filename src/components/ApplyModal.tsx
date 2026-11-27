@@ -7,6 +7,7 @@ import { X, Upload, FileText, Send, User, Mail, Phone, ShieldCheck, Sparkles, Ex
 import { CompanyLogo } from '@/components/CompanyLogo';
 import { trackEvent } from '@/lib/analytics';
 import { generateTailoredCoverLetter } from '@/lib/aiAgent';
+import { sanitizeSafeUrl } from '@/lib/sanitizeUrl';
 
 interface ApplyModalProps {
   job: Job | null;
@@ -202,7 +203,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, onClose }) => {
                 </p>
               </div>
               <a
-                href={job.applyUrl}
+                href={sanitizeSafeUrl(job.applyUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {

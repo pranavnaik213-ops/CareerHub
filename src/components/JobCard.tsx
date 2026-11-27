@@ -8,6 +8,7 @@ import { CompanyLogo } from '@/components/CompanyLogo';
 import { formatSalaryRange } from '@/lib/formatSalary';
 import { calculateJobMatch } from '@/lib/aiAgent';
 import { trackEvent } from '@/lib/analytics';
+import { sanitizeSafeUrl } from '@/lib/sanitizeUrl';
 
 interface JobCardProps {
   job: Job;
@@ -55,7 +56,8 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
 
   const handleShareToLinkedIn = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const shareUrl = encodeURIComponent(job.applyUrl || window.location.href);
+    const safeUrl = sanitizeSafeUrl(job.applyUrl);
+    const shareUrl = encodeURIComponent(safeUrl !== '#' ? safeUrl : window.location.href);
     const title = encodeURIComponent(`Hiring: ${job.title} at ${job.company} (${formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)})`);
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}&summary=${title}`, '_blank', 'noopener,noreferrer');
   };
@@ -105,7 +107,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
 
             {job.applyUrl && (
               <a
-                href={job.applyUrl}
+                href={sanitizeSafeUrl(job.applyUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
@@ -223,7 +225,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onSelect, onApplyClick })
             </button>
             {job.applyUrl ? (
               <a
-                href={job.applyUrl}
+                href={sanitizeSafeUrl(job.applyUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {

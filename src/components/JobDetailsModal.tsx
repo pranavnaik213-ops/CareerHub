@@ -8,6 +8,7 @@ import { CompanyLogo } from '@/components/CompanyLogo';
 import { formatSalaryRange } from '@/lib/formatSalary';
 import { calculateJobMatch } from '@/lib/aiAgent';
 import { trackEvent } from '@/lib/analytics';
+import { sanitizeSafeUrl } from '@/lib/sanitizeUrl';
 
 interface JobDetailsModalProps {
   job: Job | null;
@@ -36,7 +37,8 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
   };
 
   const handleShareToLinkedIn = () => {
-    const shareUrl = encodeURIComponent(job.applyUrl || window.location.href);
+    const safeUrl = sanitizeSafeUrl(job.applyUrl);
+    const shareUrl = encodeURIComponent(safeUrl !== '#' ? safeUrl : window.location.href);
     const title = encodeURIComponent(`Hiring: ${job.title} at ${job.company} (${formatSalaryRange(job.salaryMin, job.salaryMax, job.currency)})`);
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}&summary=${title}`, '_blank', 'noopener,noreferrer');
   };
@@ -96,7 +98,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
               {job.companyUrl && (
                 <div className="mt-2.5">
                   <a
-                    href={job.companyUrl}
+                    href={sanitizeSafeUrl(job.companyUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors"
@@ -148,7 +150,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
                 </p>
               </div>
               <a
-                href={job.applyUrl}
+                href={sanitizeSafeUrl(job.applyUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
@@ -289,7 +291,7 @@ export const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, 
             <div className="flex items-center gap-2 ml-auto">
               {job.applyUrl && (
                 <a
-                  href={job.applyUrl}
+                  href={sanitizeSafeUrl(job.applyUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {

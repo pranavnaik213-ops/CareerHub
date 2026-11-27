@@ -21,6 +21,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { sanitizeSafeUrl } from '@/lib/sanitizeUrl';
 
 const APPLICATION_STAGES: ApplicationStatus[] = [
   'Submitted',
@@ -465,7 +466,7 @@ export default function CandidateDashboard() {
               <div>
                 <span className="text-slate-400 block text-[11px]">GitHub Profile:</span>
                 <a
-                  href={profileForm.githubUrl || 'https://github.com/pranavnaik213-ops'}
+                  href={sanitizeSafeUrl(profileForm.githubUrl || 'https://github.com/pranavnaik213-ops')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
@@ -477,7 +478,7 @@ export default function CandidateDashboard() {
               <div>
                 <span className="text-slate-400 block text-[11px]">Project Repository:</span>
                 <a
-                  href={profileForm.portfolioUrl || 'https://github.com/pranavnaik213-ops/CareerHub'}
+                  href={sanitizeSafeUrl(profileForm.portfolioUrl || 'https://github.com/pranavnaik213-ops/CareerHub')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
@@ -489,7 +490,7 @@ export default function CandidateDashboard() {
               <div>
                 <span className="text-slate-400 block text-[11px]">LinkedIn:</span>
                 <a
-                  href={profileForm.linkedinUrl || 'https://linkedin.com/in/pranav-naik'}
+                  href={sanitizeSafeUrl(profileForm.linkedinUrl || 'https://linkedin.com/in/pranav-naik')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:underline flex items-center gap-1 mt-0.5"

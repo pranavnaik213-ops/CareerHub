@@ -1,15 +1,29 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Sensitive reconnaissance paths and backup dump file extensions
+const BLOCKED_RECON_PATTERNS = [
+  /^\/\.env/i,
+  /^\/\.git/i,
+  /^\/\.aws/i,
+  /^\/\.ssh/i,
+  /\.(bak|swp|zip|tar|gz|tar\.gz|sql|log|pem|key|crt)$/i,
+];
+
 /**
  * Next.js 16 Proxy (formerly Middleware)
- * Enforces HTTPS redirects in production and injects security headers
+ * Enforces HTTPS redirects in production, blocks sensitive file probing, and injects security headers
  */
 export function proxy(request: NextRequest) {
   const { host, pathname, search } = request.nextUrl;
   const forwardedProto = request.headers.get('x-forwarded-proto');
 
-  // Enforce HTTPS in production environments
+  // 1. Block reconnaissance requests for hidden dotfiles, backup files, and database dumps
+  if (BLOCKED_RECON_PATTERNS.some((pattern) => pattern.test(pathname))) {
+    return new NextResponse('Not Found', { status: 404 });
+  }
+
+  // 2. Enforce HTTPS in production environments
   if (
     process.env.NODE_ENV === 'production' &&
     forwardedProto &&

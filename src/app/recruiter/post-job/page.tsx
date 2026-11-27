@@ -97,12 +97,12 @@ export default function PostJobPage() {
       errs.location = 'Please specify a job location.';
     }
 
-    if (salaryMin < 300000) {
-      errs.salaryMin = 'Minimum salary must be at least ₹3,00,000 (₹3 LPA).';
+    if (!Number.isFinite(salaryMin) || salaryMin < 300000 || salaryMin > 500000000) {
+      errs.salaryMin = 'Minimum salary must be between ₹3,00,000 (₹3 LPA) and ₹50 Cr.';
     }
 
-    if (salaryMax < salaryMin) {
-      errs.salaryMax = 'Maximum salary cannot be lower than minimum salary.';
+    if (!Number.isFinite(salaryMax) || salaryMax < salaryMin || salaryMax > 500000000) {
+      errs.salaryMax = 'Maximum salary cannot be lower than minimum salary or exceed ₹50 Cr.';
     }
 
     if (!description.trim() || description.trim().length < 30) {

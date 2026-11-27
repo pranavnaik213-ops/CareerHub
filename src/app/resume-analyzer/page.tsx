@@ -27,6 +27,7 @@ import {
   CorrectedResumeResult
 } from '@/lib/resumeAiEngine';
 import { LinkedInConnectModal } from '@/components/LinkedInConnectModal';
+import { sanitizeSafeUrl } from '@/lib/sanitizeUrl';
 
 export default function ResumeAnalyzerPage() {
   const { jobs, candidateProfile, showToast } = useJobContext();
@@ -279,7 +280,7 @@ ${candidateProfile.education.map((ed) => `${ed.degree} - ${ed.school} (${ed.year
             </div>
             {selectedJob.applyUrl && (
               <a
-                href={selectedJob.applyUrl}
+                href={sanitizeSafeUrl(selectedJob.applyUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-400 hover:underline flex items-center gap-1 font-medium"
@@ -667,7 +668,7 @@ ${candidateProfile.education.map((ed) => `${ed.degree} - ${ed.school} (${ed.year
             {/* Direct Official Apply Link */}
             <div className="pt-2 border-t border-slate-800">
               <a
-                href={selectedJob.applyUrl}
+                href={sanitizeSafeUrl(selectedJob.applyUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-2.5 px-4 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition-colors flex items-center justify-center gap-1.5"
